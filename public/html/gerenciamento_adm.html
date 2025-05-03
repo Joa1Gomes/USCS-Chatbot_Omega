@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin - Usuários</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/gerenciamento_adm.css"/>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid">
+          <!-- Botão menu -->
+          <button class="btn btn-light me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuLateral">
+            <i class="fas fa-bars"></i>
+          </button>
+    
+          <!-- Nome/logo -->
+          <a class="navbar-brand" href="#">Chatbot Omega</a>
+    
+          <!-- Ícone de perfil -->
+          <div class="ms-auto">
+            <a href="#" class="nav-profile">
+              <i class="fas fa-user-circle"></i>
+            </a>
+          </div>
+        </div>
+      </nav>
+    
+      <!-- Menu lateral -->
+      <div class="offcanvas offcanvas-start" tabindex="-1" id="menuLateral">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title">Menu</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="list-unstyled">
+            <li><a href="home_page.html">🏠 Início</a></li>
+            <li><a href="#">📋 Chamados</a></li>
+            <li><a href="estatisticas.html">📊 Estatísticas</a></li>
+            <li><a href="#">⚙️ Configurações</a></li>
+            <li><a href="fale_conosco.html">⚙️ Fale conosco</a></li>
+          </ul>
+        </div>
+      </div>
+  <div class="container">
+    <table class="table table-striped table-hover">
+      <thead class="table-light">
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Email</th>
+          <th>Permissão</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody id="tabelaUsuarios">
+        <!-- Exemplo de linha (pode ser gerado dinamicamente via JS) -->
+        <tr>
+          <td>1</td>
+          <td>João Silva</td>
+          <td>joao@email.com</td>
+          <td>Usuário</td>
+          <td><button class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#modalPermissao">Editar</button></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Ana Oliveira</td>
+          <td>ana@email.com</td>
+          <td>Administrador</td>
+          <td><button class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#modalPermissao">Editar</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal de Edição -->
+  <div class="modal fade" id="modalPermissao" tabindex="-1" aria-labelledby="modalPermissaoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalPermissaoLabel">Alterar Permissão</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          <form id="formPermissao">
+            <div class="mb-3">
+              <label for="selectPermissao" class="form-label">Permissão</label>
+              <select class="form-select" id="selectPermissao">
+                <option value="usuario">Usuário</option>
+                <option value="administrador">Administrador</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-editar w-100">Salvar Alterações</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <p>© 2025 MeuSistema - Todos os direitos reservados</p>
+  </footer>
+
+  <!-- JS Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+  <script>
+    // Aqui você pode usar JS para buscar os usuários de uma API
+    document.getElementById('formPermissao').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const novaPermissao = document.getElementById('selectPermissao').value;
+      alert(`Permissão atualizada para: ${novaPermissao}`);
+      // Aqui você pode fazer uma chamada fetch para o backend atualizando o usuário
+    });
+  </script>
+
+</body>
+</html>

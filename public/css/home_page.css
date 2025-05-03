@@ -1,0 +1,70 @@
+body {
+    background-color: #f0f0f5;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding-bottom: 60px; /* espaço para rodapé */
+  }
+
+  .navbar {
+    background-color: #6a6acb;
+    padding: 10px 20px;
+  }
+
+  .navbar-brand {
+    color: white !important;
+    font-weight: bold;
+    margin-left: 10px;
+  }
+
+  .nav-profile {
+    font-size: 1.5rem;
+    color: white;
+  }
+
+  footer {
+    background-color: #4c4ca0;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+
+  .content {
+    padding: 40px 20px;
+    text-align: center;
+  }
+
+  .offcanvas {
+    background-color: #6a6acb;
+    color: white;
+  }
+
+  .offcanvas a {
+    color: white;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .offcanvas a:hover {
+    text-decoration: underline;
+  }
+
+  /* Chat button styles */
+  .chat-button {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #6a6acb;
+    color: white;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    z-index: 1000;
+  }
+
+  /* Chat popup styles */

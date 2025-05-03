@@ -1,0 +1,54 @@
+    body {
+      background-color: #a4a4d3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .cadastro-title {
+        text-align: center;
+        color: #6a6acb;
+        margin-bottom: 25px;
+        font-weight: bold;
+      }
+
+    .card-cadastro {
+      background-color: white;
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 0 15px rgba(0,0,0,0.05);
+    }
+
+    .card-cadastro h2 {
+      text-align: center;
+      color: #6a6acb;
+      margin-bottom: 30px;
+    }
+
+    .form-control {
+      border-radius: 10px;
+    }
+
+    .btn-cadastro {
+      background-color: #6a6acb;
+      color: white;
+      border-radius: 10px;
+    }
+
+    .btn-cadastro:hover {
+      background-color: #5959b8;
+    }
+
+    .text-center a {
+      color: #6a6acb;
+      text-decoration: none;
+    }
+
+    .text-center a:hover {
+      text-decoration: underline;
+    }
+  

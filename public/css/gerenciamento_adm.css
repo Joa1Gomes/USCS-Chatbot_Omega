@@ -1,0 +1,138 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Estilo geral */
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f4fc;
+    padding-top: 70px;
+    color: #333;
+  }
+  
+  /* Navbar fixa */
+  .navbar {
+    background-color: #6a6acb;
+    padding: 15px 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar-brand {
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.4rem;
+  }
+  
+  .navbar .nav-profile i {
+    font-size: 1.8rem;
+    color: #fff;
+  }
+  
+  .navbar .btn {
+    border-radius: 10px;
+  }
+  
+  /* Menu lateral */
+  .offcanvas {
+    background-color: #6a6acb;
+    color: white;
+    padding: 20px;
+  }
+  
+  .offcanvas .offcanvas-title {
+    color: #fff;
+  }
+  
+  .offcanvas .btn-close {
+    filter: invert(1);
+  }
+  
+  .offcanvas ul {
+    padding-left: 0;
+    margin-top: 20px;
+  }
+  
+  .offcanvas li {
+    margin-bottom: 15px;
+  }
+  
+  .offcanvas a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: 0.3s;
+  }
+  
+  .offcanvas a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Conteúdo principal */
+  .container {
+    padding: 30px 20px;
+  }
+  
+  /* Tabela */
+  .table {
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  .table th, .table td {
+    vertical-align: middle;
+  }
+  
+  /* Botões */
+  .btn-editar {
+    background-color: #6a6acb;
+    color: #fff;
+    border-radius: 8px;
+    transition: 0.3s;
+  }
+  
+  .btn-editar:hover {
+    background-color: #5a5ab0;
+  }
+  
+  /* Modal */
+  .modal-header {
+    background-color: #6a6acb;
+    color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  
+  .modal-content {
+    border-radius: 10px;
+  }
+  
+  .form-select, .form-control {
+    border-radius: 8px;
+  }
+
+  footer {
+    background-color: #4c4ca0;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  /* Responsivo */
+  @media (max-width: 576px) {
+    .navbar-brand {
+      font-size: 1.2rem;
+    }
+  
+    .offcanvas a {
+      font-size: 0.95rem;
+    }
+  }
+  

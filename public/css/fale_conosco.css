@@ -1,0 +1,75 @@
+body {
+    background-color: #f0f0f5;
+    font-family: 'Segoe UI', sans-serif;
+    padding-bottom: 60px;
+  }
+
+  .navbar {
+    background-color: #6a6acb;
+    padding: 10px 20px;
+  }
+
+  .navbar-brand {
+    color: white !important;
+    font-weight: bold;
+    margin-left: 10px;
+  }
+
+  .nav-profile {
+    font-size: 1.5rem;
+    color: white;
+  }
+
+  footer {
+    background-color: #4c4ca0;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+
+  .form-container {
+    background-color: white;
+    max-width: 600px;
+    margin: 100px auto 40px auto;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+  }
+
+  .form-container h2 {
+    color: #4c4ca0;
+    margin-bottom: 25px;
+    text-align: center;
+  }
+
+  .form-control {
+    border-radius: 10px;
+  }
+
+  .btn-submit {
+    background-color: #6a6acb;
+    color: white;
+    border-radius: 10px;
+  }
+
+  .btn-submit:hover {
+    background-color: #5959b8;
+  }
+
+  .offcanvas {
+    background-color: #6a6acb;
+    color: white;
+  }
+
+  .offcanvas a {
+    color: white;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .offcanvas a:hover {
+    text-decoration: underline;
+  }
