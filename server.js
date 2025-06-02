@@ -5,6 +5,7 @@ const cors = require('cors');
 const cadastroRoutes = require('./src/routes/cadastroRoutes');
 const loginRoutes = require('./src/routes/loginRoutes');
 const estatisticasRoutes = require('./src/routes/estatisticasRoutes');
+const gerenciamentoRoutes = require('./src/routes/gerenciamentoRoutes');
 
 const app = express();
 const PORT = 3000;
@@ -28,9 +29,10 @@ async function testarConexao() {
 testarConexao();
 
 // Rotas
-app.use('/cadastro', cadastroRoutes());
-app.use('/login', loginRoutes());
-app.use('/estatisticas', estatisticasRoutes());
+app.use('/cadastro', cadastroRoutes);
+app.use('/login', loginRoutes);
+app.use('/estatisticas', estatisticasRoutes);
+app.use('/gerenciamento', gerenciamentoRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);

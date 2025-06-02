@@ -36,6 +36,7 @@
         <div class="offcanvas-body">
           <ul class="list-unstyled">
             <li><a href="home_page.html">🏠 Início</a></li>
+            <li><a href="gerenciamento_adm.html">🧑‍💼 Gerenciamento de Usuários</a></li>
             <li><a href="#">📋 Chamados</a></li>
             <li><a href="estatisticas.html">📊 Estatísticas</a></li>
             <li><a href="#">⚙️ Configurações</a></li>
@@ -55,21 +56,7 @@
         </tr>
       </thead>
       <tbody id="tabelaUsuarios">
-        <!-- Exemplo de linha (pode ser gerado dinamicamente via JS) -->
-        <tr>
-          <td>1</td>
-          <td>João Silva</td>
-          <td>joao@email.com</td>
-          <td>Usuário</td>
-          <td><button class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#modalPermissao">Editar</button></td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Ana Oliveira</td>
-          <td>ana@email.com</td>
-          <td>Administrador</td>
-          <td><button class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#modalPermissao">Editar</button></td>
-        </tr>
+  
       </tbody>
     </table>
   </div>
@@ -91,29 +78,20 @@
                 <option value="administrador">Administrador</option>
               </select>
             </div>
-            <button type="submit" class="btn btn-editar w-100">Salvar Alterações</button>
+            <button type="submit" class="btn btn-editar w-100" id="atualizarPermissao">Salvar Alterações</button>
+            <button type="delete" class="btn btn-editar w-100" id="deletarUsuario" style="margin-top: 10px; background-color: red;">Deletar Usuário</button>
           </form>
         </div>
       </div>
     </div>
   </div>
   <footer>
-    <p>© 2025 MeuSistema - Todos os direitos reservados</p>
+    <p>© 2025 Chatbot Omega - Todos os direitos reservados</p>
   </footer>
 
   <!-- JS Bootstrap -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-
-  <script>
-    // Aqui você pode usar JS para buscar os usuários de uma API
-    document.getElementById('formPermissao').addEventListener('submit', function (e) {
-      e.preventDefault();
-      const novaPermissao = document.getElementById('selectPermissao').value;
-      alert(`Permissão atualizada para: ${novaPermissao}`);
-      // Aqui você pode fazer uma chamada fetch para o backend atualizando o usuário
-    });
-  </script>
+  <script src="../js/gerenciamento_usuarios.js"></script>
 
 </body>
 </html>

@@ -9,8 +9,10 @@ async function calcularEstatisticas() {
     
         const dados = await response.json();
         const totalClientes =  dados.totalClientes;
+        const totalVendas = dados.totalVendas;
 
         document.getElementById('clientesAtivos').textContent = totalClientes || '-';
+        document.getElementById('totalVendas').textContent = totalVendas || '-';
   } catch (erro) {
     document.getElementById('clientesAtivos').textContent = '--';
     console.error('Erro ao carregar KPIs:', erro);
