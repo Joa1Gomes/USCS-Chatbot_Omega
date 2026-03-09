@@ -7,3 +7,8 @@ router.put('/:id', gerenciamentoController.atualizaPermissao);
 router.delete('/:id', gerenciamentoController.deletarUsuario);
 
 module.exports = router;
+
+
+
+
+

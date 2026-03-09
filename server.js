@@ -12,7 +12,6 @@ const PORT = 3000;
 
 const config = require('./dbConfig');
 
-// Middleware
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

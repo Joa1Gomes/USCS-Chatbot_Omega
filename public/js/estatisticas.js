@@ -19,3 +19,5 @@ async function calcularEstatisticas() {
   }   
 }
 window.onload = calcularEstatisticas;
+
+
