@@ -10,15 +10,8 @@ exports.getEstatisticas = async (req, res) => {
         
         // Defidindo as consultas que vou utiilizar
         const queryTotalClientes = `
-          SELECT COUNT(*)
-          FROM USUARIO US
-          LEFT JOIN ADMINISTRADOR ADM 
-            ON US.ID_USUARIO = ADM.ID_ADMIN
-            WHERE ID_USUARIO NOT IN 
-            (
-              SELECT ID_ADMIN
-              FROM ADMINISTRADOR
-            )
+          SELECT COUNT(distinct id_cliente)
+          FROM clientes
         `;
         
         const resultTotalClientes = await sql.query(queryTotalClientes)
@@ -28,7 +21,7 @@ exports.getEstatisticas = async (req, res) => {
         const queryTotalVendas = `
           (
             Select count(*)
-            from VENDAS
+            from ATENDIMENTOS
          )
        `;
 

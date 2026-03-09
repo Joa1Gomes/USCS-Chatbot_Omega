@@ -6,6 +6,8 @@ const cadastroRoutes = require('./src/routes/cadastroRoutes');
 const loginRoutes = require('./src/routes/loginRoutes');
 const estatisticasRoutes = require('./src/routes/estatisticasRoutes');
 const gerenciamentoRoutes = require('./src/routes/gerenciamentoRoutes');
+const encerramentoRoutes = require('./src/routes/encerramentoRoutes');
+const clientesRoutes = require('./src/routes/clientesRoutes');
 
 const app = express();
 const PORT = 3000;
@@ -32,6 +34,8 @@ app.use('/cadastro', cadastroRoutes);
 app.use('/login', loginRoutes);
 app.use('/estatisticas', estatisticasRoutes);
 app.use('/gerenciamento', gerenciamentoRoutes);
+app.use('/encerramento', encerramentoRoutes);
+app.use('/clientes', clientesRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
