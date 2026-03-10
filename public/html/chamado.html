@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chamados</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/chamado.css">
+</head>
+<body>
+
+  <!-- Cabeçalho com botão de menu -->
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container-fluid">
+      <!-- Botão menu -->
+      <button class="btn btn-light me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuLateral">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <!-- Nome/logo -->
+      <a class="navbar-brand" href="#">Chatbot Omega</a>
+
+      <!-- Ícone de perfil -->
+      <div class="ms-auto">
+        <a href="#" class="nav-profile">
+          <i class="fas fa-user-circle"></i>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Menu lateral -->
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="menuLateral">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title">Menu</h5>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul class="list-unstyled">
+        <li><a href="home_page.html">🏠 Início</a></li>
+        <li><a href="gerenciamento_adm.html">🧑‍💼 Gerenciamento de Usuários</a></li>
+        <li class="active"><a href="chamado.html">📋 Chamados</a></li>
+        <li><a href="estatisticas.html">📊 Estatísticas</a></li>
+        <li><a href="configuracao.html">⚙️ Configurações</a></li>
+        <li><a href="fale_conosco.html">💬 Fale conosco</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Espaço do conteúdo -->
+  <div class="content mt-5 pt-4">
+    <h2>Chamados</h2>
+    <p>Acompanhe e gerencie todos os seus chamados de suporte</p>
+
+    <!-- Seção de Chamados -->
+    <div class="section-title">
+      <h3>Chamados Ativos</h3>
+      <p>Visualize o status e atualizações de seus chamados</p>
+    </div>
+
+    <div class="chamados-container" id="chamadosContainer">
+      <!-- Chamados serão inseridos aqui via JavaScript -->
+    </div>
+  </div>
+
+  <!-- Modal de Edição -->
+  <div class="modal fade" id="modalChamado" tabindex="-1" aria-labelledby="modalChamadoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalChamadoLabel">Editar Chamado</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          <form id="formChamado">
+            <div class="mb-3">
+              <label for="chamadoStatus" class="form-label">Status</label>
+              <select class="form-select" id="chamadoStatus">
+                <option value="aberto">Aberto</option>
+                <option value="progresso">Em Progresso</option>
+                <option value="resolvido">Resolvido</option>
+                <option value="fechado">Fechado</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="chamadoPrioridade" class="form-label">Prioridade</label>
+              <select class="form-select" id="chamadoPrioridade">
+                <option value="alta">Alta</option>
+                <option value="media">Média</option>
+                <option value="baixa">Baixa</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="chamadoDescricao" class="form-label">Descrição</label>
+              <textarea class="form-control" id="chamadoDescricao" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-editar w-100">Salvar Alterações</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rodapé -->
+  <footer>
+    <p>© 2025 Chatbot Omega - Todos os direitos reservados</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Dados de exemplo
+    const chamados = [
+      {
+        id: '#CH-2401',
+        titulo: 'Sistema não está respondendo',
+        descricao: 'O painel administrativo não carrega as páginas corretamente.',
+        cliente: 'Maria Silva',
+        data: '2025-01-15',
+        prioridade: 'alta',
+        status: 'progresso'
+      },
+      {
+        id: '#CH-2402',
+        titulo: 'Erro ao fazer login',
+        descricao: 'Usuários não conseguem acessar a plataforma com suas credenciais.',
+        cliente: 'João Costa',
+        data: '2025-01-16',
+        prioridade: 'alta',
+        status: 'aberto'
+      },
+      {
+        id: '#CH-2403',
+        titulo: 'Atualização de permissões',
+        descricao: 'Necessário atualizar permissões de um grupo de usuários.',
+        cliente: 'Ana Santos',
+        data: '2025-01-14',
+        prioridade: 'media',
+        status: 'progresso'
+      },
+      {
+        id: '#CH-2404',
+        titulo: 'Integração com API externa',
+        descricao: 'Implementar integração com sistema de pagamento externo.',
+        cliente: 'Carlos Pereira',
+        data: '2025-01-13',
+        prioridade: 'media',
+        status: 'resolvido'
+      },
+      {
+        id: '#CH-2405',
+        titulo: 'Recuperação de senha',
+        descricao: 'Usuário esqueceu sua senha e precisa de ajuda para recuperá-la.',
+        cliente: 'Patricia Lima',
+        data: '2025-01-12',
+        prioridade: 'baixa',
+        status: 'resolvido'
+      },
+      {
+        id: '#CH-2406',
+        titulo: 'Backup de dados',
+        descricao: 'Realizar backup de segurança dos dados do sistema.',
+        cliente: 'Roberto Alves',
+        data: '2025-01-11',
+        prioridade: 'media',
+        status: 'fechado'
+      }
+    ];
+
+    let chamadoAtual = null;
+    const modalChamado = new bootstrap.Modal(document.getElementById('modalChamado'));
+
+    // Renderizar chamados
+    function renderizarChamados() {
+      const container = document.getElementById('chamadosContainer');
+      container.innerHTML = '';
+
+      chamados.forEach((chamado, index) => {
+        const statusClass = `status-${chamado.status}`;
+        const prioridadeClass = `prioridade-${chamado.prioridade}`;
+        const icoPrioridade = chamado.prioridade === 'alta' ? '⚡' : chamado.prioridade === 'media' ? '⚠️' : '✓';
+
+        const chamadoHTML = `
+          <div class="chamado-card">
+            <div class="chamado-header">
+              <span class="chamado-id">${chamado.id}</span>
+              <span class="chamado-status ${statusClass}">${capitalize(chamado.status)}</span>
+            </div>
+            <div class="chamado-titulo">${chamado.titulo}</div>
+            <div class="chamado-descricao">${chamado.descricao}</div>
+            <div class="chamado-meta">
+              <div class="chamado-meta-item">
+                <i class="fas fa-user"></i>
+                <span>${chamado.cliente}</span>
+              </div>
+              <div class="chamado-meta-item">
+                <i class="fas fa-calendar"></i>
+                <span>${formatarData(chamado.data)}</span>
+              </div>
+            </div>
+            <div class="chamado-prioridade ${prioridadeClass}">
+              <span>${icoPrioridade}</span>
+              <span>Prioridade ${capitalize(chamado.prioridade)}</span>
+            </div>
+            <div class="chamado-actions">
+              <button class="btn-acao btn-editar" onclick="abrirEdicao(${index})">
+                <i class="fas fa-edit"></i> Editar
+              </button>
+              <button class="btn-acao btn-fechar" onclick="fecharChamado(${index})">
+                <i class="fas fa-check"></i> Fechar
+              </button>
+            </div>
+          </div>
+        `;
+
+        container.innerHTML += chamadoHTML;
+      });
+    }
+
+    // Abrir modal de edição
+    function abrirEdicao(index) {
+      chamadoAtual = index;
+      const chamado = chamados[index];
+      document.getElementById('chamadoStatus').value = chamado.status;
+      document.getElementById('chamadoPrioridade').value = chamado.prioridade;
+      document.getElementById('chamadoDescricao').value = chamado.descricao;
+      modalChamado.show();
+    }
+
+    // Fechar chamado
+    function fecharChamado(index) {
+      if (confirm('Tem certeza que deseja fechar este chamado?')) {
+        chamados[index].status = 'fechado';
+        renderizarChamados();
+        alert('Chamado fechado com sucesso!');
+      }
+    }
+
+    // Salvar alterações
+    document.getElementById('formChamado').addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (chamadoAtual !== null) {
+        chamados[chamadoAtual].status = document.getElementById('chamadoStatus').value;
+        chamados[chamadoAtual].prioridade = document.getElementById('chamadoPrioridade').value;
+        chamados[chamadoAtual].descricao = document.getElementById('chamadoDescricao').value;
+        renderizarChamados();
+        modalChamado.hide();
+        alert('Chamado atualizado com sucesso!');
+      }
+    });
+
+    // Utilitários
+    function capitalize(str) {
+      const map = {
+        'aberto': 'Aberto',
+        'progresso': 'Em Progresso',
+        'resolvido': 'Resolvido',
+        'fechado': 'Fechado',
+        'alta': 'Alta',
+        'media': 'Média',
+        'baixa': 'Baixa'
+      };
+      return map[str] || str;
+    }
+
+    function formatarData(data) {
+      return new Date(data).toLocaleDateString('pt-BR');
+    }
+
+    // Inicializar
+    renderizarChamados();
+  </script>
+</body>
+</html>

@@ -5,93 +5,184 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Admin - Usuários</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/gerenciamento_adm.css"/>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg fixed-top">
-        <div class="container-fluid">
-          <!-- Botão menu -->
-          <button class="btn btn-light me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuLateral">
-            <i class="fas fa-bars"></i>
-          </button>
     
-          <!-- Nome/logo -->
-          <a class="navbar-brand" href="#">Chatbot Omega</a>
-    
-          <!-- Ícone de perfil -->
-          <div class="ms-auto">
-            <a href="#" class="nav-profile">
-              <i class="fas fa-user-circle"></i>
-            </a>
-          </div>
-        </div>
-      </nav>
-    
-      <!-- Menu lateral -->
-      <div class="offcanvas offcanvas-start" tabindex="-1" id="menuLateral">
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title">Menu</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
-        </div>
-        <div class="offcanvas-body">
-          <ul class="list-unstyled">
-            <li><a href="home_page.html">🏠 Início</a></li>
-            <li><a href="gerenciamento_adm.html">🧑‍💼 Gerenciamento de Usuários</a></li>
-            <li><a href="#">📋 Chamados</a></li>
-            <li><a href="estatisticas.html">📊 Estatísticas</a></li>
-            <li><a href="#">⚙️ Configurações</a></li>
-            <li><a href="fale_conosco.html">⚙️ Fale conosco</a></li>
-          </ul>
-        </div>
+  <!-- Cabeçalho com botão de menu -->
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container-fluid">
+      <!-- Botão menu -->
+      <button class="btn btn-light me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuLateral">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <!-- Nome/logo -->
+      <a class="navbar-brand" href="#">Chatbot Omega</a>
+
+      <!-- Ícone de perfil -->
+      <div class="ms-auto">
+        <a href="#" class="nav-profile">
+          <i class="fas fa-user-circle"></i>
+        </a>
       </div>
-  <div class="container">
-    <table class="table table-striped table-hover">
-      <thead class="table-light">
-        <tr>
-          <th>ID</th>
-          <th>Nome</th>
-          <th>Email</th>
-          <th>Permissão</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
-      <tbody id="tabelaUsuarios">
-  
-      </tbody>
-    </table>
+    </div>
+  </nav>
+
+  <!-- Menu lateral -->
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="menuLateral">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title">Menu</h5>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul class="list-unstyled">
+        <li><a href="home_page.html">🏠 Início</a></li>
+        <li class="active"><a href="gerenciamento_adm.html">🧑‍💼 Gerenciamento de Usuários</a></li>
+        <li><a href="chamado.html">📋 Chamados</a></li>
+        <li><a href="estatisticas.html">📊 Estatísticas</a></li>
+        <li><a href="configuracao.html">⚙️ Configurações</a></li>
+        <li><a href="fale_conosco.html">💬 Fale conosco</a></li>
+      </ul>
+    </div>
   </div>
 
-  <!-- Modal de Edição -->
+  <!-- Conteúdo Principal -->
+  <div class="content mt-5 pt-4">
+    <h2>Gerenciamento de Usuários</h2>
+    <p>Gerencie permissões e informações dos usuários do sistema</p>
+
+    <!-- Tabela de Usuários -->
+    <div class="table-section">
+      <h3>Usuários Registrados</h3>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Email</th>
+              <th>Permissão</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="tabelaUsuarios">
+            <!-- Dados carregados via JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Edição de Permissão -->
   <div class="modal fade" id="modalPermissao" tabindex="-1" aria-labelledby="modalPermissaoLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="modalPermissaoLabel">Alterar Permissão</h5>
+          <h5 class="modal-title" id="modalPermissaoLabel">Alterar Permissão do Usuário</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
         </div>
         <div class="modal-body">
           <form id="formPermissao">
             <div class="mb-3">
-              <label for="selectPermissao" class="form-label">Permissão</label>
+              <label for="selectPermissao" class="form-label">Selecione a nova permissão</label>
               <select class="form-select" id="selectPermissao">
                 <option value="usuario">Usuário</option>
                 <option value="administrador">Administrador</option>
               </select>
             </div>
-            <button type="submit" class="btn btn-editar w-100" id="atualizarPermissao">Salvar Alterações</button>
-            <button type="delete" class="btn btn-editar w-100" id="deletarUsuario" style="margin-top: 10px; background-color: red;">Deletar Usuário</button>
           </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn-salvar" id="atualizarPermissao">Salvar Alterações</button>
+          <button type="button" class="btn-deletar-modal" id="deletarUsuario">Deletar Usuário</button>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Rodapé -->
   <footer>
     <p>© 2025 Chatbot Omega - Todos os direitos reservados</p>
   </footer>
 
-  <!-- JS Bootstrap -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="../js/gerenciamento_usuarios.js"></script>
+  <script>
+    // Dados simulados de usuários
+    const usuarios = [
+      { id: 1, nome: 'Maria Costa', email: 'maria@example.com', permissao: 'administrador' },
+      { id: 2, nome: 'João Silva', email: 'joao@example.com', permissao: 'usuario' },
+      { id: 3, nome: 'Ana Lima', email: 'ana@example.com', permissao: 'usuario' },
+      { id: 4, nome: 'Pedro Ferreira', email: 'pedro@example.com', permissao: 'administrador' },
+      { id: 5, nome: 'Carla Santos', email: 'carla@example.com', permissao: 'usuario' }
+    ];
 
+    let usuarioSelecionado = null;
+
+    // Carregar tabela de usuários
+    function carregarUsuarios() {
+      const tabela = document.getElementById('tabelaUsuarios');
+      tabela.innerHTML = '';
+
+      usuarios.forEach(usuario => {
+        const badgeClass = usuario.permissao === 'administrador' ? 'badge-admin' : 'badge-user';
+        const badgeText = usuario.permissao === 'administrador' ? 'Administrador' : 'Usuário';
+
+        const linha = document.createElement('tr');
+        linha.innerHTML = `
+          <td>${usuario.id}</td>
+          <td>${usuario.nome}</td>
+          <td>${usuario.email}</td>
+          <td><span class="badge-permissao ${badgeClass}">${badgeText}</span></td>
+          <td>
+            <button class="btn-action btn-editar" onclick="abrirModal(${usuario.id})">
+              <i class="fas fa-edit"></i> Editar
+            </button>
+          </td>
+        `;
+        tabela.appendChild(linha);
+      });
+    }
+
+    // Abrir modal para editar
+    function abrirModal(usuarioId) {
+      usuarioSelecionado = usuarios.find(u => u.id === usuarioId);
+      if (usuarioSelecionado) {
+        document.getElementById('selectPermissao').value = usuarioSelecionado.permissao;
+        const modal = new bootstrap.Modal(document.getElementById('modalPermissao'));
+        modal.show();
+      }
+    }
+
+    // Atualizar permissão
+    document.getElementById('atualizarPermissao').addEventListener('click', () => {
+      if (usuarioSelecionado) {
+        const novaPermissao = document.getElementById('selectPermissao').value;
+        usuarioSelecionado.permissao = novaPermissao;
+        carregarUsuarios();
+        bootstrap.Modal.getInstance(document.getElementById('modalPermissao')).hide();
+        alert(`Permissão de ${usuarioSelecionado.nome} atualizada para ${novaPermissao}!`);
+      }
+    });
+
+    // Deletar usuário
+    document.getElementById('deletarUsuario').addEventListener('click', () => {
+      if (usuarioSelecionado && confirm(`Tem certeza que deseja deletar ${usuarioSelecionado.nome}?`)) {
+        const indice = usuarios.findIndex(u => u.id === usuarioSelecionado.id);
+        if (indice > -1) {
+          usuarios.splice(indice, 1);
+          carregarUsuarios();
+          bootstrap.Modal.getInstance(document.getElementById('modalPermissao')).hide();
+          alert(`Usuário ${usuarioSelecionado.nome} deletado com sucesso!`);
+          usuarioSelecionado = null;
+        }
+      }
+    });
+
+    // Carregar usuários ao abrir a página
+    carregarUsuarios();
+  </script>
 </body>
 </html>

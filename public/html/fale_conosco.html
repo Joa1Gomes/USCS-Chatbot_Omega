@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Fale Conosco</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../css/fale_conosco.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/fale_conosco.css" />
+
 </head>
 <body>
 
-  <!-- Cabeçalho -->
+  <!-- Navbar -->
   <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container-fluid">
       <button class="btn btn-light me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuLateral">
@@ -25,7 +27,7 @@
     </div>
   </nav>
 
-  <!-- Menu lateral (reutilizável) -->
+  <!-- Menu Lateral -->
   <div class="offcanvas offcanvas-start" tabindex="-1" id="menuLateral">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title">Menu</h5>
@@ -34,40 +36,256 @@
     <div class="offcanvas-body">
       <ul class="list-unstyled">
         <li><a href="home_page.html">🏠 Início</a></li>
-        <li><a href="#">📋 Chamados</a></li>
+        <li><a href="gerenciamento_adm.html">🧑‍💼 Gerenciamento de Usuários</a></li>
+        <li><a href="chamado.html">📋 Chamados</a></li>
         <li><a href="estatisticas.html">📊 Estatísticas</a></li>
-        <li><a href="#">⚙️ Configurações</a></li>
-        <li><a href="fale_conosco.html">⚙️ Fale conosco</a></li>
+        <li><a href="configuracoes.html">⚙️ Configurações</a></li>
+        <li><a href="fale_conosco.html">💬 Fale conosco</a></li>
       </ul>
     </div>
   </div>
 
-  <!-- Conteúdo com formulário -->
-  <div class="form-container">
+  <!-- Content -->
+  <div class="content mt-5 pt-4">
     <h2>Fale Conosco</h2>
-    <form>
-      <div class="mb-3">
-        <label for="nome" class="form-label">Nome</label>
-        <input type="text" class="form-control" id="nome" placeholder="Digite seu nome">
+    <p>Estamos aqui para ouvir suas dúvidas, sugestões e questionamentos</p>
+
+    <!-- Form Section -->
+    <div class="form-section">
+      <div class="form-card">
+        <h3><i class="fas fa-envelope"></i> Formulário de Contato</h3>
+        <p>Preencha os campos abaixo e responderemos em breve</p>
+
+        <div class="alert-box" id="alertBox"></div>
+
+        <form id="contactForm">
+          <div class="form-group">
+            <label for="nome">Nome Completo</label>
+            <input type="text" class="form-control" id="nome" placeholder="Digite seu nome completo" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" placeholder="seu.email@exemplo.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="telefone">Telefone (Opcional)</label>
+            <input type="tel" class="form-control" id="telefone" placeholder="(11) 9 0000-0000">
+          </div>
+
+          <div class="form-group">
+            <label for="assunto">Assunto</label>
+            <select class="form-select" id="assunto" required>
+              <option value="">Selecione um assunto</option>
+              <option value="duvida">Dúvida</option>
+              <option value="tecnico">Problema Técnico</option>
+              <option value="sugestao">Sugestão</option>
+              <option value="reclamacao">Reclamação</option>
+              <option value="outro">Outro</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="mensagem">Mensagem/Dúvida</label>
+            <textarea class="form-control" id="mensagem" placeholder="Digite sua mensagem aqui..." required></textarea>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="privacidade" required>
+            <label class="form-check-label" for="privacidade">
+              Concordo com a política de privacidade e o processamento dos meus dados
+            </label>
+          </div>
+
+          <div class="form-buttons">
+            <button type="submit" class="btn-submit">
+              <i class="fas fa-paper-plane"></i> Enviar Mensagem
+            </button>
+            <button type="reset" class="btn-clear">
+              <i class="fas fa-redo"></i> Limpar Formulário
+            </button>
+          </div>
+        </form>
       </div>
-      <div class="mb-3">
-        <label for="email" class="form-label">E-mail</label>
-        <input type="email" class="form-control" id="email" placeholder="Digite seu e-mail">
+    </div>
+
+    <!-- Contact Info Section -->
+    <div class="contact-section">
+      <h3 class="section-title"><i class="fas fa-phone"></i> Informações de Contato</h3>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+          <h4>Email</h4>
+          <p>support@chatbotomega.com</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Respondemos em até 24 horas</p>
+          <a href="mailto:support@chatbotomega.com" class="btn-contact">
+            <i class="fas fa-envelope"></i> Enviar Email
+          </a>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-icon"><i class="fas fa-phone"></i></div>
+          <h4>Telefone</h4>
+          <p>+55 (11) 3000-0000</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Seg-Sex, 09h-18h</p>
+          <a href="tel:+551130000000" class="btn-contact">
+            <i class="fas fa-phone"></i> Ligar Agora
+          </a>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <h4>Localização</h4>
+          <p>São Paulo - SP, Brasil</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Av. Paulista, 1000</p>
+          <a href="#" class="btn-contact">
+            <i class="fas fa-map"></i> Ver Mapa
+          </a>
+        </div>
       </div>
-      <div class="mb-3">
-        <label for="mensagem" class="form-label">Mensagem</label>
-        <textarea class="form-control" id="mensagem" rows="5" placeholder="Digite sua mensagem"></textarea>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="faq-section">
+      <h3 class="section-title"><i class="fas fa-question-circle"></i> Perguntas Frequentes</h3>
+
+      <div class="faq-item">
+        <div class="faq-header" onclick="toggleFaq(this)">
+          <h5>Como faço para redefinir minha senha?</h5>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-content">
+          Você pode redefinir sua senha acessando a página de <strong>Configurações</strong> no menu principal. Clique em "Alterar Senha" e siga as instruções. Você precisará fornecer sua senha atual e a nova senha que deseja utilizar.
+        </div>
       </div>
-      <button type="submit" class="btn btn-submit w-100">Enviar</button>
-    </form>
+
+      <div class="faq-item">
+        <div class="faq-header" onclick="toggleFaq(this)">
+          <h5>Como abro um novo chamado?</h5>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-content">
+          Para abrir um novo chamado, acesse a seção <strong>Chamados</strong> no menu lateral. Clique no botão "Novo Chamado", preencha os detalhes do seu problema (título, descrição e prioridade) e clique em "Enviar". Você receberá um número de rastreamento para acompanhar seu chamado.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-header" onclick="toggleFaq(this)">
+          <h5>Qual é o tempo médio de resposta?</h5>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-content">
+          Nosso tempo médio de resposta é de <strong>2 a 4 horas em dias úteis</strong> (segunda a sexta). Para chamados com prioridade alta, respondemos em até 1 hora. Aos finais de semana, o tempo pode ser maior, mas estamos sempre monitorando os tickets.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-header" onclick="toggleFaq(this)">
+          <h5>Como funciona a integração com sistemas externos?</h5>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-content">
+          Oferecemos integração via <strong>API REST</strong> com diversos sistemas. Documentação completa está disponível em nossa base de conhecimento. Para suporte na integração, abra um chamado técnico ou entre em contato conosco pelo telefone para assistência especializada.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-header" onclick="toggleFaq(this)">
+          <h5>Como altero meus dados pessoais?</h5>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-content">
+          Você pode alterar seus dados pessoais (nome, email) acessando a página de <strong>Configurações</strong>. Clique no ícone de perfil no canto superior direito e selecione "Configurações". Aqui você poderá atualizar seus dados pessoais e preferências.
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- Rodapé -->
+  <!-- Footer -->
   <footer>
     <p>© 2025 Chatbot Omega - Todos os direitos reservados</p>
   </footer>
 
-  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Toggle FAQ
+    function toggleFaq(header) {
+      const faqItem = header.parentElement;
+      faqItem.classList.toggle('active');
+    }
+
+    // Show alert
+    function showAlert(message, type) {
+      const alertBox = document.getElementById('alertBox');
+      alertBox.className = `alert-box ${type} show`;
+      alertBox.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+        <span>${message}</span>
+      `;
+
+      setTimeout(() => {
+        alertBox.classList.remove('show');
+      }, 4000);
+    }
+
+    // Form submission
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const nome = document.getElementById('nome').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const assunto = document.getElementById('assunto').value;
+      const mensagem = document.getElementById('mensagem').value.trim();
+      const privacidade = document.getElementById('privacidade').checked;
+
+      // Validation
+      if (!nome) {
+        showAlert('Por favor, preencha seu nome completo', 'error');
+        return;
+      }
+
+      if (!email || !email.includes('@')) {
+        showAlert('Por favor, insira um email válido', 'error');
+        return;
+      }
+
+      if (!assunto) {
+        showAlert('Por favor, selecione um assunto', 'error');
+        return;
+      }
+
+      if (!mensagem) {
+        showAlert('Por favor, digite sua mensagem', 'error');
+        return;
+      }
+
+      if (!privacidade) {
+        showAlert('Por favor, concorde com a política de privacidade', 'error');
+        return;
+      }
+
+      // Success
+      showAlert('Mensagem enviada com sucesso! Entraremos em contato em breve.', 'success');
+      document.getElementById('contactForm').reset();
+    });
+
+    // Animate elements on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.form-card, .contact-card, .faq-item').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
+    });
+  </script>
 </body>
 </html>

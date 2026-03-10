@@ -6,17 +6,24 @@
   <title>KPIs - Dashboard</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="../css/estatisticas.css" />
 </head>
 <body>
 
-  <!-- Cabeçalho -->
+  <!-- Cabeçalho com botão de menu -->
   <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container-fluid">
+      <!-- Botão menu -->
       <button class="btn btn-light me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuLateral">
         <i class="fas fa-bars"></i>
       </button>
+
+      <!-- Nome/logo -->
       <a class="navbar-brand" href="#">Chatbot Omega</a>
+
+      <!-- Ícone de perfil -->
       <div class="ms-auto">
         <a href="#" class="nav-profile">
           <i class="fas fa-user-circle"></i>
@@ -35,51 +42,110 @@
       <ul class="list-unstyled">
         <li><a href="home_page.html">🏠 Início</a></li>
         <li><a href="gerenciamento_adm.html">🧑‍💼 Gerenciamento de Usuários</a></li>
-        <li><a href="#">📋 Chamados</a></li>
-        <li><a href="estatisticas.html">📊 Estatísticas</a></li>
-        <li><a href="#">⚙️ Configurações</a></li>
-        <li><a href="fale_conosco.html">⚙️ Fale conosco</a></li>
+        <li><a href="chamado.html">📋 Chamados</a></li>
+        <li class="active"><a href="estatisticas.html">📊 Estatísticas</a></li>
+        <li><a href="configuracao.html">⚙️ Configurações</a></li>
+        <li><a href="fale_conosco.html">💬 Fale conosco</a></li>
       </ul>
     </div>
   </div>
 
-  <!-- Área de KPIs -->
-  <div class="container kpi-container">
-    <div class="row g-4">
-      <div class="col-md-6 col-lg-4">
-        <div class="kpi-card">
-          <div class="kpi-icon"><i class="fas fa-user-check"></i></div>
-          <div class="kpi-title">Clientes Ativos</div>
-          <div class="kpi-value" id="clientesAtivos"></div>
+  <!-- Espaço do conteúdo -->
+  <div class="content mt-5 pt-4">
+    <h2>Dashboard de Estatísticas</h2>
+    <p>Acompanhe os indicadores principais do seu negócio</p>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-user-check"></i></div>
+        <div class="stat-number">1,450</div>
+        <div class="stat-label">Clientes Ativos</div>
+        <span class="stat-change up"><i class="fas fa-arrow-up"></i> 8.5%</span>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+        <div class="stat-number">94.2%</div>
+        <div class="stat-label">Taxa de Resolução</div>
+        <span class="stat-change up"><i class="fas fa-arrow-up"></i> 2.1%</span>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-headset"></i></div>
+        <div class="stat-number">23</div>
+        <div class="stat-label">Chamados Abertos</div>
+        <span class="stat-change down"><i class="fas fa-arrow-down"></i> 3.2%</span>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-clock"></i></div>
+        <div class="stat-number">2.4h</div>
+        <div class="stat-label">Tempo Médio de Resolução</div>
+        <span class="stat-change down"><i class="fas fa-arrow-down"></i> 5.3%</span>
+      </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="section-title">
+      <h3>Análise de Desempenho</h3>
+      <p>Visualize os principais indicadores em gráficos</p>
+    </div>
+
+    <div class="charts-section">
+      <!-- Chamados por Status -->
+      <div class="chart-card">
+        <h4>📊 Chamados por Status</h4>
+        <div class="chart-container">
+          <canvas id="chartStatus"></canvas>
         </div>
       </div>
-      <div class="col-md-6 col-lg-4">
-        <div class="kpi-card">
-          <div class="kpi-icon"><i class="fas fa-chart-line"></i></div>
-          <div class="kpi-title">Atendimentos no Mês</div>
-          <div class="kpi-value" id="totalVendas"></div>
+
+      <!-- Satisfação do Cliente -->
+      <div class="chart-card">
+        <h4>😊 Satisfação do Cliente</h4>
+        <div class="chart-container">
+          <canvas id="chartSatisfacao"></canvas>
         </div>
       </div>
-      <div class="col-md-6 col-lg-4">
-        <div class="kpi-card">
-          <div class="kpi-icon"><i class="fas fa-box-open"></i></div>
-          <div class="kpi-title">Produtos em Estoque</div>
-          <div class="kpi-value">--</div>
+
+      <!-- Distribuição de Prioridades -->
+      <div class="chart-card">
+        <h4>⚡ Distribuição de Prioridades</h4>
+        <div class="chart-container">
+          <canvas id="chartPrioridade"></canvas>
         </div>
       </div>
-      <div class="col-md-6 col-lg-4">
-        <div class="kpi-card">
-          <div class="kpi-icon"><i class="fas fa-headset"></i></div>
-          <div class="kpi-title">Chamados Abertos</div>
-          <div class="kpi-value">--</div>
+
+      <!-- Tempo de Resposta -->
+      <div class="chart-card">
+        <h4>⏱️ Tempo de Resposta Média (Horas)</h4>
+        <div class="chart-container">
+          <canvas id="chartTempo"></canvas>
         </div>
       </div>
-      <div class="col-md-6 col-lg-4">
-        <div class="kpi-card">
-          <div class="kpi-icon"><i class="fas fa-headset"></i></div>
-          <div class="kpi-title">Chamados Resolvidos</div>
-          <div class="kpi-value">--</div>
-        </div>
+    </div>
+
+    <!-- Insights Section -->
+    <div class="section-title">
+      <h3>💡 Principais Insights</h3>
+      <p>Análise e recomendações baseadas nos dados</p>
+    </div>
+
+    <div class="insights-section">
+      <div class="insight-card">
+        <div class="insight-icon">📈</div>
+        <h5>Crescimento em Clientes</h5>
+        <p>O número de clientes ativos cresceu 8.5% este mês. Mantenha o investimento em qualidade de atendimento para consolidar esse crescimento.</p>
+      </div>
+
+      <div class="insight-card">
+        <div class="insight-icon">⚡</div>
+        <h5>Eficiência em Resolução</h5>
+        <p>Taxa de resolução em 94.2%. Parabéns ao time de suporte! Você está resolvendo os problemas com eficiência acima da média.</p>
+      </div>
+
+      <div class="insight-card">
+        <div class="insight-icon">⏱️</div>
+        <h5>Otimização do Tempo</h5>
+        <p>Tempo médio de resposta reduzido para 2.4 horas. Isso representa uma melhoria de 5.3% em relação ao mês anterior.</p>
       </div>
     </div>
   </div>
@@ -89,8 +155,161 @@
     <p>© 2025 Chatbot Omega - Todos os direitos reservados</p>
   </footer>
 
-  <!-- JS Bootstrap -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="../js/estatisticas.js"></script>
+  <script>
+    // Gráfico: Chamados por Status (Donut)
+    const ctxStatus = document.getElementById('chartStatus').getContext('2d');
+    new Chart(ctxStatus, {
+      type: 'doughnut',
+      data: {
+        labels: ['Resolvidos', 'Em Progresso', 'Abertos', 'Bloqueados'],
+        datasets: [{
+          data: [189, 42, 23, 8],
+          backgroundColor: [
+            '#34d399',
+            '#3b82f6',
+            '#fbbf24',
+            '#ef4444'
+          ],
+          borderColor: '#ffffff',
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              font: { family: "'Inter', 'Segoe UI', sans-serif" },
+              padding: 15,
+              boxWidth: 15
+            }
+          }
+        }
+      }
+    });
+
+    // Gráfico: Satisfação do Cliente (Barra Horizontal)
+    const ctxSatisfacao = document.getElementById('chartSatisfacao').getContext('2d');
+    new Chart(ctxSatisfacao, {
+      type: 'bar',
+      data: {
+        labels: ['Excelente', 'Bom', 'Neutro', 'Ruim'],
+        datasets: [{
+          label: 'Quantidade',
+          data: [324, 156, 48, 12],
+          backgroundColor: [
+            '#34d399',
+            '#60a5fa',
+            '#fbbf24',
+            '#ef4444'
+          ],
+          borderRadius: 8
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          x: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    // Gráfico: Distribuição de Prioridades (Radar)
+    const ctxPrioridade = document.getElementById('chartPrioridade').getContext('2d');
+    new Chart(ctxPrioridade, {
+      type: 'radar',
+      data: {
+        labels: ['Prioridade Alta', 'Prioridade Média', 'Prioridade Baixa'],
+        datasets: [{
+          label: 'Chamados',
+          data: [34, 89, 131],
+          borderColor: '#3b82f6',
+          backgroundColor: 'rgba(59, 130, 246, 0.1)',
+          fill: true,
+          pointBackgroundColor: '#3b82f6',
+          pointBorderColor: '#ffffff',
+          pointBorderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          r: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    // Gráfico: Tempo de Resposta Média (Linha)
+    const ctxTempo = document.getElementById('chartTempo').getContext('2d');
+    new Chart(ctxTempo, {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+        datasets: [{
+          label: 'Tempo Médio (Horas)',
+          data: [3.2, 3.0, 2.8, 2.6, 2.5, 2.4],
+          borderColor: '#3b82f6',
+          backgroundColor: 'rgba(59, 130, 246, 0.1)',
+          fill: true,
+          tension: 0.4,
+          pointBackgroundColor: '#3b82f6',
+          pointBorderColor: '#ffffff',
+          pointBorderWidth: 2,
+          pointRadius: 5
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    // Animate cards on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.stat-card, .chart-card, .insight-card').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
+    });
+  </script>
 </body>
 </html>

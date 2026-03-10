@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Configurações - Chatbot Omega</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/configuracao.css">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container-fluid">
+      <button class="btn btn-light me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuLateral">
+        <i class="fas fa-bars"></i>
+      </button>
+      <a class="navbar-brand" href="#">Chatbot Omega</a>
+      <div class="ms-auto">
+        <a href="#" class="nav-profile">
+          <i class="fas fa-user-circle"></i>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Menu Lateral -->
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="menuLateral">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title">Menu</h5>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul class="list-unstyled">
+        <li><a href="home_page.html">🏠 Início</a></li>
+        <li><a href="gerenciamento_adm.html">🧑‍💼 Gerenciamento de Usuários</a></li>
+        <li><a href="chamado.html">📋 Chamados</a></li>
+        <li><a href="estatisticas.html">📊 Estatísticas</a></li>
+        <li><a href="configuracao.html">⚙️ Configurações</a></li>
+        <li><a href="fale_conosco.html">💬 Fale conosco</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="content mt-5 pt-4">
+    <h2>Configurações</h2>
+    <p>Gerencie suas informações pessoais e preferências de conta</p>
+
+    <!-- Profile Section -->
+    <div class="profile-header">
+      <div class="profile-avatar">👤</div>
+      <div class="profile-name" id="profileName">João Silva</div>
+      <div class="profile-email" id="profileEmail">joao.silva@email.com</div>
+    </div>
+
+    <!-- Configuration Cards -->
+    <div class="config-section">
+      
+      <!-- Alterar Nome -->
+      <div class="config-card">
+        <h3><i class="fas fa-user"></i> Alterar Nome</h3>
+        <p class="config-description">Atualize seu nome de perfil</p>
+        
+        <div id="alertNomeSucesso" class="alert-success">
+          <i class="fas fa-check-circle"></i>
+          <span>Nome alterado com sucesso!</span>
+        </div>
+        <div id="alertNomeErro" class="alert-error">
+          <i class="fas fa-exclamation-circle"></i>
+          <span>Erro ao alterar nome. Tente novamente!</span>
+        </div>
+
+        <div class="form-group">
+          <label for="nomeInput" class="form-label">Novo Nome</label>
+          <input type="text" class="form-control" id="nomeInput" placeholder="Digite seu novo nome" value="João Silva">
+        </div>
+
+        <div class="button-group">
+          <button class="btn-save" onclick="salvarNome()">
+            <i class="fas fa-save"></i> Salvar Nome
+          </button>
+          <button class="btn-cancel" onclick="cancelarNome()">
+            <i class="fas fa-times"></i> Cancelar
+          </button>
+        </div>
+      </div>
+
+      <!-- Alterar Email -->
+      <div class="config-card">
+        <h3><i class="fas fa-envelope"></i> Alterar Email</h3>
+        <p class="config-description">Atualize seu endereço de email</p>
+        
+        <div id="alertEmailSucesso" class="alert-success">
+          <i class="fas fa-check-circle"></i>
+          <span>Email alterado com sucesso!</span>
+        </div>
+        <div id="alertEmailErro" class="alert-error">
+          <i class="fas fa-exclamation-circle"></i>
+          <span>Email inválido ou já existe. Tente novamente!</span>
+        </div>
+
+        <div class="form-group">
+          <label for="emailInput" class="form-label">Novo Email</label>
+          <input type="email" class="form-control" id="emailInput" placeholder="Digite seu novo email" value="joao.silva@email.com">
+        </div>
+
+        <div class="button-group">
+          <button class="btn-save" onclick="salvarEmail()">
+            <i class="fas fa-save"></i> Salvar Email
+          </button>
+          <button class="btn-cancel" onclick="cancelarEmail()">
+            <i class="fas fa-times"></i> Cancelar
+          </button>
+        </div>
+      </div>
+
+      <!-- Alterar Senha -->
+      <div class="config-card">
+        <h3><i class="fas fa-lock"></i> Alterar Senha</h3>
+        <p class="config-description">Atualize sua senha para manter sua conta segura</p>
+        
+        <div id="alertSenhaSucesso" class="alert-success">
+          <i class="fas fa-check-circle"></i>
+          <span>Senha alterada com sucesso!</span>
+        </div>
+        <div id="alertSenhaErro" class="alert-error">
+          <i class="fas fa-exclamation-circle"></i>
+          <span>Erro ao alterar senha. Tente novamente!</span>
+        </div>
+
+        <div class="form-group">
+          <label for="senhaAtual" class="form-label">Senha Atual</label>
+          <input type="password" class="form-control" id="senhaAtual" placeholder="Digite sua senha atual">
+        </div>
+
+        <div class="form-group">
+          <label for="senhaNova" class="form-label">Nova Senha</label>
+          <input type="password" class="form-control" id="senhaNova" placeholder="Digite sua nova senha">
+        </div>
+
+        <div class="form-group">
+          <label for="senhaConfirm" class="form-label">Confirmar Nova Senha</label>
+          <input type="password" class="form-control" id="senhaConfirm" placeholder="Confirme sua nova senha">
+        </div>
+
+        <div class="button-group">
+          <button class="btn-save" onclick="salvarSenha()">
+            <i class="fas fa-save"></i> Salvar Senha
+          </button>
+          <button class="btn-cancel" onclick="cancelarSenha()">
+            <i class="fas fa-times"></i> Cancelar
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Chatbot Omega - Todos os direitos reservados</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Dados do usuário (simulado)
+    let usuarioAtual = {
+      nome: 'João Silva',
+      email: 'joao.silva@email.com',
+      senha: '123456'
+    };
+
+    // Atualizar nome
+    function salvarNome() {
+      const novoNome = document.getElementById('nomeInput').value.trim();
+      
+      if (novoNome === '') {
+        mostrarAlerta('alertNomeErro');
+        return;
+      }
+
+      usuarioAtual.nome = novoNome;
+      document.getElementById('profileName').textContent = novoNome;
+      mostrarAlerta('alertNomeSucesso');
+      
+      setTimeout(() => {
+        document.getElementById('nomeInput').value = novoNome;
+      }, 1500);
+    }
+
+    function cancelarNome() {
+      document.getElementById('nomeInput').value = usuarioAtual.nome;
+    }
+
+    // Atualizar email
+    function salvarEmail() {
+      const novoEmail = document.getElementById('emailInput').value.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!emailRegex.test(novoEmail)) {
+        mostrarAlerta('alertEmailErro');
+        return;
+      }
+
+      usuarioAtual.email = novoEmail;
+      document.getElementById('profileEmail').textContent = novoEmail;
+      mostrarAlerta('alertEmailSucesso');
+
+      setTimeout(() => {
+        document.getElementById('emailInput').value = novoEmail;
+      }, 1500);
+    }
+
+    function cancelarEmail() {
+      document.getElementById('emailInput').value = usuarioAtual.email;
+    }
+
+    // Atualizar senha
+    function salvarSenha() {
+      const senhaAtual = document.getElementById('senhaAtual').value;
+      const senhaNova = document.getElementById('senhaNova').value;
+      const senhaConfirm = document.getElementById('senhaConfirm').value;
+
+      if (senhaAtual === '' || senhaNova === '' || senhaConfirm === '') {
+        mostrarAlerta('alertSenhaErro');
+        return;
+      }
+
+      if (senhaAtual !== usuarioAtual.senha) {
+        mostrarAlerta('alertSenhaErro');
+        return;
+      }
+
+      if (senhaNova !== senhaConfirm) {
+        mostrarAlerta('alertSenhaErro');
+        return;
+      }
+
+      if (senhaNova.length < 6) {
+        mostrarAlerta('alertSenhaErro');
+        return;
+      }
+
+      usuarioAtual.senha = senhaNova;
+      mostrarAlerta('alertSenhaSucesso');
+
+      setTimeout(() => {
+        cancelarSenha();
+      }, 1500);
+    }
+
+    function cancelarSenha() {
+      document.getElementById('senhaAtual').value = '';
+      document.getElementById('senhaNova').value = '';
+      document.getElementById('senhaConfirm').value = '';
+    }
+
+    // Mostrar alerta
+    function mostrarAlerta(idAlerta) {
+      const alerta = document.getElementById(idAlerta);
+      alerta.classList.add('show');
+
+      setTimeout(() => {
+        alerta.classList.remove('show');
+      }, 3000);
+    }
+
+    // Animação ao scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.config-card').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
+    });
+  </script>
