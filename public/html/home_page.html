@@ -6,6 +6,7 @@
   <title>Menu com Lateral</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/home_page.css">
   <link rel="stylesheet" href="../css/chatbot.css">
 
@@ -14,7 +15,7 @@
 </head>
 <body>
 
-  <!-- Cabeçalho com botão de menu -->
+  <!-- Cabeçalho com botão -->
   <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container-fluid">
       <!-- Botão menu -->
@@ -22,12 +23,12 @@
         <i class="fas fa-bars"></i>
       </button>
 
-      <!-- Nome/logo -->
+      <!-- LOGO -->
       <a class="navbar-brand" href="#">Chatbot Omega</a>
 
-      <!-- Ícone de perfil -->
+      <!-- ICON DO PERFIL -->
       <div class="ms-auto">
-        <a href="#" class="nav-profile">
+        <a href="#" class="nav-profile">  
           <i class="fas fa-user-circle"></i>
         </a>
       </div>
@@ -42,12 +43,12 @@
     </div>
     <div class="offcanvas-body">
       <ul class="list-unstyled">
-        <li><a href="home_page.html">🏠 Início</a></li>
+        <li class="active"><a href="home_page.html">🏠 Início</a></li>
         <li><a href="gerenciamento_adm.html">🧑‍💼 Gerenciamento de Usuários</a></li>
-        <li><a href="#">📋 Chamados</a></li>
+        <li><a href="chamado.html">📋 Chamados</a></li>
         <li><a href="estatisticas.html">📊 Estatísticas</a></li>
-        <li><a href="#">⚙️ Configurações</a></li>
-        <li><a href="fale_conosco.html">⚙️ Fale conosco</a></li>
+        <li><a href="configuracao.html">⚙️ Configurações</a></li>
+        <li><a href="fale_conosco.html">💬 Fale conosco</a></li>
       </ul>
     </div>
   </div>
@@ -55,8 +56,116 @@
   <!-- Espaço do conteúdo -->
   <div class="content mt-5 pt-4">
     <h2>Chatbot Omega</h2>
-    <p>Sistema ainda em desenvolvimento 
-    </p>
+    <p>Sistema ainda em desenvolvimento</p>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+      <h1>Central de Atendimento ao Cliente</h1>
+      <p>Gerencie seus tickets de suporte de forma rápida e eficiente. Estamos aqui para ajudar!</p>
+      <div class="hero-actions">
+        <a href="#" class="hero-btn hero-btn-secondary">
+          <i class="fas fa-search"></i> Consultar Tickets
+        </a>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-ticket-alt"></i></div>
+        <div class="stat-number">248</div>
+        <div class="stat-label">Total de Tickets</div>
+        <span class="stat-change up"><i class="fas fa-arrow-up"></i> 12%</span>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+        <div class="stat-number">189</div>
+        <div class="stat-label">Resolvidos</div>
+        <span class="stat-change up"><i class="fas fa-arrow-up"></i> 8%</span>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-clock"></i></div>
+        <div class="stat-number">42</div>
+        <div class="stat-label">Em Andamento</div>
+        <span class="stat-change down"><i class="fas fa-arrow-down"></i> 3%</span>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-bolt"></i></div>
+        <div class="stat-number">2.4h</div>
+        <div class="stat-label">Tempo Médio</div>
+        <span class="stat-change up"><i class="fas fa-arrow-up"></i> 15%</span>
+      </div>
+    </div>
+
+    <!-- Features -->
+    <div class="section-title">
+      <h3>Serviços Disponíveis</h3>
+      <p>Escolha como podemos ajudá-lo hoje</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon-wrap"><i class="fas fa-headset"></i></div>
+        <h4>Suporte Técnico</h4>
+        <p>Abra um chamado para problemas técnicos e receba assistência especializada da nossa equipe.</p>
+        <a href="#" class="feature-link">Acessar <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrap"><i class="fas fa-comments"></i></div>
+        <h4>Coloque aqui</h4>
+        <p>Adicione o seu conteudo nessa linha de código.</p>
+        <a href="#" class="feature-link">Iniciar chat <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrap"><i class="fas fa-book-open"></i></div>
+        <h4>Base de Conhecimento</h4>
+        <p>Encontre respostas para perguntas frequentes e tutoriais detalhados.</p>
+        <a href="#" class="feature-link">Explorar <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <!-- Recent Tickets -->
+    <div class="recent-section">
+      <div class="recent-header">
+        <h3>Tickets Recentes</h3>
+        <a href="#">Ver todos <i class="fas fa-arrow-right"></i></a>
+      </div>
+
+      <div class="ticket-item">
+        <div class="ticket-avatar" style="background: var(--gradient-primary);">MC</div>
+        <div class="ticket-info">
+          <div class="ticket-title">Erro ao acessar painel administrativo</div>
+          <div class="ticket-meta">#TK-1042 · Maria Costa · Há 2 horas</div>
+        </div>
+        <span class="ticket-status status-open">Aberto</span>
+      </div>
+
+      <div class="ticket-item">
+        <div class="ticket-avatar" style="background: linear-gradient(135deg, #f0abfc, #d946ef);">JS</div>
+        <div class="ticket-info">
+          <div class="ticket-title">Solicitação de reset de senha em lote</div>
+          <div class="ticket-meta">#TK-1041 · João Silva · Há 4 horas</div>
+        </div>
+        <span class="ticket-status status-progress">Em andamento</span>
+      </div>
+
+      <div class="ticket-item">
+        <div class="ticket-avatar" style="background: linear-gradient(135deg, #34d399, #059669);">AL</div>
+        <div class="ticket-info">
+          <div class="ticket-title">Integração com sistema de pagamento</div>
+          <div class="ticket-meta">#TK-1040 · Ana Lima · Há 6 horas</div>
+        </div>
+        <span class="ticket-status status-resolved">Resolvido</span>
+      </div>
+
+      <div class="ticket-item">
+        <div class="ticket-avatar" style="background: linear-gradient(135deg, #60a5fa, #2563eb);">PF</div>
+        <div class="ticket-info">
+          <div class="ticket-title">Atualização de permissões de usuário</div>
+          <div class="ticket-meta">#TK-1039 · Pedro Ferreira · Há 1 dia</div>
+        </div>
+        <span class="ticket-status status-progress">Em andamento</span>
+      </div>
+    </div>
   </div>
 
   <!-- Rodapé -->
@@ -64,29 +173,24 @@
     <p>© 2025 Chatbot Omega - Todos os direitos reservados</p>
   </footer>
 
-  <!-- Chat Button -->
-  <button class="chat-button" onclick="toggleChat()">
-    <i class="fas fa-comments"></i>
-  </button>
-
-  <!-- Chat Popup -->
-  <div class="chat-popup" id="chatPopup">
-    <div class="chat-header">
-      <span>Precisa de ajuda?</span>
-      <button class="btn btn-sm text-white" onclick="toggleChat()">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
-    <div class="chat-body" id="chatBody">
-      <!-- Messages will appear here -->
-    </div>
-    <div class="chat-input">
-      <input type="text" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
-    </div>
-  </div>
-
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Animate stats on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
 
+    document.querySelectorAll('.stat-card, .feature-card, .recent-section').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
+    });
+  </script>
 </body>
 </html>
