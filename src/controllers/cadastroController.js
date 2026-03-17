@@ -7,7 +7,9 @@ exports.cadastrarUsuario = async (req, res) => {
   if (!nome || !email || !senha) {
     return res.status(400).json({ mensagem: 'Todos os campos são obrigatórios.' });
   }
+
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   if (!emailRegex.test(email)) {
     return res.status(400).json({ mensagem: 'Email inválido.' });
   }
@@ -32,13 +34,13 @@ exports.cadastrarUsuario = async (req, res) => {
     request.input('senha', sql.VarChar, senhaCriptografada);
 
     await request.query(query);
-    
+
     res.status(200).json({ mensagem: 'Usuário cadastrado com sucesso!' });
   } catch (erro) {
-        console.error(erro);
-        if (erro.number === 2627) {
-        return res.status(400).json({ mensagem: 'E-mail já cadastrado.' });
-        }
-        res.status(500).json({ mensagem: 'Erro ao processar cadastro.' });
+    console.error(erro);
+    if (erro.number === 2627) {
+      return res.status(400).json({ mensagem: 'E-mail já cadastrado.' });
+    }
+    res.status(500).json({ mensagem: 'Erro ao processar cadastro.' });
   }
 };
