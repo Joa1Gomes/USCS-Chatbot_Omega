@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chat de Suporte - Chatbot Omega</title>
+  
+  <!-- Bootstrap, Font Awesome e Google Fonts -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/chat.css">
+  
+</head>
+<body>
+
+  <!-- ===== LAYOUT PRINCIPAL ===== -->
+  <div class="chat-layout">
+    <!-- ===== SIDEBAR ESQUERDA - HISTÓRICO ===== -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <h3 class="sidebar-title">Histórico de Tickets</h3>
+        <p class="sidebar-subtitle">Usuário: João Silva</p>
+      </div>
+
+      <div class="tickets-list">
+        <div class="ticket-item active">
+          <div class="ticket-id">TK-1042</div>
+          <div class="ticket-title">Erro ao acessar painel administrativo</div>
+          <div class="ticket-date">15/11/2024 14:30</div>
+          <span class="ticket-status andamento">Em Andamento</span>
+        </div>
+
+        <div class="ticket-item">
+          <div class="ticket-id">TK-1038</div>
+          <div class="ticket-title">Problema com integração de API</div>
+          <div class="ticket-date">12/11/2024 09:15</div>
+          <span class="ticket-status resolvido">Resolvido</span>
+        </div>
+
+        <div class="ticket-item">
+          <div class="ticket-id">TK-1035</div>
+          <div class="ticket-title">Dúvida sobre permissões</div>
+          <div class="ticket-date">10/11/2024 16:45</div>
+          <span class="ticket-status resolvido">Resolvido</span>
+        </div>
+
+        <div class="ticket-item">
+          <div class="ticket-id">TK-1032</div>
+          <div class="ticket-title">Solicitação de novo relatório</div>
+          <div class="ticket-date">08/11/2024 11:20</div>
+          <span class="ticket-status resolvido">Resolvido</span>
+        </div>
+
+        <div class="ticket-item">
+          <div class="ticket-id">TK-1029</div>
+          <div class="ticket-title">Erro ao exportar dados</div>
+          <div class="ticket-date">05/11/2024 13:10</div>
+          <span class="ticket-status resolvido">Resolvido</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== ÁREA DO CHAT ===== -->
+    <div class="chat-area">
+      <!-- HEADER DO CHAT -->
+      <div class="chat-header">
+        <div class="ticket-info">
+          <h2>TK-1042 - Erro ao acessar painel administrativo</h2>
+          <p class="ticket-meta">Cliente: João Silva • Prioridade: Alta • Status: Em Andamento</p>
+        </div>
+        <div class="ticket-actions">
+          <button class="btn-action" title="Status" style="background: #dbeafe; color: #1e40af;">
+            <i class="fas fa-tag"></i>
+          </button>
+          <button class="btn-action" title="Prioridade" style="background: #fef3c7; color: #92400e;">
+            <i class="fas fa-exclamation-circle"></i>
+          </button>
+          <button class="btn-action" title="Mais">
+            <i class="fas fa-ellipsis-v"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- MENSAGENS DO CHAT -->
+      <div class="chat-messages" id="chatMessages">
+        <div class="message agent">
+          <div class="message-bubble">
+            Olá João! Verificamos que você está com dificuldade para acessar o painel administrativo. Vou ajudá-lo a resolver isso.
+            <div class="message-time">14:32</div>
+          </div>
+        </div>
+
+        <div class="message user">
+          <div class="message-bubble">
+            Obrigado! Sempre que tento fazer login, aparece a mensagem "Permissão negada".
+            <div class="message-time">14:33</div>
+          </div>
+        </div>
+
+        <div class="message agent">
+          <div class="message-bubble">
+            Entendi. Isso geralmente ocorre quando o usuário não tem o perfil de administrador ativo. Vou verificar suas permissões.
+            <div class="message-time">14:34</div>
+          </div>
+        </div>
+
+        <div class="message user">
+          <div class="message-bubble">
+            Perfeito! Aguardo sua resposta.
+            <div class="message-time">14:35</div>
+          </div>
+        </div>
+
+        <div class="message agent">
+          <div class="message-bubble">
+            João, verifiquei aqui e seu perfil está correto. O problema pode ser no cache do navegador. Poderia tentar limpar o cache ou acessar em modo anônimo?
+            <div class="message-time">14:38</div>
+          </div>
+        </div>
+
+        <div class="message user">
+          <div class="message-bubble">
+            Funcionou! Limpei o cache e consegui acessar. Obrigado pelo suporte!
+            <div class="message-time">14:42</div>
+          </div>
+        </div>
+
+        <div class="message agent">
+          <div class="message-bubble">
+            Ótimo notícia! Se tiver mais alguma dificuldade, é só entrar em contato. Estamos aqui para ajudar!
+            <div class="message-time">14:43</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INPUT DE MENSAGEM -->
+      <div class="chat-input-area">
+        <div class="input-wrapper">
+          <textarea class="chat-input" id="messageInput" placeholder="Digite sua resposta..." rows="1"></textarea>
+        </div>
+        <button class="btn-send" id="sendButton" onclick="sendMessage()">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <p>© 2025 Chatbot Omega - Todos os direitos reservados</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Enviar mensagem
+    function sendMessage() {
+      const input = document.getElementById('messageInput');
+      const message = input.value.trim();
+      
+      if (message) {
+        addMessage(message, 'agent');
+        input.value = '';
+        input.style.height = 'auto';
+        
+        // Simular resposta do usuário
+        setTimeout(() => {
+          addMessage('Obrigado pela resposta! Vou testar e retorno.', 'user');
+        }, 2000);
+      }
+    }
+
+    // Adicionar mensagem ao chat
+    function addMessage(text, sender) {
+      const chatMessages = document.getElementById('chatMessages');
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `message ${sender}`;
+      
+      const bubbleDiv = document.createElement('div');
+      bubbleDiv.className = 'message-bubble';
+      bubbleDiv.innerHTML = `
+        ${text}
+        <div class="message-time">${new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</div>
+      `;
+      
+      messageDiv.appendChild(bubbleDiv);
+      chatMessages.appendChild(messageDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Auto-resize textarea
+    document.getElementById('messageInput').addEventListener('input', function() {
+      this.style.height = 'auto';
+      this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+    });
+
+    // Enviar com Enter (sem Shift)
+    document.getElementById('messageInput').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+
+    // Selecionar ticket
+    document.querySelectorAll('.ticket-item').forEach(item => {
+      item.addEventListener('click', function() {
+        document.querySelectorAll('.ticket-item').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        
+        // Atualizar header do chat
+        const ticketId = this.querySelector('.ticket-id').textContent;
+        const ticketTitle = this.querySelector('.ticket-title').textContent;
+        document.querySelector('.ticket-info h2').textContent = `${ticketId} - ${ticketTitle}`;
+      });
+    });
+  </script>
+</body>
+</html>

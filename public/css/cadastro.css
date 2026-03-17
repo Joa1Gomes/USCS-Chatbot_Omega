@@ -1,54 +1,371 @@
+:root {
+      --primary: #000000;
+      --primary-dark: #111827;
+      --primary-deeper: #030712;
+      --primary-light: #9ca3af;
+      --primary-lighter: #d1d5db;
+      --primary-subtle: #f3f4f6;
+      --accent: #6b7c32;
+      --accent-warm: #a78bfa;
+      --surface: #f9fafb;
+      --surface-card: #ffffff;
+      --text-primary: #000000;
+      --text-secondary: #374151;
+      --text-muted: #6b7280;
+      --success: #059669;
+      --warning: #d97706;
+      --info: #0891b2;
+      --danger: #ef4444;
+      --gradient-primary: linear-gradient(135deg, #000000 0%, #111827 50%, #374151 100%);
+      --gradient-dark: linear-gradient(135deg, #030712 0%, #111827 50%, #1f2937 100%);
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+      --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.18);
+      --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.22);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --radius-lg: 24px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      background-color: #a4a4d3;
+      background-color: var(--surface);
+      font-family: 'Inter', 'Segoe UI', sans-serif;
+      margin: 0;
+      padding-bottom: 60px;
+      color: var(--text-primary);
+      overflow-x: hidden;
+    }
+
+    /* ===== NAVBAR SIMPLIFICADA ===== */
+    .navbar {
+      background: var(--gradient-primary);
+      padding: 0 24px;
+      height: 68px;
+      border: none;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(20px);
+      z-index: 1050;
+    }
+
+    .navbar .container-fluid {
+      height: 100%;
       display: flex;
-      justify-content: center;
       align-items: center;
-      height: 100vh;
-      font-family: 'Segoe UI', sans-serif;
+      justify-content: center;
     }
 
-    .cadastro-title {
-        text-align: center;
-        color: #6a6acb;
-        margin-bottom: 25px;
-        font-weight: bold;
-      }
+    .navbar-brand {
+      color: white !important;
+      font-weight: 700;
+      font-size: 1.5rem;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-    .card-cadastro {
-      background-color: white;
-      border-radius: 20px;
-      padding: 40px;
-      max-width: 400px;
+    .navbar-brand::before {
+      content: '';
+      width: 36px;
+      height: 36px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24' width='20' height='20'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12c0 1.74.45 3.38 1.24 4.81L2 22l5.19-1.24C8.62 21.55 10.26 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm-2 13l-3-3 1.41-1.41L10 12.17l4.59-4.58L16 9l-6 6z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    /* ===== ÁREA DE CADASTRO - LAYOUT DUAL ===== */
+    .signup-container {
+      min-height: calc(100vh - 128px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .signup-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+      max-width: 1200px;
       width: 100%;
-      box-shadow: 0 0 15px rgba(0,0,0,0.05);
     }
 
-    .card-cadastro h2 {
+    /* COLUNA ESQUERDA - INFORMAÇÕES */
+    .info-column {
+      padding-right: 40px;
+    }
+
+    .info-title {
+      font-weight: 800;
+      font-size: 2.5rem;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    .info-subtitle {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    .benefits-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .benefit-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding: 16px;
+      border-radius: 12px;
+      background: var(--surface-card);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      transition: all 0.3s ease;
+    }
+
+    .benefit-item:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .benefit-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+
+    .benefit-icon.blue { background: #e6f2ff; color: #0891b2; }
+    .benefit-icon.green { background: #e6ffe6; color: #059669; }
+    .benefit-icon.purple { background: #f5e6ff; color: #a78bfa; }
+
+    .benefit-content h4 {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .benefit-content p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* COLUNA DIREITA - FORMULÁRIO */
+    .form-column {
+      background: var(--surface-card);
+      border-radius: var(--radius);
+      padding: 40px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .form-header {
       text-align: center;
-      color: #6a6acb;
-      margin-bottom: 30px;
+      margin-bottom: 32px;
+    }
+
+    .form-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin: 0 auto 16px;
+      background: var(--primary-subtle);
+      color: var(--primary);
+    }
+
+    .form-title {
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .form-subtitle {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .form-label i {
+      font-size: 0.8rem;
+      color: var(--text-muted);
     }
 
     .form-control {
-      border-radius: 10px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      padding: 12px 14px;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+      background: var(--surface);
+      color: var(--text-primary);
     }
 
-    .btn-cadastro {
-      background-color: #6a6acb;
+    .form-control:focus {
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 3px rgba(107, 124, 50, 0.1);
+    }
+
+    .btn-cadastrar {
+      background: var(--gradient-primary);
       color: white;
-      border-radius: 10px;
+      border: none;
+      padding: 14px 32px;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 8px;
     }
 
-    .btn-cadastro:hover {
-      background-color: #5959b8;
+    .btn-cadastrar:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
     }
 
-    .text-center a {
-      color: #6a6acb;
+    .login-link {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .login-link a {
+      color: var(--primary-light);
       text-decoration: none;
+      font-weight: 600;
     }
 
-    .text-center a:hover {
+    .login-link a:hover {
+      color: var(--primary);
       text-decoration: underline;
     }
-  
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--gradient-dark);
+      color: rgba(255, 255, 255, 0.8);
+      text-align: center;
+      padding: 16px 0;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      z-index: 1040;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: -0.2px;
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    footer p {
+      margin: 0;
+    }
+
+    /* ===== RESPONSIVIDADE ===== */
+    @media (max-width: 992px) {
+      .signup-wrapper {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .info-column {
+        padding-right: 0;
+        text-align: center;
+      }
+
+      .benefit-item {
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .signup-container {
+        padding: 24px 16px;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .info-title {
+        font-size: 2rem;
+      }
+
+      .form-column {
+        padding: 24px;
+      }
+
+      .form-title {
+        font-size: 1.3rem;
+      }
+    }
+
+    /* ===== ANIMAÇÕES ===== */
+    .signup-wrapper {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .benefit-item:nth-child(1) { animation-delay: 0.2s; }
+    .benefit-item:nth-child(2) { animation-delay: 0.3s; }
+    .benefit-item:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
