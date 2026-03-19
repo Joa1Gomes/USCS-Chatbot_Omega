@@ -3,8 +3,8 @@ const sql = require('mssql');
 const config = require('../../dbConfig').default;
 
 exports.cadastrarUsuario = async (req, res) => {
-  const { nome, email, senha } = req.body;
-  if (!nome || !email || !senha) {
+  const { primeiroNome, sobrenome, email, senha, dataNascimento, telefone } = req.body;
+  if (!primeiroNome || !sobrenome || !email || !senha || !dataNascimento || !telefone) {
     return res.status(400).json({ mensagem: 'Todos os campos são obrigatórios.' });
   }
 
@@ -18,20 +18,17 @@ exports.cadastrarUsuario = async (req, res) => {
 
     const senhaCriptografada = await bcrypt.hash(senha, 10);
 
-    const query = `
-        INSERT INTO USUARIO
-         (NOME_USUARIO,
-          EMAIL_USUARIO,
-          SENHA_HASH) 
-        VALUES 
-        (@nome, @email, @senha)`;
+    const query = `INSERT INTO USUARIO_EMPRESA (PRIMEIRO_NOME_USUARIO, SOBRENOME_USUARIO, EMAIL_USUARIO, DATA_NASCIMENTO, TELEFONE_USUARIO, SENHA_HASH) VALUES (@primeiroNome, @sobrenome, @email, @dataNascimento, @telefone, @senhaCriptografada)`;
 
 
     const request = new sql.Request();
 
-    request.input('nome', sql.VarChar, nome);
+    request.input('primeiroNome', sql.VarChar, primeiroNome);
+    request.input('sobrenome', sql.VarChar, sobrenome);
     request.input('email', sql.VarChar, email);
-    request.input('senha', sql.VarChar, senhaCriptografada);
+    request.input('dataNascimento', sql.Date, dataNascimento);
+    request.input('telefone', sql.VarChar, telefone);
+    request.input('senhaCriptografada', sql.VarChar, senhaCriptografada);
 
     await request.query(query);
 

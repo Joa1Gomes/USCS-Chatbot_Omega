@@ -1,11 +1,14 @@
-document.getElementById('cadastroForm').addEventListener('submit', async function(e) {
+document.getElementById('cadastroForm').addEventListener('submit', async function (e) {
     e.preventDefault();
 
-    const nome = document.getElementById('nome').value;
-    const email = document.getElementById('email').value;
+    const primeiroNome = document.getElementById('primeiroNome').value;
+    const sobrenome = document.getElementById('sobrenome').value;
+    const email = document.getElementById('emailEmpresarial').value;
     const senha = document.getElementById('senha').value;
+    const dataNascimento = document.getElementById('dataNascimento').value;
+    const telefone = document.getElementById('telefone').value;
 
-    const dados = {nome, email, senha};
+    const dados = { primeiroNome, sobrenome, email, senha, dataNascimento, telefone };
 
     const response = await fetch('http://localhost:3000/cadastro', {
         method: 'POST',
@@ -17,7 +20,7 @@ document.getElementById('cadastroForm').addEventListener('submit', async functio
 
     const resultado = await response.json();
 
-    if(resultado.mensagem== 'Usuário cadastrado com sucesso!'){
+    if (resultado.mensagem == 'Usuário cadastrado com sucesso!') {
         alert(resultado.mensagem);
         window.location.href = '../html/login.html';
     } else {
