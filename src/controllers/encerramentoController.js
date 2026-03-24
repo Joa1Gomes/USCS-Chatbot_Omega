@@ -1,5 +1,4 @@
-const sql = require('mssql');
-const config = require('../../dbConfig').default;
+const pool = require('../../dbConfig');
 
 exports.encerrarAtendimento = async (req, res) => {
   const { idCliente, pedido, descricao, tipoSolicitacao } = req.body;
@@ -30,10 +29,10 @@ exports.encerrarAtendimento = async (req, res) => {
     request.input('tipoSolicitacao', sql.NVarChar, tipoSolicitacao);
 
     await request.query(query);
-    
+
     res.status(200).json({ mensagem: 'Atendimento cadastrado com sucesso!' });
   } catch (erro) {
-        console.error(erro);
-        res.status(500).json({ mensagem: 'Erro ao processar cadastro.' });
+    console.error(erro);
+    res.status(500).json({ mensagem: 'Erro ao processar cadastro.' });
   }
 };

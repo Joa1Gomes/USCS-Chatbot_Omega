@@ -1,4 +1,4 @@
-document.getElementById('formLogin').addEventListener('submit', async function(event) {
+document.getElementById('formLogin').addEventListener('submit', async function (event) {
     event.preventDefault();
 
     const email = document.getElementById('email').value.trim();
@@ -21,10 +21,10 @@ document.getElementById('formLogin').addEventListener('submit', async function(e
 
         const resultado = await response.json();
 
-        if (response.ok){
+        if (response.ok) {
             window.location.href = '../html/home_page.html';
-        } else {
-            mensagemErro.textContent = resultado.mensagem || 'Email ou senha inválidos.';
+        } else if (response.status === 401) {
+            mensagemErro.textContent = resultado.mensagem || 'Email ou senha inválidos.'
         }
 
     } catch (erro) {

@@ -81,6 +81,7 @@
     <p>© 2025 Chatbot Omega - Todos os direitos reservados</p>
   </footer>
 
+  <script src="../js/login.js"></script>
   <script>
     function togglePassword() {
       const senhaInput = document.getElementById('senha');
@@ -96,13 +97,6 @@
         eyeIcon.classList.add('fa-eye');
       }
     }
-
-    document.getElementById('formLogin').addEventListener('submit', function (e) {
-      e.preventDefault();
-      const email = document.getElementById('email').value;
-      alert(`Login bem-sucedido! Bem-vindo, ${email} ✅`);
-      // window.location.href = 'index.html';
-    });
   </script>
 </body>
 

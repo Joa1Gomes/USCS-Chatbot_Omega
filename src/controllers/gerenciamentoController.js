@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const sql = require('mssql');
-const config = require('../../dbConfig');
+const pool = require('../../dbConfig');
 
 
 const queryListaUsuarios = `
@@ -20,92 +19,74 @@ SELECT
 FROM USUARIO U
 `;
 
- exports.listarUsuarios = async (req, res) => {
-   try {
-     // Conexão com o banco
-     await sql.connect(config);
-     const resultListaUsuarios = await sql.query(queryListaUsuarios)
-     await sql.close();
-     res.json(resultListaUsuarios.recordset);              
-    
-   } catch (erro) {
-     console.error(erro);
-     await sql.close();
-     res.status(500).json({ mensagem: 'Erro ao carregar Usuarios'});
-   } 
- };
+exports.listarUsuarios = async (req, res) => {
+  try {
+    const resultListaUsuarios = await pool.query(queryListaUsuarios)
+    res.json(resultListaUsuarios.rows);
 
-exports.atualizaPermissao = async (req, res) => { 
-   const idUsuario = req.params.id; 
-   const {novaPermissao} = req.body;
-  
-   try {
-     await sql.connect(config);
-    
-     if (novaPermissao === 'ADMINISTRADOR') {
-         const queryAtualizaPraAdmin = `
-         IF NOT EXISTS 
-         (
-           SELECT 1 
-           FROM ADMINISTRADOR
-           WHERE ID_ADMIN  = @idUsuario
-         )
-         BEGIN
-           INSERT INTO ADMINISTRADOR (ID_ADMIN)
-           VALUES (@idUsuario)
-         END
+  } catch (erro) {
+    console.error(erro);
+
+    res.status(500).json({ mensagem: 'Erro ao carregar Usuarios' });
+  }
+};
+
+exports.atualizaPermissao = async (req, res) => {
+  const idUsuario = req.params.id;
+  const { novaPermissao } = req.body;
+
+  try {
+
+    if (novaPermissao === 'ADMINISTRADOR') {
+      const queryAtualizaPraAdmin = `
+         INSERT INTO ADMINISTRADOR (ID_ADMIN)
+         VALUES ($1)
+         ON CONFLICT (ID_ADMIN) DO NOTHING
        `;
-    
-     const request = new sql.Request();
-     request.input('idUsuario', sql.Int, idUsuario);
-     await request.query(queryAtualizaPraAdmin);
 
-     } else {
-       const queryAtualizaPraUser = `
+      await pool.query(queryAtualizaPraAdmin, [idUsuario]);
+
+    } else {
+      const queryAtualizaPraUser = `
          DELETE 
          FROM ADMINISTRADOR
-         WHERE ID_ADMIN = @idUsuario
+         WHERE ID_ADMIN = $1
        `;
 
-       const request = new sql.Request();
-       request.input('idUsuario', sql.Int, idUsuario);
-       await request.query(queryAtualizaPraUser);
-     }                                   
+      await pool.query(queryAtualizaPraUser, [idUsuario]);
+    }
 
-     const resultListaUsuarios = await sql.query(queryListaUsuarios)
-     await sql.close();
-     res.json(resultListaUsuarios.recordset);              
-    
-   } catch (erro) {
-     console.error(erro);
-     await sql.close();
-     res.status(500).json({ mensagem: 'Erro ao carregar Usuarios'});
-   } 
- };
+    const resultListaUsuarios = await pool.query(queryListaUsuarios)
 
- exports.deletarUsuario = async (req, res) => { // Permite um id no URl da requisição
+    res.json(resultListaUsuarios.rows);
+
+  } catch (erro) {
+    console.error(erro);
+
+    res.status(500).json({ mensagem: 'Erro ao carregar Usuarios' });
+  }
+};
+
+exports.deletarUsuario = async (req, res) => { // Permite um id no URl da requisição
   const idUsuario = req.params.id; //Define uma variavel com o valor do ID
 
   try {
-    await sql.connect(config);
-   
-      const queryDeletaUsuario = `
+
+    const queryDeletaUsuario = `
         DELETE 
         FROM USUARIO
-        WHERE ID_USUARIO = @idUsuario
+        WHERE ID_USUARIO = $1
     `;
-   
-    const request = new sql.Request();
-    request.input('idUsuario', sql.Int, idUsuario);
-    await request.query(queryDeletaUsuario);                             
 
-    const resultListaUsuarios = await sql.query(queryListaUsuarios)
-    await sql.close();
-    res.json(resultListaUsuarios.recordset);              
-   
+    await pool.query(queryDeletaUsuario, [idUsuario]);
+
+    const resultListaUsuarios = await pool.query(queryListaUsuarios)
+
+    res.json(resultListaUsuarios.rows);
+
   } catch (erro) {
     console.error(erro);
-    await sql.close();
-    res.status(500).json({ mensagem: 'Erro ao carregar Usuarios'});
-  } 
+
+    res.status(500).json({ mensagem: 'Erro ao carregar Usuarios' });
+  }
 };

@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: postgres_dev
+    restart: always
+    environment:
+      POSTGRES_USER: node_uscs
+      POSTGRES_PASSWORD: testes
+      POSTGRES_DB: chatbot_omega
+      POSTGRES_HOST_AUTH_METHOD: md5
+      POSTGRES_INITDB_ARGS: "--auth-host=md5"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

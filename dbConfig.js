@@ -1,15 +1,12 @@
 require('dotenv').config();
+const { Pool } = require('pg');
 
-const config = {
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    server: process.env.DB_SERVER,
-    database: process.env.DB_DATABASE,
-    port: parseInt(process.env.DB_PORT, 10), // <-- Fora de options!
-    options: {
-      encrypt: true,
-      trustServerCertificate: true
-    }
-};
+const pool = new Pool({
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  host: process.env.DB_SERVER,
+  database: process.env.DB_DATABASE,
+  port: parseInt(process.env.DB_PORT, 10),
+});
 
-module.exports = config;
+module.exports = pool;
