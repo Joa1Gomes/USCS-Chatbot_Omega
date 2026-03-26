@@ -1,47 +1,49 @@
- document.addEventListener('DOMContentLoaded', carregarUsuarios);
+document.addEventListener('DOMContentLoaded', carregarUsuarios);
 
- async function carregarUsuarios(){
-   try {
-     const response = await fetch ('http://localhost:3000/gerenciamento');
-     const usuarios = await response.json();
+async function carregarUsuarios() {
+  try {
+    const response = await fetch('http://localhost:3000/gerenciamento');
+    const usuarios = await response.json();
 
-     const idHtml = document.getElementById('tabelaUsuarios');
-     idHtml.innerHTML = '';
+    console.log(usuarios);
 
-     usuarios.forEach(usuario =>
-       {
-         const linha = document.createElement('tr');
-         linha.innerHTML = `
-         <td>${usuario.ID_USUARIO}</td>  
-         <td>${usuario.NOME_USUARIO}</td>
-         <td>${usuario.EMAIL_USUARIO}</td>
-         <td>${usuario.PERMISSAO}</td>
+    const idHtml = document.getElementById('tabelaUsuarios');
+    idHtml.innerHTML = '';
+
+    usuarios.forEach(usuario => {
+      const linha = document.createElement('tr');
+      linha.innerHTML = `
+         <td>${usuario.id_usuario}</td>  
+         <td>${usuario.nome_completo}</td>
+         <td>${usuario.email_usuario}</td>
+         <td>${usuario.permissao}</td>
          <td>
            <button class="btn btn-editar btn-sm" 
              data-bs-toggle="modal" 
              data-bs-target="#modalPermissao"
-             onclick="reservarId(${usuario.ID_USUARIO})">
+             onclick="reservarId(${usuario.id_usuario})">
              Editar
            </button>
          </td>
          `;
-         idHtml.appendChild(linha);
-       });
-   } catch (error) {
-     console.error('Erro ao carregar usuários:', error);    
-   }
- }
+      idHtml.appendChild(linha);
+    });
+  } catch (error) {
+    console.error('Erro ao carregar usuários:', error);
+  }
+}
 
- function reservarId(idUsuario) {
-   document.getElementById('modalPermissao').dataset.userId = idUsuario;
- }
+function reservarId(idUsuario) {
+  document.getElementById('modalPermissao').dataset.userId = idUsuario;
+}
 
- document.getElementById('formPermissao').addEventListener('submit', async (e) => {e.preventDefault();
-  
+document.getElementById('formPermissao').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
   const userId = document.getElementById('modalPermissao').dataset.userId;
   const botaoClicado = e.submitter;
 
-  if (botaoClicado.id === 'atualizarPermissao'){
+  if (botaoClicado.id === 'atualizarPermissao') {
     try {
       const novaPermissao = document.getElementById('selectPermissao').value.toUpperCase();
       const response = await fetch(`http://localhost:3000/gerenciamento/${userId}`, {
@@ -56,34 +58,34 @@
       if (!response.ok) {
         throw new Error('Erro ao atualizar permissão');
       }
-      
+
     } catch (error) {
       console.error('Erro ao atualizar permissão:', error);
-      alert('Falha ao atualizar permissão do usuário');    
+      alert('Falha ao atualizar permissão do usuário');
     }
-  }else if (botaoClicado.id === 'deletarUsuario') {
+  } else if (botaoClicado.id === 'deletarUsuario') {
     try {
       const response = await fetch(`http://localhost:3000/gerenciamento/${userId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type':
-          'application/json'
+            'application/json'
         },
       });
 
       if (!response.ok) {
         throw new Error('Erro ao deletar usuario');
       }
-    
+
     } catch (error) {
       console.error('Erro ao atualizar permissão:', error);
-      alert('Falha ao atualizar permissão do usuário');    
+      alert('Falha ao atualizar permissão do usuário');
     }
   }
 
-    await carregarUsuarios();
+  await carregarUsuarios();
 
-    const modal = bootstrap.Modal.getInstance(document.getElementById('modalPermissao'));
-    modal.hide();
- })
- 
+  const modal = bootstrap.Modal.getInstance(document.getElementById('modalPermissao'));
+  modal.hide();
+})
+

@@ -12,7 +12,7 @@ exports.cadastrarCliente = async (req, res) => {
           ultimo_nome,
           email_cliente)
         OUTPUT INSERTED.ID_CLIENTE
-        VALUES 
+        VALUES
         (@primeiro_nome, @ultimo_nome, @email_cliente)`;
 
 

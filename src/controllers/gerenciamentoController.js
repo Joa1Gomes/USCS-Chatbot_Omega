@@ -6,17 +6,10 @@ const pool = require('../../dbConfig');
 const queryListaUsuarios = `
 SELECT
     U.ID_USUARIO,
-    U.NOME_USUARIO,
+    CONCAT(U.PRIMEIRO_NOME_USUARIO, ' ', U.SOBRENOME_USUARIO) AS NOME_COMPLETO,
     U.EMAIL_USUARIO,
-    CASE
-       WHEN EXISTS (
-          SELECT 1 
-          FROM ADMINISTRADOR A 
-          WHERE A.ID_ADMIN = U.ID_USUARIO
-        ) THEN 'ADMINISTRADOR'
-        ELSE 'USUÁRIO'
-    END AS PERMISSAO
-FROM USUARIO U
+    'ADMINISTRADOR' AS PERMISSAO
+FROM USUARIO_EMPRESA U
 `;
 
 exports.listarUsuarios = async (req, res) => {

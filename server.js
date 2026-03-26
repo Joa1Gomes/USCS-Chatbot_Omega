@@ -21,10 +21,10 @@ app.use(express.static('public'));
 async function testarConexao() {
   try {
     const client = await pool.connect();
-    console.log('Conectado ao SQL Server com sucesso!');
+    console.log('Conectado ao Server com sucesso!');
     client.release();
   } catch (err) {
-    console.error('Erro ao conectar ao SQL Server:', err);
+    console.error('Erro ao conectar ao Server:', err);
   }
 }
 
