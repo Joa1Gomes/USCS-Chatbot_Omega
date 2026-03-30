@@ -9,6 +9,3 @@ router.delete('/:id', gerenciamentoController.deletarUsuario);
 module.exports = router;
 
 
-
-
-

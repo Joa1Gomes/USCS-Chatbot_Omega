@@ -1,5 +1,4 @@
 const express = require('express');
-const sql = require('mssql');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const cadastroRoutes = require('./src/routes/cadastroRoutes');
@@ -12,18 +11,20 @@ const clientesRoutes = require('./src/routes/clientesRoutes');
 const app = express();
 const PORT = 3000;
 
-const config = require('./dbConfig');
+const pool = require('./dbConfig');
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(express.static('public'));
 
 async function testarConexao() {
   try {
-    await sql.connect(config);
-    console.log('Conectado ao SQL Server com sucesso!');
+    const client = await pool.connect();
+    console.log('Conectado ao Server com sucesso!');
+    client.release();
   } catch (err) {
-    console.error('Erro ao conectar ao SQL Server:', err);
+    console.error('Erro ao conectar ao Server:', err);
   }
 }
 
@@ -48,6 +49,6 @@ app.use((err, req, res, next) => {
 
 // Limpeza na finalização
 process.on('SIGINT', () => {
-  sql.close();
+  pool.end();
   process.exit();
 });

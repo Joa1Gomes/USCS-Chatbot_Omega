@@ -1,40 +1,157 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Cadastro</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cadastro - Chatbot Omega (Opção B)</title>
+
+  <!-- Bootstrap, Font Awesome e Google Fonts -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="../css/cadastro.css">
+
 </head>
+
 <body>
 
-  <div class="card-cadastro">
-    <h2 class="cadastro-title">Cadastre-se</h2>
-    <form id="cadastroForm">
-      <div class="mb-3">
-        <label for="nome" class="form-label">Nome completo</label>
-        <input type="text" class="form-control" id="nome" placeholder="Digite seu nome" />
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <i class="fas fa-robot"></i> Chatbot Omega
+      </a>
+    </div>
+  </nav>
+
+  <!-- ===== ÁREA DE CADASTRO - LAYOUT DUAL ===== -->
+  <div class="signup-container">
+    <div class="signup-wrapper">
+      <!-- COLUNA ESQUERDA - INFORMAÇÕES -->
+      <div class="info-column">
+        <h1 class="info-title">Comece sua jornada</h1>
+        <p class="info-subtitle">Cadastre-se e desbloqueie todos os recursos do Chatbot Omega para sua empresa.</p>
+
+        <ul class="benefits-list">
+          <li class="benefit-item">
+            <div class="benefit-icon blue"><i class="fas fa-rocket"></i></div>
+            <div class="benefit-content">
+              <h4>Implementação Rápida</h4>
+              <p>Comece em minutos com nossa plataforma intuitiva e guias passo a passo.</p>
+            </div>
+          </li>
+          <li class="benefit-item">
+            <div class="benefit-icon green"><i class="fas fa-chart-line"></i></div>
+            <div class="benefit-content">
+              <h4>Aumente sua Produtividade</h4>
+              <p>Automatize até 80% das interações e foque no que realmente importa.</p>
+            </div>
+          </li>
+          <li class="benefit-item">
+            <div class="benefit-icon purple"><i class="fas fa-shield-alt"></i></div>
+            <div class="benefit-content">
+              <h4>Segurança Garantida</h4>
+              <p>Seus dados protegidos com criptografia de ponta a ponta e conformidade LGPD.</p>
+            </div>
+          </li>
+        </ul>
       </div>
-      <div class="mb-3">
-        <label for="email" class="form-label">E-mail</label>
-        <input type="email" class="form-control" id="email" placeholder="Digite seu e-mail" />
+
+      <!-- COLUNA DIREITA - FORMULÁRIO -->
+      <div class="form-column">
+        <div class="form-header">
+          <div class="form-icon"><i class="fas fa-user-plus"></i></div>
+          <h2 class="form-title">Criar Conta</h2>
+          <p class="form-subtitle">Preencha suas informações para começar</p>
+        </div>
+
+        <form id="cadastroForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="primeiroNome">
+                <i class="fas fa-user"></i> Primeiro Nome
+              </label>
+              <input type="text" class="form-control" id="primeiroNome" placeholder="João" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="sobrenome">
+                <i class="fas fa-user"></i> Sobrenome
+              </label>
+              <input type="text" class="form-control" id="sobrenome" placeholder="Silva" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="emailEmpresarial">
+              <i class="fas fa-envelope"></i> E-mail Empresarial
+            </label>
+            <input type="email" class="form-control" id="emailEmpresarial" placeholder="joao.silva@empresa.com"
+              required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="senha">
+              <i class="fas fa-lock"></i> Senha
+            </label>
+            <input type="password" class="form-control" id="senha" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="dataNascimento">
+              <i class="fas fa-calendar"></i> Data de Nascimento
+            </label>
+            <input type="date" class="form-control" id="dataNascimento" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="telefone">
+              <i class="fas fa-phone"></i> Telefone
+            </label>
+            <input type="tel" class="form-control" id="telefone" placeholder="(11) 99999-9999" required>
+          </div>
+
+          <button type="submit" class="btn-cadastrar">
+            <i class="fas fa-check-circle"></i> Criar Conta
+          </button>
+        </form>
+
+        <div class="login-link">
+          Já tem uma conta? <a href="login.html">Entrar</a>
+        </div>
       </div>
-      <div class="mb-3">
-        <label for="senha" class="form-label">Senha</label>
-        <input type="password" class="form-control" id="senha" placeholder="Crie uma senha" />
-      </div>
-      <div class="mb-3">
-        <label for="confirmarSenha" class="form-label">Confirmar senha</label>
-        <input type="password" class="form-control" id="confirmarSenha" placeholder="Repita a senha" />
-      </div>
-      <button type="submit" class="btn btn-cadastro w-100">Cadastrar</button>
-    </form>
-    <p class="text-center mt-3">
-      Já tem uma conta? <a href="login.html">Entrar</a>
-    </p>
+    </div>
   </div>
 
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <p>© 2025 Chatbot Omega - Todos os direitos reservados</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/cadastro.js"></script>
+  <!-- <script>
+    // Formulário de Cadastro
+    document.getElementById('formCadastro').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const nome = document.getElementById('primeiroNome').value;
+      const sobrenome = document.getElementById('sobrenome').value;
+      const email = document.getElementById('emailEmpresarial').value;
+
+      alert(`Cadastro realizado com sucesso! Bem-vindo, ${nome} ${sobrenome} ✅`);
+      console.log('Dados cadastrados:', {
+        nome: nome,
+        sobrenome: sobrenome,
+        email: email,
+        dataNascimento: document.getElementById('dataNascimento').value,
+        telefone: document.getElementById('telefone').value
+      });
+    });
+  </script> -->
 </body>
-<script src="../js/cadastro.js"></script>
+
 </html>
