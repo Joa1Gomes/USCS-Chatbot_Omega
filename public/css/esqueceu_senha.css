@@ -1,0 +1,46 @@
+ :root {
+      --primary: #000000;
+      --primary-dark: #111827;
+      --gradient-primary: linear-gradient(135deg, #000000 0%, #111827 50%, #374151 100%);
+      --surface: #f9fafb;
+      --surface-card: #ffffff;
+      --text-primary: #000000;
+      --text-muted: #6b7280;
+      --success: #059669;
+      --radius: 16px;
+    }
+
+    body { background-color: var(--surface); font-family: 'Inter', sans-serif; }
+
+    .recovery-container { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+    
+    .recovery-card {
+      background: var(--surface-card);
+      border-radius: var(--radius);
+      padding: 48px;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.15);
+      width: 100%;
+      max-width: 450px;
+      text-align: center;
+      transition: all 0.5s ease;
+    }
+
+    .success-message { display: none; } /* Escondido por padrão */
+    
+    .success-icon {
+      font-size: 3rem;
+      color: var(--success);
+      margin-bottom: 20px;
+    }
+
+    /* Ajustes para o formulário */
+    .form-control { border-radius: 10px; padding: 14px; margin-bottom: 20px; }
+    .btn-enviar {
+      background: var(--gradient-primary);
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 10px;
+      width: 100%;
+      font-weight: 700;
+    }
