@@ -1,6 +1,6 @@
-# USCS Chatbot Omega 🤖
+# Chatbot Omega 🤖
 
-**USCS Chatbot Omega** é uma solução completa para empresas que buscam integrar chatbots inteligentes em seus marketplaces ou websites. O sistema combina a eficiência de atendimentos automatizados por IA com a flexibilidade de transição para atendentes humanos em tempo real.
+**Chatbot Omega** é uma solução completa para empresas que buscam integrar chatbots inteligentes em seus marketplaces ou websites. O sistema combina a eficiência de atendimentos automatizados por IA com a flexibilidade de transição para atendentes humanos em tempo real.
 
 ---
 
