@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Menu com Lateral</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="../css/home_page.css">
   <link rel="stylesheet" href="../css/chatbot.css">
 
   <script src="../js/chatbot.js"></script>
 
 </head>
+
 <body>
 
   <!-- Cabeçalho com botão -->
@@ -28,7 +31,7 @@
 
       <!-- ICON DO PERFIL -->
       <div class="ms-auto">
-        <a href="#" class="nav-profile">  
+        <a href="#" class="nav-profile">
           <i class="fas fa-user-circle"></i>
         </a>
       </div>
@@ -48,6 +51,7 @@
         <li><a href="chamado.html">📋 Chamados</a></li>
         <li><a href="estatisticas.html">📊 Estatísticas</a></li>
         <li><a href="configuracao.html">⚙️ Configurações</a></li>
+        <li><a href="chat.html">📞 Atendimentos</a></li>
         <li><a href="fale_conosco.html">💬 Fale conosco</a></li>
       </ul>
     </div>
@@ -63,8 +67,8 @@
       <h1>Central de Atendimento ao Cliente</h1>
       <p>Gerencie seus tickets de suporte de forma rápida e eficiente. Estamos aqui para ajudar!</p>
       <div class="hero-actions">
-        <a href="#" class="hero-btn hero-btn-secondary">
-          <i class="fas fa-search"></i> Consultar Tickets
+        <a href="../html/chamado.html" class="hero-btn hero-btn-secondary">
+          <i class="fas fa-search"></i> Consultar Chamados
         </a>
       </div>
     </div>
@@ -73,27 +77,27 @@
     <div class="stats-row">
       <div class="stat-card">
         <div class="stat-icon"><i class="fas fa-ticket-alt"></i></div>
-        <div class="stat-number">248</div>
+        <div class="stat-number" id="totaltickets_homepage"></div>
         <div class="stat-label">Total de Tickets</div>
-        <span class="stat-change up"><i class="fas fa-arrow-up"></i> 12%</span>
+        <span class="stat-change up"><i class="fas fa-arrow-up"></i> -</span>
       </div>
       <div class="stat-card">
         <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
-        <div class="stat-number">189</div>
+        <div class="stat-number" id="ticketsresolvidos_homepage"></div>
         <div class="stat-label">Resolvidos</div>
-        <span class="stat-change up"><i class="fas fa-arrow-up"></i> 8%</span>
+        <span class="stat-change up"><i class="fas fa-arrow-up"></i> -</span>
       </div>
       <div class="stat-card">
         <div class="stat-icon"><i class="fas fa-clock"></i></div>
-        <div class="stat-number">42</div>
+        <div class="stat-number" id="ticketsandamento_homepage"></div>
         <div class="stat-label">Em Andamento</div>
-        <span class="stat-change down"><i class="fas fa-arrow-down"></i> 3%</span>
+        <span class="stat-change down"><i class="fas fa-arrow-down"></i> -</span>
       </div>
       <div class="stat-card">
         <div class="stat-icon"><i class="fas fa-bolt"></i></div>
-        <div class="stat-number">2.4h</div>
+        <div class="stat-number" id="tempomedio_homepage"></div>
         <div class="stat-label">Tempo Médio</div>
-        <span class="stat-change up"><i class="fas fa-arrow-up"></i> 15%</span>
+        <span class="stat-change up"><i class="fas fa-arrow-up"></i> -</span>
       </div>
     </div>
 
@@ -107,13 +111,13 @@
         <div class="feature-icon-wrap"><i class="fas fa-headset"></i></div>
         <h4>Suporte Técnico</h4>
         <p>Abra um chamado para problemas técnicos e receba assistência especializada da nossa equipe.</p>
-        <a href="#" class="feature-link">Acessar <i class="fas fa-arrow-right"></i></a>
+        <a href="../html/fale_conosco.html" class="feature-link">Acessar <i class="fas fa-arrow-right"></i></a>
       </div>
       <div class="feature-card">
         <div class="feature-icon-wrap"><i class="fas fa-comments"></i></div>
-        <h4>Coloque aqui</h4>
-        <p>Adicione o seu conteudo nessa linha de código.</p>
-        <a href="#" class="feature-link">Iniciar chat <i class="fas fa-arrow-right"></i></a>
+        <h4>Estatísticas</h4>
+        <p>Analise suas principais métricas de atendimento</p>
+        <a href="../html/estatisticas.html" class="feature-link">Consultar<i class="fas fa-arrow-right"></i></a>
       </div>
       <div class="feature-card">
         <div class="feature-icon-wrap"><i class="fas fa-book-open"></i></div>
@@ -127,7 +131,7 @@
     <div class="recent-section">
       <div class="recent-header">
         <h3>Tickets Recentes</h3>
-        <a href="#">Ver todos <i class="fas fa-arrow-right"></i></a>
+        <a href="../html/chamado.html">Ver todos <i class="fas fa-arrow-right"></i></a>
       </div>
 
       <div class="ticket-item">
@@ -193,4 +197,5 @@
     });
   </script>
 </body>
+
 </html>

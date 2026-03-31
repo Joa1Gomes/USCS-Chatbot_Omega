@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Admin - Usuários</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/gerenciamento_adm.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../css/gerenciamento_adm.css" />
 </head>
+
 <body>
-    
+
   <!-- Cabeçalho com botão de menu -->
   <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container-fluid">
@@ -44,6 +47,7 @@
         <li><a href="chamado.html">📋 Chamados</a></li>
         <li><a href="estatisticas.html">📊 Estatísticas</a></li>
         <li><a href="configuracao.html">⚙️ Configurações</a></li>
+        <li><a href="chat.html">📞 Atendimentos</a></li>
         <li><a href="fale_conosco.html">💬 Fale conosco</a></li>
       </ul>
     </div>
@@ -108,43 +112,9 @@
     <p>© 2025 Chatbot Omega - Todos os direitos reservados</p>
   </footer>
 
+  <script src="../js/gerenciamento_usuarios.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // Dados simulados de usuários
-    const usuarios = [
-      { id: 1, nome: 'Maria Costa', email: 'maria@example.com', permissao: 'administrador' },
-      { id: 2, nome: 'João Silva', email: 'joao@example.com', permissao: 'usuario' },
-      { id: 3, nome: 'Ana Lima', email: 'ana@example.com', permissao: 'usuario' },
-      { id: 4, nome: 'Pedro Ferreira', email: 'pedro@example.com', permissao: 'administrador' },
-      { id: 5, nome: 'Carla Santos', email: 'carla@example.com', permissao: 'usuario' }
-    ];
-
-    let usuarioSelecionado = null;
-
-    // Carregar tabela de usuários
-    function carregarUsuarios() {
-      const tabela = document.getElementById('tabelaUsuarios');
-      tabela.innerHTML = '';
-
-      usuarios.forEach(usuario => {
-        const badgeClass = usuario.permissao === 'administrador' ? 'badge-admin' : 'badge-user';
-        const badgeText = usuario.permissao === 'administrador' ? 'Administrador' : 'Usuário';
-
-        const linha = document.createElement('tr');
-        linha.innerHTML = `
-          <td>${usuario.id}</td>
-          <td>${usuario.nome}</td>
-          <td>${usuario.email}</td>
-          <td><span class="badge-permissao ${badgeClass}">${badgeText}</span></td>
-          <td>
-            <button class="btn-action btn-editar" onclick="abrirModal(${usuario.id})">
-              <i class="fas fa-edit"></i> Editar
-            </button>
-          </td>
-        `;
-        tabela.appendChild(linha);
-      });
-    }
 
     // Abrir modal para editar
     function abrirModal(usuarioId) {
@@ -156,33 +126,7 @@
       }
     }
 
-    // Atualizar permissão
-    document.getElementById('atualizarPermissao').addEventListener('click', () => {
-      if (usuarioSelecionado) {
-        const novaPermissao = document.getElementById('selectPermissao').value;
-        usuarioSelecionado.permissao = novaPermissao;
-        carregarUsuarios();
-        bootstrap.Modal.getInstance(document.getElementById('modalPermissao')).hide();
-        alert(`Permissão de ${usuarioSelecionado.nome} atualizada para ${novaPermissao}!`);
-      }
-    });
-
-    // Deletar usuário
-    document.getElementById('deletarUsuario').addEventListener('click', () => {
-      if (usuarioSelecionado && confirm(`Tem certeza que deseja deletar ${usuarioSelecionado.nome}?`)) {
-        const indice = usuarios.findIndex(u => u.id === usuarioSelecionado.id);
-        if (indice > -1) {
-          usuarios.splice(indice, 1);
-          carregarUsuarios();
-          bootstrap.Modal.getInstance(document.getElementById('modalPermissao')).hide();
-          alert(`Usuário ${usuarioSelecionado.nome} deletado com sucesso!`);
-          usuarioSelecionado = null;
-        }
-      }
-    });
-
-    // Carregar usuários ao abrir a página
-    carregarUsuarios();
   </script>
 </body>
+
 </html>

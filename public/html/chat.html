@@ -1,18 +1,60 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Chat de Suporte - Chatbot Omega</title>
-  
+
   <!-- Bootstrap, Font Awesome e Google Fonts -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="../css/chat.css">
-  
+
 </head>
+
 <body>
+
+  <!-- Cabeçalho com botão -->
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container-fluid">
+      <!-- Botão menu -->
+      <button class="btn btn-light me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuLateral">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <!-- LOGO -->
+      <a class="navbar-brand" href="#">Chatbot Omega</a>
+
+      <!-- ICON DO PERFIL -->
+      <div class="ms-auto">
+        <a href="#" class="nav-profile">
+          <i class="fas fa-user-circle"></i>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Menu lateral -->
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="menuLateral">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title">Menu</h5>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul class="list-unstyled">
+        <li class="active"><a href="home_page.html">🏠 Início</a></li>
+        <li><a href="gerenciamento_adm.html">🧑‍💼 Gerenciamento de Usuários</a></li>
+        <li><a href="chamado.html">📋 Chamados</a></li>
+        <li><a href="estatisticas.html">📊 Estatísticas</a></li>
+        <li><a href="configuracao.html">⚙️ Configurações</a></li>
+        <li><a href="chat.html">📞 Atendimentos</a></li>
+        <li><a href="fale_conosco.html">💬 Fale conosco</a></li>
+      </ul>
+    </div>
+  </div>
 
   <!-- ===== LAYOUT PRINCIPAL ===== -->
   <div class="chat-layout">
@@ -86,7 +128,8 @@
       <div class="chat-messages" id="chatMessages">
         <div class="message agent">
           <div class="message-bubble">
-            Olá João! Verificamos que você está com dificuldade para acessar o painel administrativo. Vou ajudá-lo a resolver isso.
+            Olá João! Verificamos que você está com dificuldade para acessar o painel administrativo. Vou ajudá-lo a
+            resolver isso.
             <div class="message-time">14:32</div>
           </div>
         </div>
@@ -100,7 +143,8 @@
 
         <div class="message agent">
           <div class="message-bubble">
-            Entendi. Isso geralmente ocorre quando o usuário não tem o perfil de administrador ativo. Vou verificar suas permissões.
+            Entendi. Isso geralmente ocorre quando o usuário não tem o perfil de administrador ativo. Vou verificar suas
+            permissões.
             <div class="message-time">14:34</div>
           </div>
         </div>
@@ -114,7 +158,8 @@
 
         <div class="message agent">
           <div class="message-bubble">
-            João, verifiquei aqui e seu perfil está correto. O problema pode ser no cache do navegador. Poderia tentar limpar o cache ou acessar em modo anônimo?
+            João, verifiquei aqui e seu perfil está correto. O problema pode ser no cache do navegador. Poderia tentar
+            limpar o cache ou acessar em modo anônimo?
             <div class="message-time">14:38</div>
           </div>
         </div>
@@ -158,12 +203,12 @@
     function sendMessage() {
       const input = document.getElementById('messageInput');
       const message = input.value.trim();
-      
+
       if (message) {
         addMessage(message, 'agent');
         input.value = '';
         input.style.height = 'auto';
-        
+
         // Simular resposta do usuário
         setTimeout(() => {
           addMessage('Obrigado pela resposta! Vou testar e retorno.', 'user');
@@ -176,27 +221,27 @@
       const chatMessages = document.getElementById('chatMessages');
       const messageDiv = document.createElement('div');
       messageDiv.className = `message ${sender}`;
-      
+
       const bubbleDiv = document.createElement('div');
       bubbleDiv.className = 'message-bubble';
       bubbleDiv.innerHTML = `
         ${text}
         <div class="message-time">${new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</div>
       `;
-      
+
       messageDiv.appendChild(bubbleDiv);
       chatMessages.appendChild(messageDiv);
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
     // Auto-resize textarea
-    document.getElementById('messageInput').addEventListener('input', function() {
+    document.getElementById('messageInput').addEventListener('input', function () {
       this.style.height = 'auto';
       this.style.height = Math.min(this.scrollHeight, 120) + 'px';
     });
 
     // Enviar com Enter (sem Shift)
-    document.getElementById('messageInput').addEventListener('keydown', function(e) {
+    document.getElementById('messageInput').addEventListener('keydown', function (e) {
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
         sendMessage();
@@ -205,10 +250,10 @@
 
     // Selecionar ticket
     document.querySelectorAll('.ticket-item').forEach(item => {
-      item.addEventListener('click', function() {
+      item.addEventListener('click', function () {
         document.querySelectorAll('.ticket-item').forEach(t => t.classList.remove('active'));
         this.classList.add('active');
-        
+
         // Atualizar header do chat
         const ticketId = this.querySelector('.ticket-id').textContent;
         const ticketTitle = this.querySelector('.ticket-title').textContent;
@@ -217,4 +262,5 @@
     });
   </script>
 </body>
+
 </html>

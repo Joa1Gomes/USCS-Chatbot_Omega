@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Chamados</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="../css/chamado.css">
 </head>
+
 <body>
 
   <!-- Cabeçalho da pagina com menu  -->
@@ -44,6 +47,7 @@
         <li class="active"><a href="chamado.html">📋 Chamados</a></li>
         <li><a href="estatisticas.html">📊 Estatísticas</a></li>
         <li><a href="configuracao.html">⚙️ Configurações</a></li>
+        <li><a href="chat.html">📞 Atendimentos</a></li>
         <li><a href="fale_conosco.html">💬 Fale conosco</a></li>
       </ul>
     </div>
@@ -238,7 +242,7 @@
     }
 
     // Salvar alterações
-    document.getElementById('formChamado').addEventListener('submit', function(e) {
+    document.getElementById('formChamado').addEventListener('submit', function (e) {
       e.preventDefault();
       if (chamadoAtual !== null) {
         chamados[chamadoAtual].status = document.getElementById('chamadoStatus').value;
@@ -272,4 +276,5 @@
     renderizarChamados();
   </script>
 </body>
+
 </html>

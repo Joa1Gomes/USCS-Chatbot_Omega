@@ -1,9 +1,8 @@
-const sql = require('mssql');
-const config = require('../../dbConfig').default;
+const pool = require('../../dbConfig');
 
 exports.cadastrarCliente = async (req, res) => {
-  const { nomeCliente, emailCliente} = req.body;
-  
+  const { nomeCliente, emailCliente } = req.body;
+
   try {
     await sql.connect(config);
 
@@ -13,7 +12,7 @@ exports.cadastrarCliente = async (req, res) => {
           ultimo_nome,
           email_cliente)
         OUTPUT INSERTED.ID_CLIENTE
-        VALUES 
+        VALUES
         (@primeiro_nome, @ultimo_nome, @email_cliente)`;
 
 
@@ -30,7 +29,7 @@ exports.cadastrarCliente = async (req, res) => {
     request.input('ultimo_nome', sql.VarChar, ultimoNome);
     request.input('email_cliente', sql.VarChar, emailCliente);
 
-    
+
     const checkRequest = new sql.Request();
     checkRequest.input('email_cliente', sql.VarChar, emailCliente);
     const existing = await checkRequest.query('SELECT ID_CLIENTE FROM clientes WHERE email_cliente = @email_cliente');
@@ -42,19 +41,19 @@ exports.cadastrarCliente = async (req, res) => {
 
     const idCliente = result.recordset[0].ID_CLIENTE;
     return res.status(200).json({ idCliente });
-    
+
   } catch (erro) {
-        console.error(erro);
-        if (erro.number === 2627) {
-        const selectRequest = new sql.Request();
+    console.error(erro);
+    if (erro.number === 2627) {
+      const selectRequest = new sql.Request();
 
-        selectRequest.input('email_cliente', sql.VarChar, emailCliente);
-        const selectResult = await selectRequest.query('SELECT ID_CLIENTE FROM clientes WHERE email_cliente = @email_cliente');
+      selectRequest.input('email_cliente', sql.VarChar, emailCliente);
+      const selectResult = await selectRequest.query('SELECT ID_CLIENTE FROM clientes WHERE email_cliente = @email_cliente');
 
-        if (selectResult.recordset.length > 0) {
-          return res.status(200).json({idCliente: selectResult.recordset[0].ID_CLIENTE });
-        }
-        }
-        res.status(500).json({ mensagem: 'Erro ao processar cadastro.' });
+      if (selectResult.recordset.length > 0) {
+        return res.status(200).json({ idCliente: selectResult.recordset[0].ID_CLIENTE });
+      }
+    }
+    res.status(500).json({ mensagem: 'Erro ao processar cadastro.' });
   }
 };
