@@ -1,12 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+
+
 const cadastroRoutes = require('./src/routes/cadastroRoutes');
 const loginRoutes = require('./src/routes/loginRoutes');
 const estatisticasRoutes = require('./src/routes/estatisticasRoutes');
 const gerenciamentoRoutes = require('./src/routes/gerenciamentoRoutes');
 const encerramentoRoutes = require('./src/routes/encerramentoRoutes');
 const clientesRoutes = require('./src/routes/clientesRoutes');
+const homePageRoutes = require('./src/routes/homePageRoutes');
 
 const app = express();
 const PORT = 3000;
@@ -37,6 +40,7 @@ app.use('/estatisticas', estatisticasRoutes);
 app.use('/gerenciamento', gerenciamentoRoutes);
 app.use('/encerramento', encerramentoRoutes);
 app.use('/clientes', clientesRoutes);
+app.use('/home', homePageRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);

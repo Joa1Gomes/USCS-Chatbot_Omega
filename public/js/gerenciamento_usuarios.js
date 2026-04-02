@@ -5,7 +5,6 @@ async function carregarUsuarios() {
     const response = await fetch('http://localhost:3000/gerenciamento');
     const usuarios = await response.json();
 
-    console.log(usuarios);
 
     const idHtml = document.getElementById('tabelaUsuarios');
     idHtml.innerHTML = '';
