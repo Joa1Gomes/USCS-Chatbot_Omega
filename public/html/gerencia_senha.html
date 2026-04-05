@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Nova Senha - Chatbot Omega</title>
-  
+
   <!-- Bootstrap, Font Awesome e Google Fonts -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="../css/gerencia_senha.css">
-  
+
 </head>
+
 <body>
 
   <!-- ===== NAVBAR ===== -->
@@ -56,7 +59,8 @@
             <i class="fas fa-check-circle"></i> Confirmar Nova Senha
           </label>
           <div class="password-wrapper">
-            <input type="password" class="form-control" id="confirmarSenha" placeholder="Confirme sua nova senha" required>
+            <input type="password" class="form-control" id="confirmarSenha" placeholder="Confirme sua nova senha"
+              required>
             <button type="button" class="password-toggle" onclick="togglePassword('confirmarSenha', 'eyeIcon2')">
               <i class="fas fa-eye" id="eyeIcon2"></i>
             </button>
@@ -80,68 +84,9 @@
   </footer>
 
   <!-- Scripts -->
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    // Toggle de senha
-    function togglePassword(inputId, iconId) {
-      const input = document.getElementById(inputId);
-      const icon = document.getElementById(iconId);
-      
-      if (input.type === 'password') {
-        input.type = 'text';
-        icon.classList.remove('fa-eye');
-        icon.classList.add('fa-eye-slash');
-      } else {
-        input.type = 'password';
-        icon.classList.remove('fa-eye-slash');
-        icon.classList.add('fa-eye');
-      }
-    }
-
-    // Verificar força da senha
-    document.getElementById('novaSenha').addEventListener('input', function() {
-      const senha = this.value;
-      const strengthBar = document.getElementById('strengthBar');
-      
-      let forca = 0;
-      if (senha.length >= 8) forca++;
-      if (senha.match(/[a-z]/) && senha.match(/[A-Z]/)) forca++;
-      if (senha.match(/[0-9]/)) forca++;
-      if (senha.match(/[^a-zA-Z0-9]/)) forca++;
-      
-      strengthBar.className = 'strength-bar';
-      if (forca <= 1) {
-        strengthBar.classList.add('fraca');
-      } else if (forca === 2) {
-        strengthBar.classList.add('media');
-      } else {
-        strengthBar.classList.add('forte');
-      }
-    });
-
-    // Formulário de Nova Senha
-    document.getElementById('formNovaSenha').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const novaSenha = document.getElementById('novaSenha').value;
-      const confirmarSenha = document.getElementById('confirmarSenha').value;
-      
-      if (novaSenha !== confirmarSenha) {
-        alert('As senhas não coincidem! ❌');
-        return;
-      }
-      
-      if (novaSenha.length < 8) {
-        alert('A senha deve ter no mínimo 8 caracteres! ❌');
-        return;
-      }
-      
-      alert('Senha alterada com sucesso! ✅ Você pode fazer login agora.');
-      console.log('Senha alterada para:', novaSenha);
-      
-      // Aqui você redirecionaria para o login
-      // window.location.href = 'login.html';
-    });
-  </script>
+  <script src="../js/gerencia_senha.js"></script>
 </body>
+
 </html>
