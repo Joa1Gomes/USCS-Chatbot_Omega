@@ -5,7 +5,7 @@ document.getElementById('formRecuperacao').addEventListener('submit', async func
     const email = document.getElementById('emailRecuperacao').value;
 
     try {
-        const resposta = await fetch('/senha/esqueceu', {
+        const resposta = await fetch('http://localhost:3000/senha/esqueceu', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

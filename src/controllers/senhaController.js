@@ -16,10 +16,10 @@ exports.solicitarReset = async (req, res) => {
         const result = await pool.query(queryValidaEmail, [email]);
 
 
-        if (result.rows.lenght === 0) {
-            res.status(400).json({
+        if (result.rows.length === 0) {
+            return res.status(400).json({
                 mensagem: 'Se o email estiver cadastrado, enviaremos o link.'
-            })
+            });
         }
 
         const token = crypto.randomBytes(32).toString('hex');
@@ -33,7 +33,7 @@ exports.solicitarReset = async (req, res) => {
 
         await pool.query(queryUpdate, [token, expiracao, email]);
 
-        const linkReset = `https://localhost:3000/reset-senha?token=${token}`;
+        const linkReset = `http://localhost:3000/html/gerencia_senha.html?token=${token}`;
 
         await enviarEmail(
             email,
@@ -60,8 +60,8 @@ exports.resetarSenha = async (req, res) => {
         return res.status(400).json({ mensagem: 'Token e nova senha são obrigatórios' })
     }
 
-    if (novaSenha.lenght < 8) {
-        return res.stats(400).json({ mensagem: 'A nova senha deve ter pelo menos 8 caracteres.' })
+    if (novaSenha.length < 8) {
+        return res.status(400).json({ mensagem: 'A nova senha deve ter pelo menos 8 caracteres.' })
     }
 
 
@@ -72,7 +72,7 @@ exports.resetarSenha = async (req, res) => {
             WHERE reset_token = $1
         
         `
-        pool.query(queryBuscaToken, [token])
+        const result = await pool.query(queryBuscaToken, [token]);
 
         if (result.rows.length === 0) {
             return res.status(400).json({ mensagem: 'Token inválido.' })
@@ -80,7 +80,7 @@ exports.resetarSenha = async (req, res) => {
 
         const usuario = result.rows[0];
 
-        if (new Date() > new Date(usuario, reset_token_expira)) {
+        if (new Date() > new Date(usuario.reset_token_expira)) {
             return res.status(400).json({ mensagem: 'Este token está expirado, solicite um novo.' })
         }
 
@@ -100,7 +100,7 @@ exports.resetarSenha = async (req, res) => {
 
 
     } catch (error) {
-        console.error('Erro ao resetar senha', erro);
+        console.error('Erro ao resetar senha', error);
         return res.status(500).json({ mensagem: 'Erro interno do servidor' })
     }
 };

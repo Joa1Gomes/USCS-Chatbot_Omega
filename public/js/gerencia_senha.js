@@ -11,20 +11,20 @@ document.getElementById('formNovaSenha').addEventListener('submit', async functi
     e.preventDefault();
 
     const novaSenha = document.getElementById('novaSenha').value;
-    const confirmaSenha = document.getElementById('confirmarSenha').value;
+    const confirmarSenha = document.getElementById('confirmarSenha').value;
 
     if (novaSenha !== confirmarSenha) {
         alert('As senhas não coincidem!');
         return;
     }
 
-    if (novaSenha.lenght < 8) {
+    if (novaSenha.length < 8) {
         alert('A senha deve ter pelo menos 8 caracteres');
         return;
     }
 
     try {
-        const resposta = await fetch('/senha/resetar', {
+        const resposta = await fetch('http://localhost:3000/senha/resetar', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -32,7 +32,7 @@ document.getElementById('formNovaSenha').addEventListener('submit', async functi
             body: JSON.stringify({ token, novaSenha })
         });
 
-        const dados = resposta.json()
+        const dados = await resposta.json()
 
         if (resposta.ok) {
             alert(dados.mensagem)

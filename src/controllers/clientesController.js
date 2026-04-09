@@ -32,7 +32,9 @@ exports.cadastrarCliente = async (req, res) => {
 
     const checkRequest = new sql.Request();
     checkRequest.input('email_cliente', sql.VarChar, emailCliente);
+
     const existing = await checkRequest.query('SELECT ID_CLIENTE FROM clientes WHERE email_cliente = @email_cliente');
+
     if (existing.recordset.length > 0) {
       return res.status(200).json({ idCliente: existing.recordset[0].ID_CLIENTE });
     }
