@@ -8,6 +8,7 @@ const gerenciamentoRoutes = require('./src/routes/gerenciamentoRoutes');
 const encerramentoRoutes = require('./src/routes/encerramentoRoutes');
 const clientesRoutes = require('./src/routes/clientesRoutes');
 const senhaRoutes = require('./src/routes/senhaRoutes');
+const chamadoRoutes = require('./src/routes/chamadoRoutes');
 
 const app = express();
 const PORT = 3000;
@@ -39,6 +40,7 @@ app.use('/gerenciamento', gerenciamentoRoutes);
 app.use('/encerramento', encerramentoRoutes);
 app.use('/clientes', clientesRoutes);
 app.use('/senha', senhaRoutes);
+app.use('/chamados', chamadoRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
