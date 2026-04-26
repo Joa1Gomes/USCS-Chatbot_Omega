@@ -95,8 +95,8 @@
       </div>
       <div class="stat-card">
         <div class="stat-icon"><i class="fas fa-bolt"></i></div>
-        <div class="stat-number" id="tempomedio_homepage"></div>
-        <div class="stat-label">Tempo Médio</div>
+        <div class="stat-number" id="ticketsabertos_homepage"></div>
+        <div class="stat-label">Abertos</div>
         <span class="stat-change up"><i class="fas fa-arrow-up"></i> -</span>
       </div>
     </div>
@@ -134,40 +134,8 @@
         <a href="../html/chamado.html">Ver todos <i class="fas fa-arrow-right"></i></a>
       </div>
 
-      <div class="ticket-item">
-        <div class="ticket-avatar" style="background: var(--gradient-primary);">MC</div>
-        <div class="ticket-info">
-          <div class="ticket-title">Erro ao acessar painel administrativo</div>
-          <div class="ticket-meta">#TK-1042 · Maria Costa · Há 2 horas</div>
-        </div>
-        <span class="ticket-status status-open">Aberto</span>
-      </div>
-
-      <div class="ticket-item">
-        <div class="ticket-avatar" style="background: linear-gradient(135deg, #f0abfc, #d946ef);">JS</div>
-        <div class="ticket-info">
-          <div class="ticket-title">Solicitação de reset de senha em lote</div>
-          <div class="ticket-meta">#TK-1041 · João Silva · Há 4 horas</div>
-        </div>
-        <span class="ticket-status status-progress">Em andamento</span>
-      </div>
-
-      <div class="ticket-item">
-        <div class="ticket-avatar" style="background: linear-gradient(135deg, #34d399, #059669);">AL</div>
-        <div class="ticket-info">
-          <div class="ticket-title">Integração com sistema de pagamento</div>
-          <div class="ticket-meta">#TK-1040 · Ana Lima · Há 6 horas</div>
-        </div>
-        <span class="ticket-status status-resolved">Resolvido</span>
-      </div>
-
-      <div class="ticket-item">
-        <div class="ticket-avatar" style="background: linear-gradient(135deg, #60a5fa, #2563eb);">PF</div>
-        <div class="ticket-info">
-          <div class="ticket-title">Atualização de permissões de usuário</div>
-          <div class="ticket-meta">#TK-1039 · Pedro Ferreira · Há 1 dia</div>
-        </div>
-        <span class="ticket-status status-progress">Em andamento</span>
+      <div id="recentes-lista">
+        <!-- Tickets recentes serão injetados aqui via JS -->
       </div>
     </div>
   </div>
@@ -178,6 +146,7 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/home_page.js"></script>
   <script>
     // Animate stats on scroll
     const observer = new IntersectionObserver((entries) => {

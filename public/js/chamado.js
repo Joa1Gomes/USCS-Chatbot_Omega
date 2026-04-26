@@ -11,12 +11,13 @@ const modalChamado = new bootstrap.Modal(document.getElementById('modalChamado')
 function capitalize(str) {
   const map = {
     'aberto': 'Aberto',
-    'progresso': 'Em Progresso',
+    'em_andamento': 'Em Andamento',
     'resolvido': 'Resolvido',
-    'fechado': 'Fechado',
+    'encerrado': 'Encerrado',
     'alta': 'Alta',
     'media': 'Média',
-    'baixa': 'Baixa'
+    'baixa': 'Baixa',
+    'fechado': 'Encerrado'
   };
   return map[str] || str;
 }
@@ -48,15 +49,15 @@ function renderizarChamados() {
     container.innerHTML += `
       <div class="chamado-card">
         <div class="chamado-header">
-          <span class="chamado-id">${chamado.id}</span>
-          <span class="chamado-status ${statusClass}">${capitalize(chamado.status)}</span>
+          <span class="chamado-id">${chamado.id_ticket}</span>
+          <span class="chamado-status status-${chamado.status}">${capitalize(chamado.status)}</span>
         </div>
         <div class="chamado-titulo">${chamado.titulo}</div>
         <div class="chamado-descricao">${chamado.descricao}</div>
         <div class="chamado-meta">
           <div class="chamado-meta-item">
             <i class="fas fa-user"></i>
-            <span>${chamado.cliente}</span>
+            <span>${chamado.nome_cliente}</span>
           </div>
           <div class="chamado-meta-item">
             <i class="fas fa-calendar"></i>
@@ -79,6 +80,7 @@ function renderizarChamados() {
     `;
   });
 }
+
 // ── Carregar chamados da API ───────────────────────────────────────────────
 async function carregarChamados() {
   try {
@@ -106,7 +108,7 @@ function abrirEdicao(index) {
 // ── Fechar chamado (PATCH /chamados/:id/fechar) ───────────────────────────
 async function fecharChamado(index) {
   if (!confirm('Tem certeza que deseja fechar este chamado?')) return;
-  const id = idNumerico(chamados[index].id);
+  const id = chamados[index].id_ticket;
   try {
     const res = await fetch(`${BASE_URL}/${id}/fechar`, { method: 'PATCH' });
     if (!res.ok) throw new Error('Falha ao fechar chamado');
@@ -122,7 +124,7 @@ async function fecharChamado(index) {
 document.getElementById('formChamado').addEventListener('submit', async function (e) {
   e.preventDefault();
   if (chamadoAtual === null) return;
-  const id = idNumerico(chamados[chamadoAtual].id);
+  const id = chamados[chamadoAtual].id_ticket;
   const status = document.getElementById('chamadoStatus').value;
   const prioridade = document.getElementById('chamadoPrioridade').value;
   const descricao = document.getElementById('chamadoDescricao').value;

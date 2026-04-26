@@ -19,10 +19,7 @@ exports.getChamados = async (req, res) => {
 
         const result = await pool.query(query);
 
-        const chamados = result.rows.map(row => ({
-            ...row,
-            id: `#CH-${String(row.id).padStart(4, '0')}`
-        }));
+        const chamados = result.rows;
 
         res.status(200).json(chamados);
 
@@ -42,7 +39,7 @@ exports.updateChamado = async (req, res) => {
     try {
         const query = `
         UPDATE TICKETS_EMPRESA
-        SET status = UPPER($1),
+        SET status_ticket = UPPER($1),
             prioridade = LOWER($2),
             descricao = $3
         WHERE id_ticket = $4
@@ -71,7 +68,7 @@ exports.fecharChamado = async (req, res) => {
     try {
         const query = `
         UPDATE TICKETS_EMPRESA
-        SET status_ticket = 'FECHADO',
+        SET status_ticket = 'ENCERRADO',
             data_encerramento = now()::timestamp(0)
         WHERE id_ticket = $1
         RETURNING id_ticket
