@@ -22,7 +22,23 @@ document.getElementById('formLogin').addEventListener('submit', async function (
         const resultado = await response.json();
 
         if (response.ok) {
+
+            let isAdmin = false
+
+            sessionStorage.setItem('lojas', JSON.stringify(resultado.lojas));
+
+            const idsLojas = resultado.lojas.map(l => l.id_loja);
+            sessionStorage.setItem('ids_lojas', JSON.stringify(idsLojas));
+
+            const isAdminStr = resultado.perfil;
+
+            isAdmin = isAdminStr == 'admin' ? true : false;
+
+
+            sessionStorage.setItem('is_admin', JSON.stringify(isAdmin));
+
             window.location.href = '../html/home_page.html';
+
         } else if (response.status === 401) {
             mensagemErro.textContent = resultado.mensagem || 'Email ou senha inválidos.'
         }

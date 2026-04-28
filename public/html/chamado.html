@@ -7,8 +7,11 @@
   <title>Chamados</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
+  rel="stylesheet">
   <link rel="stylesheet" href="../css/chamado.css">
 </head>
 
@@ -60,14 +63,64 @@
 
     <!-- Seção de Chamados -->
     <div class="section-title">
-      <h3>Chamados Ativos</h3>
-      <p>Visualize o status e atualizações de seus chamados</p>
-    </div>
+      <div class="filtros-row">
 
-    <div class="chamados-container" id="chamadosContainer">
-      <!-- Chamados serão inseridos aqui via JavaScript -->
-    </div>
-  </div>
+        <div class="section-title filtro-box">
+          <div class="multi-dropdown" id="filtroLojas">
+            <button class="multi-dropdown-btn" type="button">
+              Lojas
+            </button>
+
+            <ul class="multi-dropdown-menu" id="lojasDropdown"></ul>
+          </div>
+
+          <div class="multi-selected-tags" id="tagsSelecionadas"></div>
+        </div>
+
+        <div class="section-title filtro-box">
+          <div class="multi-dropdown" id="filtroStatus">
+            <button class="multi-dropdown-btn" type="button">
+              Status
+            </button>
+
+            <ul class="multi-dropdown-menu" id="statusDropdown"></ul>
+          </div>
+
+          <div class="multi-selected-tags" id="tagsSelecionadas2"></div>
+        </div>
+
+        <div class="section-title filtro-box">
+          <div class="multi-dropdown" id="filtroPrioridade">
+            <button class="multi-dropdown-btn" type="button">
+              Prioridade
+            </button>
+            <ul class="multi-dropdown-menu" id="rioridadeDropdown"></ul>
+          </div>
+
+          <div class="multi-selected-tags" id="tagsSelecionadas2"></div>
+        </div>
+        <div class="range-date-box">
+
+          <div class="range-calendar-box">
+            <input type="text" id="filtroDataRange" placeholder="Selecione o período">
+          </div>
+
+
+
+
+          <button class="btn-filtrar-data">
+            Filtrar
+          </button>
+
+        </div>
+
+      </div> <!-- fecha filtros-row -->
+    </div> <!-- fecha section-title -->
+
+    <div class=" chamados-container" id="chamadosContainer">
+    </div> <!-- fecha chamadosContainer -->
+
+  </div> <!-- fecha content -->
 
   <!-- Modal de Edição -->
   <div class="modal fade" id="modalChamado" tabindex="-1" aria-labelledby="modalChamadoLabel" aria-hidden="true">
@@ -114,6 +167,102 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../js/chamado.js"></script>
+  <script>
+    document.querySelector('.multi-dropdown-btn').addEventListener('click', function () {
+      document.getElementById('filtroLojas').classList.toggle('open');
+    });
+
+    document.addEventListener('change', function (e) {
+      if (e.target.classList.contains('permissao-item')) {
+        atualizarTagsSelecionadas();
+      }
+    });
+
+    function atualizarTagsSelecionadas() {
+      const tags = document.getElementById('tagsSelecionadas');
+      tags.innerHTML = '';
+
+      document.querySelectorAll('.permissao-item:checked').forEach(item => {
+        const texto = item.nextElementSibling.textContent;
+
+        tags.insertAdjacentHTML('beforeend', `
+            <span>${texto}</span>
+        `);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+      const dropdown = document.getElementById('lojasDropdown');
+
+      const permissoesFake = [
+        { id: 1, descricao: 'Magazine' },
+        { id: 2, descricao: 'Petz' },
+        { id: 3, descricao: 'Shopee' },
+        { id: 4, descricao: 'Sla porra' },
+
+      ];
+
+      permissoesFake.forEach(item => {
+        dropdown.insertAdjacentHTML('beforeend', `
+            <li>
+                <div class="form-check">
+                    <input class="form-check-input permissao-item" 
+                           type="checkbox" 
+                           value="${item.id}" 
+                           id="perm_${item.id}">
+                    <label class="form-check-label" for="perm_${item.id}">
+                        ${item.descricao}
+                    </label>
+                </div>
+            </li>
+        `);
+      });
+
+    });
+    const datasDisponiveis = [
+      "2025-04-10",
+      "2025-04-12",
+      "2025-04-18",
+      "2025-04-21",
+      "2025-04-25",
+      "2025-04-26"
+    ];
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+      flatpickr("#filtroDataRange", {
+        mode: "range",
+        dateFormat: "Y-m-d",
+        locale: "pt",
+        enable: datasDisponiveis,
+        altInput: true,
+        altFormat: "d/m/Y",
+        disableMobile: true,
+        onChange: function (selectedDates, dateStr) {
+
+          if (selectedDates.length === 2) {
+            filtrarChamadosPorData(selectedDates);
+          }
+        }
+      });
+
+    });
+    function filtrarChamadosPorData(selectedDates) {
+
+      const dataInicio = formatarISO(selectedDates[0]);
+      const dataFim = formatarISO(selectedDates[1]);
+
+      const chamadosFiltrados = chamados.filter(ch => {
+        return ch.data_abertura >= dataInicio && ch.data_abertura <= dataFim;
+      });
+
+      renderizarChamados(chamadosFiltrados);
+    }
+    function formatarISO(data) {
+      return data.toISOString().split('T')[0];
+    }
+  </script>
 </body>
 
 </html>

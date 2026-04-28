@@ -19,8 +19,15 @@ function formatarData(data) {
 
 
 async function carregarEstatisticasHomePage() {
+
+    const idsLojas = sessionStorage.getItem('ids_lojas');
+    if (!idsLojas) {
+        alert('Sessão expirada. Faça login novamente.');
+        windows.location.href('/login.html')
+    }
+
     try {
-        const response = await fetch('http://localhost:3000/homepage/cards', {
+        const response = await fetch(`http://localhost:3000/homepage/cards?ids_lojas=${encodeURIComponent(idsLojas)}`, {
             method: 'GET',
         });
         if (!response.ok) {
@@ -80,21 +87,28 @@ function renderizarChamadosRecentes() {
     chamados.forEach((chamado, index) => {
         const cor = avatarColors[index % avatarColors.length];
         container.innerHTML += `
-        <div class="ticket-item">
+            <div class= "ticket-item">
             <div class="ticket-avatar" style="background: ${cor};">${iniciais(chamado.nome_completo)}</div>
             <div class="ticket-info">
                 <div class="ticket-title">${chamado.assunto || 'Sem título'}</div>
                 <div class="ticket-meta">#TK-${String(chamado.id_ticket).padStart(4, '0')} · ${chamado.nome_completo || '-'} · ${formatarData(chamado.data_inicio)}</div>
             </div>
             <span class="ticket-status ${statusClass(chamado.status)}">${capitalize(chamado.status)}</span>
-        </div>
-        `;
+        </div >
+            `;
     });
 }
 
 async function carregarChamadosRecentes() {
+
+    const idsLojas = sessionStorage.getItem('ids_lojas');
+    if (!idsLojas) {
+        alert('Sessão expirada. Faça login novamente.');
+        windows.location.href('/login.html')
+    }
+
     try {
-        const response = await fetch('http://localhost:3000/homepage/chamadosRecentes', {
+        const response = await fetch(`http://localhost:3000/homepage/chamadosRecentes?ids_lojas=${encodeURIComponent(idsLojas)}`, {
             method: 'GET',
         });
 

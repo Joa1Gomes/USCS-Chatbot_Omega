@@ -1,11 +1,11 @@
-document.addEventListener("DOMContentLoaded" {
+document.addEventListener('DOMContentLoaded', function () {
 
-    //requisicao get para carregar os dados do usuario
+    const isAdmin = sessionStorage.getItem('is_admin');
 
-    //requisicao put para alterar o nome
-
-    //requisicao put para alterar a senha validando com a senha atual do banco
-
-    //requisicao put para alterar o email
+    if (isAdmin === 'true') {
+        document.getElementById('menuLista').insertAdjacentHTML('afterbegin', `
+            <li><a href="gerenciamento_adm.html">🧑‍💼 Gerenciamento de Usuários</a></li>
+        `);
+    }
 
 });

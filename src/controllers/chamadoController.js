@@ -2,6 +2,13 @@ const pool = require('../../dbConfig');
 
 //GET /chamados - Vai listar todos os chamados 
 exports.getChamados = async (req, res) => {
+
+    const idsLojas = JSON.parse(req.query.ids_lojas || '[]');
+
+    if (!idsLojas.length) {
+        return res.status(400).json({ mensagem: "Nenhuma loja encontrada" });
+    }
+
     try {
         const query = ` 
         SELECT 
@@ -14,10 +21,11 @@ exports.getChamados = async (req, res) => {
             ,LOWER(status_ticket) as status
         from TICKETS_EMPRESA a
 		inner join clientes_empresa b on a.id_cliente_empresa = b.id_cliente_empresa
+        where a.id_loja = ANY($1::int[])
         ORDER BY data_inicio DESC
             `;
 
-        const result = await pool.query(query);
+        const result = await pool.query(query, [idsLojas]);
 
         const chamados = result.rows;
 

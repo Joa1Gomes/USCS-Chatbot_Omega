@@ -5,6 +5,7 @@ const pool = require('../../dbConfig');
 
 exports.LogarUsuario = async (req, res) => {
   const { email, senha } = req.body;
+
   if (!email || !senha) {
     return res.status(400).json({ mensagem: 'Todos os campos são obrigatórios.' });
   }
@@ -32,11 +33,43 @@ exports.LogarUsuario = async (req, res) => {
       return res.status(401).json({ mensagem: 'Senha incorreta.' });
     }
 
-    res.status(200).json({ mensagem: 'Login realizado com sucesso!' });
+    // buscar as lojas que o usuario tem acesso
+    const queryLojas = `
+    
+      SELECT ul.id_loja, l.nome_loja
+      FROM usuario_lojas ul
+      INNER JOIN lojas l ON ul.id_loja = l.id_loja
+      WHERE ul.id_usuario = $1
+    
+    `
+    const resultLojas = await pool.query(queryLojas, [usuario.id_usuario]);
+    const lojas = resultLojas.rows;
+
+    const queryIsAdmin = `
+    
+      SELECT perfil
+      FROM usuario_empresa
+      where id_usuario = $1
+    `
+
+    const resultPerfil = await pool.query(queryIsAdmin, [usuario.id_usuario]);
+    const pefilObj = resultPerfil.rows[0];
+    const perfil = Object.values(pefilObj)[0];
+
+
+    res.status(200).json({
+      mensagem: "Login realizado com sucesos",
+      id_usuario: usuario.id_usuario,
+      lojas, // array com as informações das lojas
+      perfil
+    });
+
+
+    //res.status(200).json({ mensagem: 'Login realizado com sucesso!' });
 
   } catch (erro) {
     console.error(erro);
 
     res.status(500).json({ mensagem: 'Erro ao processar login.' });
   };
-}
+};

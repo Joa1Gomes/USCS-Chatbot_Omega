@@ -5,7 +5,6 @@ const BASE_URL = 'http://localhost:3000/chamados';
 
 
 const modalChamado = new bootstrap.Modal(document.getElementById('modalChamado'));
-
 // Padronizar textos que a API retorna
 
 function capitalize(str) {
@@ -83,8 +82,17 @@ function renderizarChamados() {
 
 // ── Carregar chamados da API ───────────────────────────────────────────────
 async function carregarChamados() {
+
+  const idsLojas = sessionStorage.getItem('ids_lojas');
+  if (!idsLojas) {
+    alert('Sessão expirada. Faça login novamente.');
+    window.location.href = '/login.html';
+    return;
+  }
+
   try {
-    const res = await fetch(BASE_URL);
+    const url = `${BASE_URL}?ids_lojas=${encodeURIComponent(idsLojas)}`;
+    const res = await fetch(url);
     if (!res.ok) throw new Error('Erro na resposta da API');
     chamados = await res.json();
     renderizarChamados();
