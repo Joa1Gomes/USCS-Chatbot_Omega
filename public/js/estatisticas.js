@@ -1,6 +1,26 @@
+document.addEventListener('DOMContentLoaded', function () {
+
+  const isAdmin = sessionStorage.getItem('is_admin');
+
+  if (isAdmin === 'true') {
+    document.getElementById('menuLista').insertAdjacentHTML('afterbegin', `
+            <li><a href="gerenciamento_adm.html">🧑‍💼 Gerenciamento de Usuários</a></li>
+        `);
+  }
+
+});
+
 async function calcularEstatisticas() {
+
+  const idsLojas = sessionStorage.getItem('ids_lojas');
+
+  if (!idsLojas) {
+    alert('Sessão expirada. Faça login novamente.');
+    windows.location.href('/login.html')
+  }
+
   try {
-    const response = await fetch('http://localhost:3000/estatisticas', {
+    const response = await fetch(`http://localhost:3000/estatisticas?ids_lojas=${encodeURIComponent(idsLojas)}`, {
       method: 'GET'
     });
     if (!response.ok) {
