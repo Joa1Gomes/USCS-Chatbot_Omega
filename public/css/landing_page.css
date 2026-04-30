@@ -1,0 +1,80 @@
+/* ===== LANDING PAGE CUSTOM ===== */
+
+/* Ajuste geral da página */
+.content {
+  padding-top: 60px;
+}
+
+/* HERO específico da landing */
+.hero-section {
+  text-align: center;
+}
+
+/* Botão principal (já usa padrão, só reforça) */
+.hero-btn-primary {
+  background: white;
+  color: var(--primary);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.hero-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  color: var(--primary);
+}
+
+/* Botão secundário */
+.hero-btn-secondary {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.hero-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+/* Grid de features mais centralizado */
+.features-grid {
+  max-width: 1000px;
+  margin: 0 auto 40px;
+}
+
+/* Cards com leve destaque ao passar o mouse */
+.feature-card {
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Pequeno ajuste no título */
+.section-title {
+  text-align: center;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .hero-section {
+    text-align: center;
+  }
+
+  .features-grid {
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

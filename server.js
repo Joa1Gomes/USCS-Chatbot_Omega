@@ -44,9 +44,13 @@ app.use('/senha', senhaRoutes);
 app.use('/chamados', chamadoRoutes);
 app.use('/homepage', homepageRoutes);
 
-app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
+  });
+}
+
+module.exports = app;
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
