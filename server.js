@@ -10,6 +10,7 @@ const clientesRoutes = require('./src/routes/clientesRoutes');
 const senhaRoutes = require('./src/routes/senhaRoutes');
 const chamadoRoutes = require('./src/routes/chamadoRoutes');
 const homepageRoutes = require('./src/routes/homePageRoutes');
+const gerenciamentoLojasRoutes = require('./src/routes/gerenciamentoLojasRoutes');
 
 const app = express();
 const PORT = 3000;
@@ -43,6 +44,7 @@ app.use('/clientes', clientesRoutes);
 app.use('/senha', senhaRoutes);
 app.use('/chamados', chamadoRoutes);
 app.use('/homepage', homepageRoutes);
+app.use('/lojas', gerenciamentoLojasRoutes);
 
 if (require.main === module) {
   app.listen(PORT, () => {
