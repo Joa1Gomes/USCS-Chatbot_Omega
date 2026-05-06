@@ -36,6 +36,8 @@ document.getElementById('formLogin').addEventListener('submit', async function (
 
 
             sessionStorage.setItem('is_admin', JSON.stringify(isAdmin));
+            sessionStorage.setItem('id_empresa', resultado.id_empresa);
+            sessionStorage.setItem('id_usuario', resultado.id_usuario);
 
             window.location.href = '../html/home_page.html';
 

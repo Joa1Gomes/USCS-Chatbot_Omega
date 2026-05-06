@@ -1,4 +1,5 @@
 let lojas = []
+let lojaAtual = null
 const urlPadrao = 'http://localhost:3000'
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -8,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (isAdmin = 'true') {
         document.getElementById('menuLista').insertAdjacentHTML('afterbegin', `
             <li><a href="gerenciamento_adm.html">🧑‍💼 Gerenciamento de Usuários</a></li>
-            <li><a href="gerenciamento_lojas.html">🏬 Gerenciamento de Lojas</a></li>
+            <li><a href="gerenciamento_loja.html">🏬 Gerenciamento de Lojas</a></li>
             `)
     }
 
@@ -23,22 +24,19 @@ async function renderizarLojas() {
         container.innerHTML = '<p style="text-align:center; color:#aaa;">Nenhuma loja encontrada.</p>';
     }
 
-    lojas.forEach((lojas, index) => {
+    lojas.forEach((loja, index) => {
         container.innerHTML += `
-        <tr data-id="LOJ001" data-cep="00000-000" data-end="Rua A" data-num="10" data-compl="Loja B"
-            data-resp-nome="João" data-resp-email="joao@a.com" data-resp-cargo="Gerente" data-resp-cpf="12345678901">
-            <td>${lojas.codigo_loja || 'Sem código'}</td>
-            <td>${lojas.nome_loja || 'Sem nome definido'}</td>
-            <td>${lojas.cnpj_loja || 'Sem CNPJ'}</td>
-            <td>${lojas.cidade || 'Sem cidade'}</td>
-            <td>${lojas.estado || 'Sem estado'}</td>
-            <td>${lojas.telefone || 'Sem telefone'}</td>
-            <td><span class="badge-ativa">${lojas.status}</span></td>
+        <tr>
+            <td>${loja.codigo_loja || 'Sem código'}</td>
+            <td>${loja.nome_loja || 'Sem nome definido'}</td>
+            <td>${loja.cnpj_loja || 'Sem CNPJ'}</td>
+            <td>${loja.cidade || 'Sem cidade'}</td>
+            <td>${loja.estado || 'Sem estado'}</td>
+            <td>${loja.telefone || 'Sem telefone'}</td>
+            <td><span class="badge-ativa">${loja.status}</span></td>
             <td>
-              <button class="btn btn-sm btn-outline-primary" onclick="editarLoja('${lojas.codigo_loja}')"><i
-                  class="fas fa-edit"></i></button>
-              <button class="btn btn-sm btn-outline-danger" onclick="this.closest('tr').remove()"><i
-                  class="fas fa-trash"></i></button>
+              <button class="btn btn-sm btn-outline-primary" onclick="editarLoja(${loja.id_loja})"><i class="fas fa-edit"></i></button>
+              <button class="btn btn-sm btn-outline-danger" onclick="deletarLoja(${loja.id_loja})"><i class="fas fa-trash"></i></button>
             </td>
           </tr>
         
@@ -49,10 +47,15 @@ async function renderizarLojas() {
 
 
 async function carregarLojas() {
+    const id_empresa = sessionStorage.getItem('id_empresa');
+    const id_usuario = sessionStorage.getItem('id_usuario');
+    const is_admin = sessionStorage.getItem('is_admin'); // "true" ou "false" (string)
+
     try {
-        const response = await fetch(`http://localhost:3000/lojas/lista`, {
-            method: 'GET',
-        });
+        const response = await fetch(
+            `http://localhost:3000/lojas/lista?id_empresa=${id_empresa}&id_usuario=${id_usuario}&is_admin=${is_admin}`,
+            { method: 'GET' }
+        );
         if (!response.ok) throw new Error('Erro ao buscar lojas');
 
         lojas = await response.json();
@@ -60,10 +63,103 @@ async function carregarLojas() {
 
     } catch (erro) {
         console.error('Erro ao carregar lojas', erro);
-        const container = document.getElementById('lojas-lista');
-        if (container) container.innerHTML = '<p style="color:red; text-align:center;">Erro ao carregar lojas.</p>';
+        const container = document.getElementById('tabelaLojas');
+        if (container) container.innerHTML = '<tr><td colspan="8" style="text-align:center;color:red;">Erro ao carregar lojas.</td></tr>';
     }
 };
+
+
+async function salvarLoja() {
+    const form = document.getElementById('formLoja');
+    //if (!form.CheckValidity()) { form.reportValidity(); return; }
+
+    const id_empresa = sessionStorage.getItem('id_empresa');
+    const isEditando = document.getElementById('editId').value !== '';
+
+    const payload = {
+        id_empresa: id_empresa,
+        codigo_loja: document.getElementById('cod').value,
+        nome_loja: document.getElementById('nome').value,
+        cnpj_loja: document.getElementById('cnpj').value,
+        cidade: document.getElementById('cidade').value,
+        estado: document.getElementById('estado').value,
+        endereco: document.getElementById('end').value,
+        telefone: document.getElementById('tel').value,
+        status: document.getElementById('status').value
+    };
+
+    try {
+        const url = isEditando
+            ? `http://localhost:3000/lojas/editarLoja/${document.getElementById('editId').value}`
+            : `http://localhost:3000/lojas/cadastraLoja`;
+        // Se for edição usamos PATCH ou PUT, se for criação usamos POST
+        const metodo = isEditando ? 'PATCH' : 'POST';
+        const response = await fetch(url, {
+            method: metodo,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+            const resultado = await response.json();
+            alert('Erro ao salvar loja: ' + resultado.mensagem);
+            return;
+        }
+        bootstrap.Modal.getInstance(document.getElementById('modalLoja')).hide();
+        await carregarLojas();
+
+    } catch (erro) {
+        console.error('Erro ao salvar loja:', erro);
+        alert('Erro de conexão ao tentar salvar a loja.');
+    }
+}
+
+async function deletarLoja(id_loja) {
+
+    try {
+        const response = await fetch(
+            `http://localhost:3000/lojas/deletarLoja/${id_loja}`,
+            { method: 'DELETE' }
+        );
+
+        if (!response.ok) {
+            const erro = await response.json();
+            throw new Error(erro.mensagem || 'Erro ao deletar loja');
+        }
+
+        alert('Loja deletada com sucesso!');
+        await carregarLojas(); // Recarrega a lista do backend
+
+    } catch (erro) {
+        console.error('Erro ao deletar lojas', erro);
+        alert(erro.message);
+    }
+}
+
+async function editarLoja(id_loja) {
+    // Garante comparação numérica — o onclick pode passar string ou number
+    const loja = lojas.find(l => Number(l.id_loja) === Number(id_loja));
+    if (!loja) {
+        console.error('Loja não encontrada no array. id_loja recebido:', id_loja, '| lojas no array:', lojas.map(l => l.id_loja));
+        return;
+    }
+
+    // Preenche o campo oculto com o id_loja para o salvarLoja saber que é uma edição
+    document.getElementById('editId').value = loja.id_loja;
+
+    document.getElementById('cod').value = loja.codigo_loja;
+    document.getElementById('nome').value = loja.nome_loja;
+    document.getElementById('cnpj').value = loja.cnpj_loja;
+    document.getElementById('cidade').value = loja.cidade;
+    document.getElementById('estado').value = loja.estado;
+    document.getElementById('tel').value = loja.telefone;
+    document.getElementById('status').value = loja.status;
+
+    document.getElementById('modalTitle').innerText = 'Editar loja';
+    const modalEl = document.getElementById('modalLoja');
+    const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+    modal.show();
+}
 
 async function inicializarPagina() {
     await carregarLojas()

@@ -263,47 +263,6 @@
       modal.show();
     }
 
-    function salvarLoja() {
-      const form = document.getElementById('formLoja');
-      if (!form.checkValidity()) { form.reportValidity(); return; }
-
-      const id = document.getElementById('editId').value;
-      const cod = document.getElementById('cod').value;
-      const nome = document.getElementById('nome').value;
-
-      const status = document.getElementById('status').value;
-      const badgeClass = status === 'Ativa' ? 'badge-ativa' : 'badge-inativa';
-
-      // Validações
-      const cpf = document.getElementById('respCpf').value.replace(/\D/g, '');
-      if (cpf.length !== 11) { alert('CPF deve ter 11 dígitos!'); return; }
-      if (!document.getElementById('respEmail').value.includes('@')) { alert('Email inválido!'); return; }
-
-      if (id) {
-        const row = document.querySelector(`tr[data-id="${id}"]`);
-        row.cells[0].innerText = cod;
-        row.cells[1].innerText = nome;
-        row.cells[6].innerHTML = `<span class="${badgeClass}">${status}</span>`;
-        // Atualiza atributos de dados
-        row.dataset.cep = document.getElementById('cep').value;
-        // ... atualizar outros campos ...
-      } else {
-        const tr = document.createElement('tr');
-        tr.setAttribute('data-id', cod);
-        tr.innerHTML = `
-          <td>${cod}</td><td>${nome}</td><td>${document.getElementById('cnpj').value}</td>
-          <td>${document.getElementById('cidade').value}</td><td>${document.getElementById('estado').value}</td>
-          <td>${document.getElementById('tel').value}</td>
-          <td><span class="${badgeClass}">${status}</span></td>
-          <td>
-            <button class="btn btn-sm btn-outline-primary" onclick="editarLoja('${cod}')"><i class="fas fa-edit"></i></button>
-            <button class="btn btn-sm btn-outline-danger" onclick="this.closest('tr').remove()"><i class="fas fa-trash"></i></button>
-          </td>
-        `;
-        document.getElementById('tabelaLojas').appendChild(tr);
-      }
-      modal.hide();
-    }
 
     function editarLoja(id) {
       // Logica de editar...

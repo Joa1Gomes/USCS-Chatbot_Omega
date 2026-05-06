@@ -60,6 +60,7 @@ exports.LogarUsuario = async (req, res) => {
     res.status(200).json({
       mensagem: "Login realizado com sucesos",
       id_usuario: usuario.id_usuario,
+      id_empresa: usuario.id_empresa,
       lojas, // array com as informações das lojas
       perfil
     });
