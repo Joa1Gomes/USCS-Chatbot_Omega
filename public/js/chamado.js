@@ -174,15 +174,16 @@ function atualizarFiltros() {
 
   /* ── Dropdowns ── */
 
-  // LOJAS
-  const lojasItens = [...optLojas.lojas.entries()].map(([id, nome]) => ({
-    value: id,
-    label: nome,
+  // LOJAS — usa as lojas do sessionStorage, não só as dos chamados
+  const lojasStorage = JSON.parse(sessionStorage.getItem('lojas') || '[]');
+  const lojasItens = lojasStorage.map(l => ({
+    value: String(l.id_loja),
+    label: l.nome_loja,
     disabled: false
   }));
   renderDropdown('lojasDropdown', lojasItens, filtros.lojas, aplicarFiltros);
   renderTags('tagsSelecionadas', filtros.lojas,
-    Object.fromEntries([...optLojas.lojas.entries()].map(([id, nome]) => [id, nome])));
+    Object.fromEntries(lojasStorage.map(l => [String(l.id_loja), l.nome_loja])));
 
   // STATUS — usa a lista de todos os status possíveis; desabilita os que não têm chamados
   const todosStatus = ['aberto', 'em_andamento', 'resolvido', 'encerrado'];
