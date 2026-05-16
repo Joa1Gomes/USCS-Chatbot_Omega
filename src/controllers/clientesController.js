@@ -4,58 +4,50 @@ exports.cadastrarCliente = async (req, res) => {
   const { nomeCliente, emailCliente } = req.body;
 
   try {
-    await sql.connect(config);
+    // Separa primeiro e último nome
+    const partesNome = nomeCliente ? nomeCliente.trim().split(' ') : [''];
+    const primeiroNome = partesNome[0];
+    const ultimoNome = partesNome.length > 1 ? partesNome[partesNome.length - 1] : '';
 
-    const query = `
-        INSERT INTO clientes
-         (primeiro_nome,
-          ultimo_nome,
-          email_cliente)
-        OUTPUT INSERTED.ID_CLIENTE
-        VALUES
-        (@primeiro_nome, @ultimo_nome, @email_cliente)`;
+    // Se o cliente já existe pelo e-mail, retorna o id existente
+    const existing = await pool.query(
+      `SELECT id_cliente_empresa FROM clientes_empresa WHERE email_cliente = $1 LIMIT 1`,
+      [emailCliente]
+    );
 
-
-    const request = new sql.Request();
-
-    let partesNome = nomeCliente.split(" ");
-
-    let primeiroNome = partesNome[0];
-
-    let ultimoIndex = partesNome.length - 1;
-    let ultimoNome = partesNome[ultimoIndex]
-
-    request.input('primeiro_nome', sql.VarChar, primeiroNome);
-    request.input('ultimo_nome', sql.VarChar, ultimoNome);
-    request.input('email_cliente', sql.VarChar, emailCliente);
-
-
-    const checkRequest = new sql.Request();
-    checkRequest.input('email_cliente', sql.VarChar, emailCliente);
-
-    const existing = await checkRequest.query('SELECT ID_CLIENTE FROM clientes WHERE email_cliente = @email_cliente');
-
-    if (existing.recordset.length > 0) {
-      return res.status(200).json({ idCliente: existing.recordset[0].ID_CLIENTE });
+    if (existing.rowCount > 0) {
+      return res.status(200).json({ idCliente: existing.rows[0].id_cliente_empresa });
     }
 
-    const result = await request.query(query);
+    // Insere novo cliente e retorna o id gerado
+    const result = await pool.query(
+      `INSERT INTO clientes_empresa (nome_completo, email_cliente)
+       VALUES ($1, $2)
+       RETURNING id_cliente_empresa`,
+      [`${primeiroNome} ${ultimoNome}`.trim(), emailCliente]
+    );
 
-    const idCliente = result.recordset[0].ID_CLIENTE;
-    return res.status(200).json({ idCliente });
+    const idCliente = result.rows[0].id_cliente_empresa;
+    return res.status(201).json({ idCliente });
 
   } catch (erro) {
-    console.error(erro);
-    if (erro.number === 2627) {
-      const selectRequest = new sql.Request();
+    console.error('Erro ao cadastrar cliente:', erro);
 
-      selectRequest.input('email_cliente', sql.VarChar, emailCliente);
-      const selectResult = await selectRequest.query('SELECT ID_CLIENTE FROM clientes WHERE email_cliente = @email_cliente');
-
-      if (selectResult.recordset.length > 0) {
-        return res.status(200).json({ idCliente: selectResult.recordset[0].ID_CLIENTE });
+    // Violação de unique (email duplicado) — retorna o cliente já existente
+    if (erro.code === '23505') {
+      try {
+        const fallback = await pool.query(
+          `SELECT id_cliente_empresa FROM clientes_empresa WHERE email_cliente = $1 LIMIT 1`,
+          [emailCliente]
+        );
+        if (fallback.rowCount > 0) {
+          return res.status(200).json({ idCliente: fallback.rows[0].id_cliente_empresa });
+        }
+      } catch (err2) {
+        console.error('Erro no fallback:', err2);
       }
     }
+
     res.status(500).json({ mensagem: 'Erro ao processar cadastro.' });
   }
 };

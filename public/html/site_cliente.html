@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>TechStore</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style_cliente.css">
+
+  <link rel="icon" href="img/logosite.png" type="image/png">
+  <link rel="shortcut icon" href="img/logosite.png" type="image/png">
+  <link rel="apple-touch-icon" href="img/logosite.png">
+</head>
+
+<body>
+
+  <!-- BOT CHAT -->
+  <button id="chatToggle" class="omega-toggle">
+    <span class="omega-toggle-dot"></span>
+    <span>Omega</span>
+  </button>
+
+  <section id="chatWidget" class="omega-widget hidden">
+    <div class="omega-card">
+
+      <header class="omega-header">
+        <div class="omega-header-left">
+          <div class="omega-logo">
+            <img src="img/logorobo.png" alt="Omega Bot">
+          </div>
+          <div>
+            <h1>Omega</h1>
+            <p>Suporte</p>
+          </div>
+        </div>
+        <div class="omega-header-actions">
+          <button id="minimizeChat" class="header-btn">—</button>
+          <button id="closeChat" class="header-btn">×</button>
+        </div>
+      </header>
+
+      <div class="omega-status-bar">
+        <span class="status-indicator"></span>
+        <span>Online</span>
+      </div>
+
+      <div id="chatMessages" class="omega-messages"></div>
+
+      <div class="omega-footer">
+        <div id="optionsContainer" class="omega-options"></div>
+        <div class="omega-input-area">
+          <input type="text" id="userInput" placeholder="Digite..." />
+          <button id="sendBtn">Enviar</button>
+        </div>
+        <div class="omega-footer-bottom">
+          <button id="restartChat" class="footer-link-btn">Reiniciar</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="toast-container"></div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-top">
+
+      <!-- LOGO -->
+      <div class="logo">
+        <a href="site_cliente.html">
+          <img src="img/logo.png" alt="TechStore">
+        </a>
+      </div>
+
+      <!-- BUSCA -->
+      <div class="search-box">
+        <input type="text" id="search" placeholder="Buscar produtos..." onkeyup="buscar()">
+        <button class="search-btn" onclick="buscar()">
+          <img src="img/lupa.png" alt="Buscar">
+        </button>
+      </div>
+
+      <!-- LOGIN + CARRINHO AGRUPADOS -->
+      <div class="header-icons">
+
+        <!-- ÁREA DO USUÁRIO -->
+        <div id="user-area"></div>
+
+        <!-- CARRINHO -->
+        <div class="cart-btn" onclick="toggleCarrinho()">
+          <img src="img/carrinho.png" alt="Carrinho">
+          <span id="cart-count">0</span>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- MENU -->
+    <nav class="menu">
+      <button onclick="filtrar('todos')">Home</button>
+      <button onclick="filtrar('cpu')">Processadores</button>
+      <button onclick="filtrar('ram')">Memória RAM</button>
+      <button onclick="filtrar('gpu')">Placa de Vídeo</button>
+      <button onclick="filtrar('fonte')">Fontes</button>
+      <button onclick="filtrar('placa')">Placa Mãe</button>
+      <button onclick="filtrar('gabinete')">Gabinetes</button>
+    </nav>
+  </header>
+
+  <!-- PRODUTOS -->
+  <main>
+    <div id="produtos" class="grid"></div>
+  </main>
+
+  <!-- CARRINHO -->
+  <div id="carrinho" class="carrinho">
+    <div class="carrinho-header">
+      <h2>Carrinho</h2>
+      <button class="fechar" onclick="toggleCarrinho()">✖</button>
+    </div>
+
+    <div id="itens-carrinho" style="max-height: 400px; overflow-y: auto; margin-bottom: 20px;"></div>
+
+    <div class="carrinho-footer" style="border-top: 1px solid #333; padding-top: 15px;">
+      <h3>Total: <span id="total">R$ 0,00</span></h3>
+
+      <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px;">
+        <button class="buy" onclick="finalizarCompra()">Finalizar Compra</button>
+        <button class="limpar" onclick="limparCarrinho()">Limpar Carrinho</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/produtos_cliente.js"></script>
+  <script src="../js/chatbot_cliente.js"></script>
+  <script src="../js/scripts_cliente.js"></script>
+
+</body>
+
+</html>

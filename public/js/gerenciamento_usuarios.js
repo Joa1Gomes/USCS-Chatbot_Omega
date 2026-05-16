@@ -19,6 +19,11 @@ document.addEventListener('DOMContentLoaded', function () {
 async function carregarUsuarios() {
   try {
     const idEmpresa = sessionStorage.getItem('id_empresa');
+    if (!idEmpresa) {
+        alert('Sessão expirada. Faça login novamente.');
+        window.location.href = '/login.html';
+        return;
+    }
     const response = await fetch(`http://localhost:3000/gerenciamento?id_empresa=${idEmpresa}`);
     const usuarios = await response.json();
 

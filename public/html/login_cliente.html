@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Login - TechStore</title>
+  <link rel="stylesheet" href="../css/style_cliente.css">
+
+  <style>
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .box {
+      background: #1a1a1a;
+      padding: 30px;
+      border-radius: 12px;
+      width: 320px;
+    }
+
+    .box h2 {
+      text-align: center;
+    }
+
+    .box input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: none;
+    }
+
+    .box button {
+      width: 100%;
+      padding: 12px;
+      background: #ff8c00;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .link {
+      text-align: center;
+      margin-top: 10px;
+      cursor: pointer;
+      color: #ff8c00;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="box" id="formLogin">
+
+      <h2>Login</h2>
+
+      <input type="email" id="email" placeholder="Email">
+      <input type="password" id="senha" placeholder="Senha">
+
+      <button onclick="entrar()">Entrar</button>
+
+      <div class="link" onclick="trocar()">Criar conta</div>
+    </div>
+  </div>
+
+  <script src="../js/auth.js"></script>
+
+  <script>
+    let modo = "login";
+
+    function trocar() {
+      const box = document.getElementById("formLogin");
+
+      if (modo === "login") {
+        box.innerHTML = `
+      <h2>Criar Conta</h2>
+
+      <input type="text" id="nome" placeholder="Nome">
+      <input type="email" id="email" placeholder="Email">
+      <input type="password" id="senha" placeholder="Senha">
+
+      <button onclick="cadastrar()">Cadastrar</button>
+
+      <div class="link" onclick="trocar()">Já tenho conta</div>
+    `;
+        modo = "cadastro";
+      } else {
+        location.reload();
+      }
+    }
+
+    function entrar() {
+      const email = document.getElementById("email").value;
+      const senha = document.getElementById("senha").value;
+
+      if (login(email, senha)) {
+        alert("Login realizado!");
+        window.location.href = "site_cliente.html";
+      }
+    }
+
+    function cadastrar() {
+      const nome = document.getElementById("nome").value;
+      const email = document.getElementById("email").value;
+      const senha = document.getElementById("senha").value;
+
+      if (registrar(nome, email, senha)) {
+        location.reload();
+      }
+    }
+  </script>
+
+</body>
+
+</html>

@@ -33,11 +33,14 @@ function formatarData(data) {
 
 async function carregarEstatisticasHomePage() {
 
-    const idsLojas = sessionStorage.getItem('ids_lojas');
-    if (!idsLojas) {
-        alert('Sessão expirada. Faça login novamente.');
-        windows.location.href('/login.html')
+    const idsLojasRaw = sessionStorage.getItem('ids_lojas');
+    const idsLojasParsed = idsLojasRaw ? JSON.parse(idsLojasRaw) : [];
+    if (!idsLojasRaw || idsLojasParsed.length === 0) {
+        alert('Sessão expirada ou nenhuma loja associada. Faça login novamente.');
+        window.location.href = '/login.html';
+        return;
     }
+    const idsLojas = idsLojasRaw;
 
     try {
         const response = await fetch(`http://localhost:3000/homepage/cards?ids_lojas=${encodeURIComponent(idsLojas)}`, {
@@ -114,11 +117,14 @@ function renderizarChamadosRecentes() {
 
 async function carregarChamadosRecentes() {
 
-    const idsLojas = sessionStorage.getItem('ids_lojas');
-    if (!idsLojas) {
-        alert('Sessão expirada. Faça login novamente.');
-        windows.location.href('/login.html')
+    const idsLojasRaw = sessionStorage.getItem('ids_lojas');
+    const idsLojasParsed = idsLojasRaw ? JSON.parse(idsLojasRaw) : [];
+    if (!idsLojasRaw || idsLojasParsed.length === 0) {
+        alert('Sessão expirada ou nenhuma loja associada. Faça login novamente.');
+        window.location.href = '/login.html';
+        return;
     }
+    const idsLojas = idsLojasRaw;
 
     try {
         const response = await fetch(`http://localhost:3000/homepage/chamadosRecentes?ids_lojas=${encodeURIComponent(idsLojas)}`, {

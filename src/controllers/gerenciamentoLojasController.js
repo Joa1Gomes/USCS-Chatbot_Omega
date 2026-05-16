@@ -2,12 +2,15 @@ const pool = require('../../dbConfig');
 
 exports.getLojas = async (req, res) => {
     const { id_empresa, id_usuario, is_admin } = req.query;
+    const isAdmin = is_admin === 'true' || is_admin === '"true"';
+
+    console.log(`[getLojas] id_empresa=${id_empresa} | id_usuario=${id_usuario} | is_admin=${is_admin} | isAdmin=${isAdmin}`);
 
     try {
         let queryLojas;
         let params;
 
-        if (is_admin === 'true') {
+        if (isAdmin) {
             // Admin vê TODAS as lojas da empresa
             queryLojas = `
                 SELECT id_loja, codigo_loja, nome_loja, cnpj_loja, cidade, estado, telefone, status

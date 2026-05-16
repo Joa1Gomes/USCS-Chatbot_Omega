@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Produto | TechStore</title>
+  <link rel="stylesheet" href="../css/style_cliente.css">
+</head>
+
+<body>
+
+  <div id="toast-container"></div>
+
+  <header>
+    <div class="header-top">
+
+      <!-- LOGO -->
+      <div class="logo">
+        <a href="../html/site_cliente.html">
+          <img src="img/logo.png" alt="TechStore">
+        </a>
+      </div>
+
+      <!-- BUSCA -->
+      <div class="search-box">
+        <input type="text" id="search" placeholder="Buscar produtos..." onkeyup="buscar()">
+        <button class="search-btn" onclick="buscar()">
+          <img src="img/lupa.png" alt="Buscar">
+        </button>
+      </div>
+
+      <!-- LOGIN + CARRINHO -->
+      <div class="header-icons">
+
+        <!-- AREA DO USUÁRIO -->
+        <div id="user-area"></div>
+
+        <!-- CARRINHO -->
+        <div class="cart-btn" onclick="toggleCarrinho()">
+          <img src="img/carrinho.png" alt="Carrinho">
+          <span id="cart-count">0</span>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- MENU -->
+    <nav class="menu">
+      <button onclick="window.location.href='site_cliente.html'">Home</button>
+      <button onclick="window.location.href='site_cliente.html'">Processadores</button>
+      <button onclick="window.location.href='site_cliente.html'">Memória RAM</button>
+      <button onclick="window.location.href='site_cliente.html'">Placa de Vídeo</button>
+      <button onclick="window.location.href='site_cliente.html'">Fontes</button>
+      <button onclick="window.location.href='site_cliente.html'">Placa Mãe</button>
+      <button onclick="window.location.href='site_cliente.html'">Gabinetes</button>
+    </nav>
+  </header>
+
+  <!-- PRODUTO -->
+  <main class="produto-container">
+
+    <!-- PRODUTO PRINCIPAL -->
+    <div id="produto-container"></div>
+
+    <!-- RECOMENDADOS (AGORA EMBAIXO ✅) -->
+    <div class="recomendados-section">
+      <h2 class="recomendados-titulo">Você também pode gostar</h2>
+
+      <div class="carousel-container">
+        <button class="carousel-btn left" onclick="scrollRecomendados(-1)">‹</button>
+
+        <div class="recomendados" id="recomendados"></div>
+
+        <button class="carousel-btn right" onclick="scrollRecomendados(1)">›</button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ZOOM -->
+  <div id="zoomModal" class="zoom-modal">
+    <span class="fechar-zoom" onclick="fecharZoom()">×</span>
+    <img id="zoomImg">
+  </div>
+
+  <script src="../js/produtos_cliente.js"></script>
+  <script src="../js/scripts_cliente.js"></script>
+
+  <div id="carrinho" class="carrinho">
+
+    <div class="carrinho-header">
+      <h2>Carrinho</h2>
+      <button class="fechar" onclick="toggleCarrinho()">✖</button>
+    </div>
+
+    <div id="itens-carrinho" style="max-height:400px;overflow-y:auto;margin-bottom:20px;"></div>
+
+    <div class="carrinho-footer" style="border-top:1px solid #333;padding-top:15px;">
+      <h3>Total: <span id="total">R$ 0,00</span></h3>
+
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:15px;">
+        <button class="buy" onclick="finalizarCompra()">Finalizar Compra</button>
+        <button class="limpar" onclick="limparCarrinho()">Limpar Carrinho</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const id = localStorage.getItem("produtoSelecionado");
+    const produto = buscarProdutoPorId(id);
+    const container = document.getElementById("produto-container");
+
+    /* ========================= */
+    /* PRODUTO PRINCIPAL */
+    /* ========================= */
+    if (produto) {
+      container.innerHTML = `
+    
+    <div class="produto-page">
+
+      <div class="galeria">
+
+        <div class="thumbs">
+          <img src="${produto.img}" onclick="trocarImagem(this.src)">
+          <img src="${produto.img}" onclick="trocarImagem(this.src)">
+          <img src="${produto.img}" onclick="trocarImagem(this.src)">
+        </div>
+
+        <div class="img-box">
+          <button class="zoom-btn" onclick="abrirZoom()">+</button>
+          <img id="imgPrincipal" src="${produto.img}">
+        </div>
+
+      </div>
+
+      <div class="produto-info">
+
+        <h1>${produto.nome}</h1>
+
+        <div class="avaliacao">
+          ⭐⭐⭐⭐⭐ <span>(4.8)</span>
+        </div>
+
+        <p class="desc">${produto.desc}</p>
+
+        <h2 class="preco">
+          ${produto.preco.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+        </h2>
+
+        <p class="estoque">Em estoque</p>
+
+        <div class="frete-box">
+          <input type="text" id="cep" placeholder="Digite seu CEP">
+          <button onclick="calcularFrete()">Calcular</button>
+          <p id="frete-resultado"></p>
+        </div>
+
+        <button class="buy" onclick="comprar(${produto.id})">
+          🛒 Adicionar ao carrinho
+        </button>
+
+      </div>
+
+    </div>
+  `;
+    }
+
+    /* ========================= */
+    /* RECOMENDADOS (CORRIGIDO 🔥) */
+    /* ========================= */
+
+    const lista = document.getElementById("recomendados");
+
+    if (lista) {
+      const outros = produtos.filter(p => p.id != id);
+
+      lista.innerHTML = outros.map(p => {
+
+        let badge = "";
+        if (Math.random() > 0.7) {
+          badge = `<div class="badge oferta">OFERTA</div>`;
+        } else if (Math.random() > 0.7) {
+          badge = `<div class="badge top">TOP</div>`;
+        }
+
+        return `
+      <div class="card">
+
+        ${badge}
+
+        <img src="${p.img}">
+        <h3>${p.nome}</h3>
+
+        <p class="preco">
+          ${p.preco.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+        </p>
+
+        <button onclick="verProduto(${p.id})">
+          Ver Produto
+        </button>
+
+      </div>
+    `;
+      }).join("");
+    }
+
+    /* ========================= */
+    /* FUNÇÕES */
+    /* ========================= */
+
+    function verProduto(id) {
+      localStorage.setItem("produtoSelecionado", id);
+      window.location.href = "produtos_cliente.html";
+    }
+
+    function trocarImagem(src) {
+      document.getElementById("imgPrincipal").src = src;
+    }
+
+    function abrirZoom() {
+      document.getElementById("zoomImg").src =
+        document.getElementById("imgPrincipal").src;
+
+      document.getElementById("zoomModal").style.display = "flex";
+    }
+
+    function fecharZoom() {
+      document.getElementById("zoomModal").style.display = "none";
+    }
+
+    function calcularFrete() {
+      const cep = document.getElementById("cep").value;
+      const resultado = document.getElementById("frete-resultado");
+
+      if (cep.length < 8) {
+        resultado.innerText = "CEP inválido";
+        return;
+      }
+
+      resultado.innerText = "Frete: R$ 29,90 (3-5 dias)";
+    }
+
+    function comprar(id) {
+      let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+
+      const item = carrinho.find(p => p.id == id);
+
+      if (item) {
+        item.qtd += 1;
+      } else {
+        const prod = buscarProdutoPorId(id);
+        carrinho.push({ ...prod, qtd: 1 });
+      }
+
+      localStorage.setItem("carrinho", JSON.stringify(carrinho));
+
+      mostrarToast("Produto adicionado ao carrinho!");
+    }
+
+    function scrollRecomendados(dir) {
+      const container = document.getElementById("recomendados");
+      container.scrollBy({
+        left: dir * 300,
+        behavior: "smooth"
+      });
+    }
+
+    function mostrarToast(mensagem) {
+      const container = document.getElementById("toast-container");
+
+      const toast = document.createElement("div");
+      toast.classList.add("toast");
+      toast.innerText = mensagem;
+
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.remove();
+      }, 3000);
+    }
+
+  </script>
+
+
+</body>
+
+</html>

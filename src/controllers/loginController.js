@@ -35,35 +35,37 @@ exports.LogarUsuario = async (req, res) => {
 
     // buscar as lojas que o usuario tem acesso
     const queryLojas = `
-    
       SELECT ul.id_loja, l.nome_loja
       FROM usuario_lojas ul
       INNER JOIN lojas l ON ul.id_loja = l.id_loja
       WHERE ul.id_usuario = $1
-    
-    `
+    `;
     const resultLojas = await pool.query(queryLojas, [usuario.id_usuario]);
-    const lojas = resultLojas.rows;
+    let lojas = resultLojas.rows;
 
-    const queryIsAdmin = `
-    
-      SELECT perfil
-      FROM usuario_empresa
-      where id_usuario = $1
-    `
+    const perfil = usuario.perfil || 'usuario';
 
-    const resultPerfil = await pool.query(queryIsAdmin, [usuario.id_usuario]);
-    const pefilObj = resultPerfil.rows[0];
-    const perfil = Object.values(pefilObj)[0];
+    console.log(`[Login] id=${usuario.id_usuario} | perfil=${perfil} | lojas=${lojas.length}`);
 
+    // Fallback: se nao tiver lojas em usuario_lojas, busca todas da empresa
+    if (lojas.length === 0 && usuario.id_empresa) {
+      console.log(`[Login] Buscando todas as lojas da empresa ${usuario.id_empresa}...`);
+      const resultTodasLojas = await pool.query(
+        `SELECT id_loja, nome_loja FROM lojas WHERE id_empresa = $1 ORDER BY nome_loja`,
+        [usuario.id_empresa]
+      );
+      lojas = resultTodasLojas.rows;
+      console.log(`[Login] Lojas encontradas no fallback: ${lojas.length}`);
+    }
 
     res.status(200).json({
-      mensagem: "Login realizado com sucesos",
+      mensagem: 'Login realizado com sucesso',
       id_usuario: usuario.id_usuario,
       id_empresa: usuario.id_empresa,
-      lojas, // array com as informações das lojas
+      lojas,
       perfil
     });
+
 
 
     //res.status(200).json({ mensagem: 'Login realizado com sucesso!' });

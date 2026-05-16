@@ -11,6 +11,8 @@ const senhaRoutes = require('./src/routes/senhaRoutes');
 const chamadoRoutes = require('./src/routes/chamadoRoutes');
 const homepageRoutes = require('./src/routes/homePageRoutes');
 const gerenciamentoLojasRoutes = require('./src/routes/gerenciamentoLojasRoutes');
+const configRoutes = require('./src/routes/configRoutes');
+const conversaRoutes = require('./src/routes/conversaRoutes');
 
 const app = express();
 const PORT = 3000;
@@ -45,6 +47,8 @@ app.use('/senha', senhaRoutes);
 app.use('/chamados', chamadoRoutes);
 app.use('/homepage', homepageRoutes);
 app.use('/lojas', gerenciamentoLojasRoutes);
+app.use('/configuracoes', configRoutes);
+app.use('/conversas', conversaRoutes);
 
 if (require.main === module) {
   app.listen(PORT, () => {

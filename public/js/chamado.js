@@ -311,6 +311,9 @@ function renderizarChamados(lista) {
           <button class="btn-acao btn-fechar" onclick="fecharChamado(${realIndex})">
             <i class="fas fa-check"></i> Fechar
           </button>
+          <button class="btn-acao btn-chat" onclick="abrirChat(${chamado.id_ticket})">
+            <i class="fas fa-comments"></i> Chat
+          </button>
         </div>
       </div>`;
   });
@@ -318,12 +321,14 @@ function renderizarChamados(lista) {
 
 /* ── Carregar chamados da API ─────────────────────────────────────────────── */
 async function carregarChamados() {
-  const idsLojas = sessionStorage.getItem('ids_lojas');
-  if (!idsLojas) {
-    alert('Sessão expirada. Faça login novamente.');
+  const idsLojasRaw = sessionStorage.getItem('ids_lojas');
+  const idsLojasParsed = idsLojasRaw ? JSON.parse(idsLojasRaw) : [];
+  if (!idsLojasRaw || idsLojasParsed.length === 0) {
+    alert('Sessão expirada ou nenhuma loja associada. Faça login novamente.');
     window.location.href = '/login.html';
     return;
   }
+  const idsLojas = idsLojasRaw;
 
   try {
     const url = `${BASE_URL}?ids_lojas=${encodeURIComponent(idsLojas)}`;
@@ -440,6 +445,12 @@ document.getElementById('btnLimparFiltros').addEventListener('click', () => {
   atualizarFiltros();
   renderizarChamados(chamadosFiltrados());
 });
+
+function abrirChat(idTicket) {
+  // Salva o id do ticket na sessionStorage e redireciona para chat.html
+  sessionStorage.setItem('ticket_chat_ativo', idTicket);
+  window.location.href = 'chat.html';
+}
 
 /* ── Inicializar ─────────────────────────────────────────────────────────── */
 carregarChamados();

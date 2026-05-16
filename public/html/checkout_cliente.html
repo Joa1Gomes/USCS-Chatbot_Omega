@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Finalizar Compra</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style_cliente.css">
+
+</head>
+
+<body>
+
+  <div class="checkout-container">
+
+    <div class="form">
+      <h2>Dados do Cliente</h2>
+
+      <input placeholder="Nome completo">
+      <input placeholder="E-mail">
+      <input placeholder="CPF">
+      <input placeholder="Endereço">
+      <input placeholder="Cidade">
+      <input placeholder="CEP">
+
+      <h2>Pagamento</h2>
+
+      <input placeholder="Número do cartão">
+      <input placeholder="Validade">
+      <input placeholder="CVV">
+    </div>
+
+    <div class="resumo">
+      <h2>Resumo do Pedido</h2>
+
+      <div id="lista"></div>
+
+      <div class="total">
+        Total: R$ <span id="total">0</span>
+      </div>
+
+      <button class="finalizar" onclick="finalizarPedido()">Confirmar Compra</button>
+    </div>
+
+  </div>
+
+  <script src="../js/checkout_cliente.js"></script>
+</body>
+
+</html>

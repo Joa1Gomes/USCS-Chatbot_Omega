@@ -4,33 +4,16 @@ exports.encerrarAtendimento = async (req, res) => {
   const { idCliente, pedido, descricao, tipoSolicitacao } = req.body;
 
   try {
-    await sql.connect(config);
+    const result = await pool.query(
+      `INSERT INTO TICKETS_EMPRESA
+         (id_cliente_empresa, assunto, descricao, prioridade, status_ticket, data_inicio)
+       VALUES ($1, $2, $3, 'media', 'ABERTO', NOW())
+       RETURNING id_ticket`,
+      [idCliente, tipoSolicitacao, descricao || pedido]
+    );
 
-    const query = `
-        INSERT INTO atendimentos
-         (id_cliente,
-          tipo_atendimento,
-          numero_pedido,
-          descricao_atendimento,
-          flag_cancelado,
-          tipo_cancelamento,
-          data_atendimento
-          ) 
-        VALUES 
-        (@idCliente, @tipoSolicitacao, @pedido, @descricao, 0, '', getdate())
-        `;
-
-
-    const request = new sql.Request();
-
-    request.input('idCliente', sql.Int, idCliente);
-    request.input('pedido', sql.NVarChar, pedido);
-    request.input('descricao', sql.NVarChar, descricao);
-    request.input('tipoSolicitacao', sql.NVarChar, tipoSolicitacao);
-
-    await request.query(query);
-
-    res.status(200).json({ mensagem: 'Atendimento cadastrado com sucesso!' });
+    const id_ticket = result.rows[0].id_ticket;
+    res.status(200).json({ mensagem: 'Atendimento registrado!', id_ticket });
   } catch (erro) {
     console.error(erro);
     res.status(500).json({ mensagem: 'Erro ao processar cadastro.' });

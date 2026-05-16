@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let isAdmin = sessionStorage.getItem('is_admin');
 
-    if (isAdmin = 'true') {
+    if (isAdmin === 'true') {
         document.getElementById('menuLista').insertAdjacentHTML('afterbegin', `
             <li><a href="gerenciamento_adm.html">🧑‍💼 Gerenciamento de Usuários</a></li>
             <li><a href="gerenciamento_loja.html">🏬 Gerenciamento de Lojas</a></li>
@@ -22,6 +22,7 @@ async function renderizarLojas() {
 
     if (lojas.length === 0) {
         container.innerHTML = '<p style="text-align:center; color:#aaa;">Nenhuma loja encontrada.</p>';
+        return;
     }
 
     lojas.forEach((loja, index) => {
@@ -33,7 +34,7 @@ async function renderizarLojas() {
             <td>${loja.cidade || 'Sem cidade'}</td>
             <td>${loja.estado || 'Sem estado'}</td>
             <td>${loja.telefone || 'Sem telefone'}</td>
-            <td><span class="badge-ativa">${loja.status}</span></td>
+            <td><span class="badge-ativa">${(loja.status || '').trim()}</span></td>
             <td>
               <button class="btn btn-sm btn-outline-primary" onclick="editarLoja(${loja.id_loja})"><i class="fas fa-edit"></i></button>
               <button class="btn btn-sm btn-outline-danger" onclick="deletarLoja(${loja.id_loja})"><i class="fas fa-trash"></i></button>
@@ -50,6 +51,12 @@ async function carregarLojas() {
     const id_empresa = sessionStorage.getItem('id_empresa');
     const id_usuario = sessionStorage.getItem('id_usuario');
     const is_admin = sessionStorage.getItem('is_admin'); // "true" ou "false" (string)
+
+    if (!id_empresa) {
+        alert('Sessão expirada. Faça login novamente.');
+        window.location.href = '/login.html';
+        return;
+    }
 
     try {
         const response = await fetch(
