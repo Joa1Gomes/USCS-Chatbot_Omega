@@ -61,6 +61,112 @@ function adicionarMensagem(texto, tipo) {
   chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
+// ── Busca tickets anteriores do cliente ───────────────────────────────────────
+async function buscarTicketsPorEmail(email) {
+  try {
+    const res = await fetch(`http://localhost:3000/clientes/tickets?email=${encodeURIComponent(email)}`);
+    if (!res.ok) return [];
+    return await res.json();
+  } catch (err) {
+    console.error('Erro ao buscar tickets:', err);
+    return [];
+  }
+}
+
+// ── Retoma uma conversa anterior ──────────────────────────────────────────────
+async function retomarConversa(ticket) {
+  idTicket = ticket.id_ticket;
+  idConversa = ticket.id_conversa;
+
+  limparOpcoes();
+  adicionarMensagemSistema(`Carregando conversa do ticket #${idTicket}...`);
+
+  try {
+    // Carrega mensagens anteriores
+    const res = await fetch(`http://localhost:3000/conversas/${idConversa}/mensagens`);
+    const mensagens = await res.json();
+
+    // Remove o indicador de carregamento
+    const carregandoEl = chatMessages.querySelector("[data-loading]");
+    if (carregandoEl) carregandoEl.remove();
+
+    // Renderiza mensagens anteriores
+    mensagens.forEach(msg => {
+      if (msg.remetente === 'atendente') {
+        adicionarMensagemAtendente(msg.conteudo);
+      } else {
+        adicionarMensagem(msg.conteudo, msg.remetente === 'bot' ? 'bot' : 'user');
+      }
+      ultimoIdMensagem = Math.max(ultimoIdMensagem, msg.id_mensagem);
+    });
+
+    adicionarCardProtocolo(idTicket);
+    adicionarMensagem("Atendimento retomado! Você pode continuar conversando com o atendente.", "bot");
+    iniciarModoAtendente();
+  } catch (err) {
+    console.error('Erro ao retomar conversa:', err);
+    adicionarMensagem("Não foi possível retomar a conversa. Tente novamente.", "bot");
+  }
+}
+
+// ── Card de tickets anteriores ────────────────────────────────────────────────
+function adicionarCardTicketsAnteriores(tickets) {
+  const card = document.createElement("div");
+  card.classList.add("system-card");
+
+  const statusMap = {
+    aberto: { label: 'Aberto', color: '#f59e0b', bg: '#fffbeb' },
+    em_andamento: { label: 'Em Andamento', color: '#3b82f6', bg: '#eff6ff' },
+    encerrado: { label: 'Encerrado', color: '#6b7280', bg: '#f9fafb' },
+    resolvido: { label: 'Resolvido', color: '#10b981', bg: '#ecfdf5' }
+  };
+
+  const listaHTML = tickets.map(t => {
+    const st = statusMap[t.status] || { label: t.status, color: '#6b7280', bg: '#f9fafb' };
+    const data = new Date(t.data).toLocaleDateString('pt-BR');
+    return `
+      <div class="ticket-card-item" style="
+        border:1px solid #e2e8f0;
+        border-radius:12px;
+        padding:10px 12px;
+        margin-bottom:8px;
+        background:#fff;
+        cursor:pointer;
+        transition:box-shadow 0.2s;
+      " data-ticket-id="${t.id_ticket}" data-conversa-id="${t.id_conversa || ''}">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+          <strong style="font-size:0.85rem;color:#1e40af">#${t.id_ticket} — ${t.titulo}</strong>
+          <span style="font-size:0.72rem;font-weight:700;padding:2px 8px;border-radius:999px;background:${st.bg};color:${st.color}">${st.label}</span>
+        </div>
+        <div style="font-size:0.75rem;color:#64748b">${data}</div>
+      </div>`;
+  }).join('');
+
+  card.innerHTML = `
+    <h3>📋 Seus atendimentos anteriores</h3>
+    <p style="margin-bottom:10px">Encontramos registros para o seu e-mail. Clique em um ticket para retomar ou continue com um novo atendimento.</p>
+    ${listaHTML}
+  `;
+
+  chatMessages.appendChild(card);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+
+  // Adiciona eventos de clique nos itens
+  card.querySelectorAll('.ticket-card-item').forEach(el => {
+    el.addEventListener('mouseenter', () => el.style.boxShadow = '0 4px 12px rgba(37,99,235,0.15)');
+    el.addEventListener('mouseleave', () => el.style.boxShadow = 'none');
+    el.addEventListener('click', () => {
+      const conversaId = el.dataset.conversaId;
+      const ticketId = parseInt(el.dataset.ticketId);
+      if (!conversaId) {
+        adicionarMensagem('Este ticket não possui conversa registrada.', 'bot');
+        return;
+      }
+      retomarConversa({ id_ticket: ticketId, id_conversa: conversaId });
+    });
+  });
+}
+
 function adicionarMensagemAtendente(texto) {
   const mensagem = document.createElement("div");
   mensagem.classList.add("message", "bot-message");
@@ -422,8 +528,35 @@ async function processarEntrada(valor) {
         return;
       }
       dadosAtendimento.email = valor;
+
+      // Consulta tickets anteriores do cliente
+      {
+        adicionarMensagemSistema("Consultando seus atendimentos anteriores...");
+        const tickets = await buscarTicketsPorEmail(valor);
+
+        // Remove o indicador de consulta
+        const consultandoEl = chatMessages.querySelector("[style*='text-align:center']");
+        if (consultandoEl) consultandoEl.remove();
+
+        if (tickets.length > 0) {
+          // Mostra tickets anteriores e oferece opções
+          adicionarCardTicketsAnteriores(tickets);
+          etapaAtual = "ticketsAnteriores";
+          mostrarOpcoes(["Novo atendimento"]);
+        } else {
+          // Sem histórico, segue fluxo normal
+          etapaAtual = "pedido";
+          adicionarMensagem("Você possui o número do pedido?", "bot");
+          mostrarOpcoes(["Sim", "Não"]);
+        }
+      }
+      break;
+
+    case "ticketsAnteriores":
+      // Usuário clicou em "Novo atendimento"
       etapaAtual = "pedido";
-      adicionarMensagem("Você possui o número do pedido?", "bot");
+      limparOpcoes();
+      adicionarMensagem("Ok! Vamos abrir um novo atendimento. Você possui o número do pedido?", "bot");
       mostrarOpcoes(["Sim", "Não"]);
       break;
 

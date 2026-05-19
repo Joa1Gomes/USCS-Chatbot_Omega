@@ -51,3 +51,30 @@ exports.cadastrarCliente = async (req, res) => {
     res.status(500).json({ mensagem: 'Erro ao processar cadastro.' });
   }
 };
+
+// GET /clientes/tickets?email=... - Lista todos os tickets do cliente pelo e-mail
+exports.getTicketsPorEmail = async (req, res) => {
+  const { email } = req.query;
+  if (!email) return res.status(400).json({ mensagem: 'E-mail obrigatório.' });
+
+  try {
+    const result = await pool.query(
+      `SELECT
+         t.id_ticket,
+         COALESCE(t.assunto, 'Sem título') AS titulo,
+         LOWER(t.status_ticket) AS status,
+         t.data_inicio AS data,
+         c.id_conversa
+       FROM tickets_empresa t
+       INNER JOIN clientes_empresa cl ON t.id_cliente_empresa = cl.id_cliente_empresa
+       LEFT JOIN conversas c ON c.id_ticket = t.id_ticket
+       WHERE cl.email_cliente = $1
+       ORDER BY t.data_inicio DESC`,
+      [email]
+    );
+    res.status(200).json(result.rows);
+  } catch (erro) {
+    console.error('Erro ao buscar tickets por email:', erro);
+    res.status(500).json({ mensagem: 'Erro ao buscar tickets.' });
+  }
+};
