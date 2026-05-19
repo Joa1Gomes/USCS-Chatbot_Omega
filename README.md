@@ -1,12 +1,12 @@
 # Chatbot Omega 🤖
 
-**Chatbot Omega** é uma solução completa para empresas que buscam integrar chatbots inteligentes em seus marketplaces ou websites. O sistema combina a eficiência de atendimentos automatizados por IA com a flexibilidade de transição para atendentes humanos em tempo real.
+**Chatbot Omega** é uma solução completa para empresas que buscam integrar chatbots inteligentes em seus marketplaces ou websites. O sistema combina a eficiência de atendimentos automaticos com flexibilidade de transição para atendentes humanos em tempo real.
 
 ---
 
 ## 🚀 Principais Funcionalidades
 
-- **Integração de Chatbot com IA**: Chatbot facilmente acoplável para interação inicial com clientes.
+- **Integração de Chatbot**: Chatbot facilmente acoplável para interação inicial com clientes.
 - **Coleta Automatizada de Dados**: Captura automática de informações essenciais (nome, e-mail, número do pedido, tipo de solicitação).
 - **Atendimento Humano em Tempo Real**: Fluxo de transição para suporte humano quando a complexidade exige intervenção especializada.
 - **Painel Administrativo da Empresa**: Gerenciamento de usuários, permissões e visualização de atendimentos concluídos.
