@@ -6,8 +6,8 @@ exports.encerrarAtendimento = async (req, res) => {
   try {
     const result = await pool.query(
       `INSERT INTO TICKETS_EMPRESA
-         (id_cliente_empresa, assunto, descricao, prioridade, status_ticket, data_inicio)
-       VALUES ($1, $2, $3, 'media', 'ABERTO', NOW())
+         (id_cliente_empresa, assunto, descricao, prioridade, status_ticket, data_inicio, id_loja)
+       VALUES ($1, $2, $3, 'media', 'ABERTO', NOW(), 1)
        RETURNING id_ticket`,
       [idCliente, tipoSolicitacao, descricao || pedido]
     );

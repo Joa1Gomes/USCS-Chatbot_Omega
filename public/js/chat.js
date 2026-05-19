@@ -105,11 +105,19 @@ function renderizarMensagens(mensagens) {
 
     mensagens.forEach(msg => {
         const div = document.createElement('div');
-        // 'atendente' → classe 'agent' (CSS existente); 'cliente'/'bot' → 'user'
+        // Atendente → direita (agent); cliente/bot → esquerda (user)
         const cssClass = msg.remetente === 'atendente' ? 'agent' : 'user';
         div.className = `message ${cssClass}`;
+
+        // Label visível do remetente
+        let label = '';
+        if (msg.remetente === 'bot') label = '<span class="msg-label">🤖 Bot</span>';
+        else if (msg.remetente === 'cliente') label = '<span class="msg-label">👤 Cliente</span>';
+        else if (msg.remetente === 'atendente') label = '<span class="msg-label msg-label-agent">🎧 Atendente</span>';
+
         div.innerHTML = `
       <div class="message-bubble">
+        ${label}
         ${msg.conteudo}
         <div class="message-time">${new Date(msg.data_envio).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</div>
       </div>
