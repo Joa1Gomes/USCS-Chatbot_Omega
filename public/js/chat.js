@@ -14,6 +14,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
+
+document.addEventListener('DOMContentLoaded', async function () {
+    // Injeta menu admin
+    const isAdmin = sessionStorage.getItem('is_admin');
+    if (isAdmin === 'true') {
+        document.getElementById('menuLista').insertAdjacentHTML('afterbegin', `
+      <li><a href="gerenciamento_adm.html">🧑‍💼 Gerenciamento de Usuários</a></li>
+      <li><a href="gerenciamento_loja.html">🏬 Gerenciamento de Lojas</a></li>
+    `);
+    }
+
+    // Carrega dados reais do usuário
+    await carregarDadosUsuario();
+});
+
 // Carrega a lista de tickets na sidebar esquerda
 async function carregarTicketsSidebar() {
     const idsLojasRaw = sessionStorage.getItem('ids_lojas');

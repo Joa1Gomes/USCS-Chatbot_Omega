@@ -13,6 +13,8 @@ exports.getChamados = async (req, res) => {
         const query = ` 
         SELECT 
             id_ticket
+            ,a.id_loja
+            ,l.nome_loja
             ,COALESCE(assunto, 'Sem título') as titulo
             ,COALESCE(descricao, 'Sem descrição') as descricao
             ,COALESCE(nome_completo, 'Sem Nome') as nome_cliente
@@ -21,6 +23,7 @@ exports.getChamados = async (req, res) => {
             ,LOWER(status_ticket) as status
         from TICKETS_EMPRESA a
 		inner join clientes_empresa b on a.id_cliente_empresa = b.id_cliente_empresa
+        inner join lojas l on l.id_loja = a.id_loja
         where a.id_loja = ANY($1::int[])
         ORDER BY data_inicio DESC
             `;

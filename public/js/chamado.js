@@ -50,6 +50,17 @@ function formatarData(data) {
 /* ── Normaliza qualquer valor de data para Date (sem hora) ──────────────── */
 function toDate(val) {
   if (!val) return null;
+
+  // Strings no formato YYYY-MM-DD (vindas de input[type=date]) são interpretadas
+  // por new Date() como UTC midnight. No fuso -03:00 isso desloca 1 dia para trás.
+  // Ex: new Date("2025-05-18") → May 17 às 21:00 local → setHours → May 17.
+  // Solução: construir a data direto no fuso local via new Date(ano, mês, dia).
+  if (typeof val === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(val)) {
+    const [y, m, d] = val.split('-').map(Number);
+    return new Date(y, m - 1, d); // meia-noite local — sem desvio UTC
+  }
+
+  // Timestamps vindos do banco (com componente de hora/fuso) são tratados normalmente
   const d = new Date(val);
   d.setHours(0, 0, 0, 0);
   return isNaN(d) ? null : d;
@@ -174,7 +185,8 @@ function atualizarFiltros() {
 
   /* ── Dropdowns ── */
 
-  // LOJAS — usa as lojas do sessionStorage, não só as dos chamados
+  // LOJAS — usa as lojas do sessionStorage; todas ficam habilitadas para seleção.
+  // O filtro real acontece em chamadosFiltrados() via filtros.lojas.has(String(c.id_loja))
   const lojasStorage = JSON.parse(sessionStorage.getItem('lojas') || '[]');
   const lojasItens = lojasStorage.map(l => ({
     value: String(l.id_loja),
@@ -186,12 +198,15 @@ function atualizarFiltros() {
     Object.fromEntries(lojasStorage.map(l => [String(l.id_loja), l.nome_loja])));
 
   // STATUS — usa a lista de todos os status possíveis; desabilita os que não têm chamados
-  const todosStatus = ['aberto', 'em_andamento', 'resolvido', 'encerrado'];
-  const statusItens = todosStatus.map(s => ({
-    value: s,
-    label: capitalize(s),
-    disabled: !optStatus.status.has(s)
-  }));
+  // CORREÇÃO #2: incluir 'fechado' (chamados antigos podem ter este status no banco)
+  const todosStatus = ['aberto', 'em_andamento', 'resolvido', 'encerrado', 'fechado'];
+  const statusItens = todosStatus
+    .filter(s => optStatus.status.has(s) || filtros.status.has(s)) // oculta os que nunca existem
+    .map(s => ({
+      value: s,
+      label: capitalize(s),
+      disabled: !optStatus.status.has(s)
+    }));
   renderDropdown('statusDropdown', statusItens, filtros.status, aplicarFiltros);
   renderTags('tagsSelecionadas2', filtros.status, {});
 
@@ -234,19 +249,32 @@ function atualizarRangeData(minData, maxData) {
     return;
   }
 
-  const fmt = d => d.toISOString().split('T')[0];  // YYYY-MM-DD
+  // CORREÇÃO #1: usar getFullYear/getMonth/getDate (local) em vez de toISOString() (UTC)
+  // toISOString() converte para UTC e pode deslocar a data 1 dia no fuso -03:00
+  const fmt = d => {
+    const ano = d.getFullYear();
+    const mes = String(d.getMonth() + 1).padStart(2, '0');
+    const dia = String(d.getDate()).padStart(2, '0');
+    return `${ano}-${mes}-${dia}`;
+  };
 
   inputInicio.min = fmt(minData);
   inputInicio.max = fmt(maxData);
   inputFim.min = fmt(minData);
   inputFim.max = fmt(maxData);
 
-  // Preenche com o range total se ainda não tiver valor
-  if (!inputInicio.value) inputInicio.value = fmt(minData);
-  if (!inputFim.value) inputFim.value = fmt(maxData);
-
-  // Garante consistência: inicio <= fim
-  if (inputInicio.value > inputFim.value) inputFim.value = inputInicio.value;
+  // CORREÇÃO #3: Só preenche automaticamente se NÃO há filtro de data ativo
+  // Isso evita que o "Limpar" seja anulado logo depois pelo atualizarRangeData
+  if (!filtros.dataInicio && !filtros.dataFim) {
+    inputInicio.value = '';
+    inputFim.value = '';
+  } else {
+    // Preenche com o range total somente na carga inicial (inputs ainda vazios)
+    if (!inputInicio.value) inputInicio.value = fmt(minData);
+    if (!inputFim.value) inputFim.value = fmt(maxData);
+    // Garante consistência: inicio <= fim
+    if (inputInicio.value > inputFim.value) inputFim.value = inputInicio.value;
+  }
 
   if (hint) {
     hint.textContent =
@@ -336,10 +364,10 @@ async function carregarChamados() {
     if (!res.ok) throw new Error('Erro na resposta da API');
     chamados = await res.json();
 
-    // Inicializa filtros de data com o range completo dos dados
-    const { minData, maxData } = opcoesDisponiveis(chamados);
-    filtros.dataInicio = minData;
-    filtros.dataFim = maxData;
+    // CORREÇÃO #3: na carga inicial NÃO pré-define filtros de data
+    // Os inputs serão exibidos com o hint do range disponível, mas sem filtrar
+    filtros.dataInicio = null;
+    filtros.dataFim = null;
 
     atualizarFiltros();
     renderizarChamados(chamadosFiltrados());
