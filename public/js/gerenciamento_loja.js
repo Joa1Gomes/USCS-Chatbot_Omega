@@ -52,11 +52,11 @@ async function carregarLojas() {
     const id_usuario = sessionStorage.getItem('id_usuario');
     const is_admin = sessionStorage.getItem('is_admin'); // "true" ou "false" (string)
 
-    if (!id_empresa) {
-        alert('Sessão expirada. Faça login novamente.');
-        window.location.href = '/login.html';
-        return;
-    }
+    // if (!id_empresa) {
+    //     alert('Sessão expirada. Faça login novamente.');
+    //     window.location.href = '/login.html';
+    //     return;
+    // }
 
     try {
         const response = await fetch(
